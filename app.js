@@ -61,6 +61,9 @@ app.get('/person', IsLoggedIn, (req, res) => {
         user : req.user
     })
 });
+app.post('/tambah-person', IsLoggedIn, (req, res) => {
+    console.log(req.body)
+});
 
 app.use('/',(req,res) => {
     res.status(404);
