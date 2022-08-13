@@ -95,7 +95,10 @@
                         <div class="col-sm-4">
                             <select class="form-select" aria-label="Provinsi" name="provinsi" id="provinsi"
                                     onchange="cekkab()">
-                                <option value="">Provinsi</option>
+                                <option value="">== Pilih Provinsi ==</option>
+                                <% prov.forEach(provinsi =>{%>
+                                    <option value="<%= provinsi.id+'-'+provinsi.nama%>"><%= provinsi.nama%></option>
+                                <%})%>
                             </select>
                         </div>
                         <div class="col-sm-4">
@@ -143,6 +146,12 @@
         </div>
     </div>
 </div>
+<!--<script>-->
+<!--    function cekkab(){-->
+<!--        const provin = document.getElementById('provinsi');-->
+<!--        console.log(provin);-->
+<!--    }-->
+<!--</script>-->
 <%- include('../template/footer') %>
 <%- include('../assets/scripts/extend_js/datatable') %>
 <%- include('../template/close_foot') %>

@@ -1,12 +1,17 @@
-const express = require('express')
-const passport = require('passport')
+const express = require('express');
+const passport = require('passport');
+const bodyParser = require('body-parser');
 const session = require('express-session');
-const morgan = require('morgan');
 const {home} = require("nodemon/lib/utils");
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
+const apiRoute = require('./routers/api');
+const authRoute = require('./routers/auth');
+const personRoute = require('./routers/person');
 
 require('./auth');
+const {json} = require("express");
+const {resolveInclude} = require("ejs");
 
 app.set('view engine', 'ejs');
 
@@ -14,7 +19,8 @@ app.use(express.static(__dirname + '/views'));
 app.use(session({secret: 'user'}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extend: true}));
+app.use(bodyParser.json());
 
 function IsLoggedIn(req, res, next){
     if (!req.user){
@@ -29,13 +35,16 @@ function IsLoggedIn(req, res, next){
     }
 }
 
+app.use('/api', apiRoute);
+app.use('/auth', authRoute);
+app.use('/person', personRoute);
+
 app.get('/', IsLoggedIn, (req, res) => {
     res.render('beranda', {
         title : 'Beranda',
         user : req.user
     })
 });
-
 app.get('/login', (req, res) => {
     res.render('login', {
         title : 'Login'
@@ -45,24 +54,6 @@ app.get('/login', (req, res) => {
 app.get('/logout', (req,res) => {
     req.session.destroy();
     res.redirect('/login');
-});
-
-app.get('/auth/google', passport.authenticate('google', {scope: ['email', 'profile']}));
-
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/',
-        failureRedirect: '/auth/login'
-    }));
-
-app.get('/person', IsLoggedIn, (req, res) => {
-    res.render('person/list_person', {
-        title : 'Person',
-        user : req.user
-    })
-});
-app.post('/tambah-person', IsLoggedIn, (req, res) => {
-    console.log(req.body)
 });
 
 app.use('/',(req,res) => {
