@@ -95,7 +95,7 @@
                         <div class="col-sm-4">
                             <select class="form-select" aria-label="Provinsi" name="provinsi" id="provinsi"
                                     onchange="cekkab()">
-                                <option value="">== Pilih Provinsi ==</option>
+                                <option value="">Provinsi</option>
                                 <% prov.forEach(provinsi =>{%>
                                     <option value="<%= provinsi.id+'-'+provinsi.nama%>"><%= provinsi.nama%></option>
                                 <%})%>
@@ -146,12 +146,99 @@
         </div>
     </div>
 </div>
-<!--<script>-->
-<!--    function cekkab(){-->
-<!--        const provin = document.getElementById('provinsi');-->
-<!--        console.log(provin);-->
-<!--    }-->
-<!--</script>-->
+<script>
+    async function cekkab(){
+        const provin = document.getElementById('provinsi').value;
+        if (provin != ''){
+            const prov = provin.split("-");
+            const idprov = prov[0];
+            const kabkot = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${idprov}.json`);
+            const data = await kabkot.text();
+            const datakabkot = JSON.parse(data);
+            const sortkabkot = datakabkot.sort((a, b) => a.nama.localeCompare(b.nama));
+            const ckabkot = document.getElementById('kabkot');
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kabkot option").remove();
+            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            sortkabkot.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                ckabkot.innerHTML += create;
+            });
+        } else {
+            const ckabkot = document.getElementById('kabkot');
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kabkot option").remove();
+            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+    async function cekkec(){
+        const dkk = document.getElementById('kabkot').value;
+        if (dkk != ''){
+            const kabkot = dkk.split("-");
+            const idkabkot = kabkot[0];
+            const kec = await fetch(`https://ibnux.github.io/data-indonesia/kecamatan/${idkabkot}.json`);
+            const data = await kec.text();
+            const datakec = JSON.parse(data);
+            const sortkec = datakec.sort((a, b) => a.nama.localeCompare(b.nama));
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            sortkec.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                ckec.innerHTML += create;
+            });
+        } else {
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+    async function cekdes(){
+        const dkec = document.getElementById('kec').value;
+        if (dkec != ''){
+            const kec = dkec.split("-");
+            const idkec = kec[0];
+            const keldes = await fetch(`https://ibnux.github.io/data-indonesia/kelurahan/${idkec}.json`);
+            const data = await keldes.text();
+            const datakeldes = JSON.parse(data);
+            const sortkeldes = datakeldes.sort((a, b) => a.nama.localeCompare(b.nama));
+            const cdes = document.getElementById('des');
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            sortkeldes.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                cdes.innerHTML += create;
+            });
+        } else {
+            const cdes = document.getElementById('des');
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+
+</script>
 <%- include('../template/footer') %>
 <%- include('../assets/scripts/extend_js/datatable') %>
 <%- include('../template/close_foot') %>
