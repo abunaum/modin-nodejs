@@ -1,0 +1,30 @@
+{
+    "name": "Modin App",
+    "short_name": "Modin",
+    "start_url": ".",
+    "background_color": "#f5f7fa",
+    "theme_color": "#36f763",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/assets/img/aconline16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/img/aconline32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/img/aconline196.png",
+            "sizes": "196x196",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/img/aconline512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

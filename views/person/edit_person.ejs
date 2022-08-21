@@ -1,0 +1,192 @@
+<%- include('../template/header') %>
+<%- include('../template/close_head') %>
+<%- include('../template/nav') %>
+<form action="/person?_method=PUT" method="post">
+    <input type="hidden" class="form-control" id="id" name="id" value="<%= orang._id %>" required>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="nama" class="form-label">Nama</label>
+        <input type="text" class="form-control" id="nama" name="nama" value="<%= orang.nama %>" required>
+    </div>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="nik" class="form-label">NIK</label>
+        <input type="number" class="form-control" id="nik" name="nik" value="<%= orang.nik %>" required>
+    </div>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="jk" name="jk">
+            <%
+            if (orang.jk = 'lk'){
+            %>
+                <option value="lk">Laki - Laki</option>
+                <option value="pr">Perempuan</option>
+            <% } else { %>
+                <option value="pr">Perempuan</option>
+                <option value="lk">Laki - Laki</option>
+            <% } %>
+        </select>
+    </div>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="tempatlahir" class="form-label">TTL</label>
+        <input type="text" class="form-control input-group-outline" id="tempatlahir" name="tempatlahir"
+               value="<%= orang.tempat_lahir %>" required>
+        <input type="date" class="form-control input-group-outline" id="tgllahirpr" name="tgllahir"
+               value="<%= orang.tanggal_lahir.toISOString().substr(0, 10) %>">
+    </div>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="kerja" class="form-label">Pekerjaan</label>
+        <input type="text" class="form-control" id="kerja" name="kerja" value="Wiraswasta" required>
+    </div>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="agama" class="form-label">Agama</label>
+        <input type="text" class="form-control" id="agama" name="agama" value="ISLAM" required>
+    </div>
+    <div class="mb-3 input-group input-group-outline is-filled">
+        <label for="wn" class="form-label">Kewarganegaraan</label>
+        <input type="text" class="form-control" id="wn" name="wn" value="WNI" required>
+    </div>
+    <div class="mb-3 input-group">
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Provinsi" name="provinsi" id="provinsi"
+                    onchange="cekkab()">
+                <option value="">Provinsi</option>
+                <% prov.forEach(provinsi =>{ %>
+                    <option value="<%= provinsi.id + '-' + provinsi.nama %>"><%= provinsi.nama %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="kabkot" name="kabkot" id="kabkot"
+                    onchange="cekkec()">
+                <option value="">Kabupaten / Kota</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="kec" name="kec" id="kec" onchange="cekdes()">
+                <option value="">Kecamatan</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="des" class="form-label"></label>
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="des" name="des" id="des">
+                <option value="">Kelurahan / Desa</option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <select class="form-select" aria-label="rt" name="rt" id="rt">
+                <option value='<%= orang.rt %>'>RT <%= orang.rt %></option>
+                <% for (var i = 1; i < 100; i++) { %>
+                    <option value='<%= i %>'>RT <%= i %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <select class="form-select" aria-label="rw" name="rw" id="rw">
+                <option value='<%= orang.rw %>'>RW <%= orang.rw %></option>
+                <% for (var i = 1; i < 100; i++) { %>
+                    <option value='<%= i %>'>RW <%= i %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Dusun / Jalan"
+                   value="<%= orang.jalan %>" required>
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed blue;">
+    <center>
+        <button type="submit" class="mb-3 btn btn-success">Edit</button>
+    </center>
+</form>
+<script>
+    async function cekkab(){
+        const provin = document.getElementById('provinsi').value;
+        if (provin != ''){
+            const prov = provin.split("-");
+            const idprov = prov[0];
+            const kabkot = await fetch(`/api/kabkot/${idprov}`);
+            const data = await kabkot.text();
+            const datakabkot = JSON.parse(data);
+            const ckabkot = document.getElementById('kabkot');
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kabkot option").remove();
+            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            datakabkot.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                ckabkot.innerHTML += create;
+            });
+        } else {
+            const ckabkot = document.getElementById('kabkot');
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kabkot option").remove();
+            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+    async function cekkec(){
+        const dkk = document.getElementById('kabkot').value;
+        if (dkk != ''){
+            const kabkot = dkk.split("-");
+            const idkabkot = kabkot[0];
+            const kec = await fetch(`/api/kec/${idkabkot}`);
+            const data = await kec.text();
+            const datakec = JSON.parse(data);
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            datakec.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                ckec.innerHTML += create;
+            });
+        } else {
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+    async function cekdes(){
+        const dkec = document.getElementById('kec').value;
+        if (dkec != ''){
+            const kec = dkec.split("-");
+            const idkec = kec[0];
+            const keldes = await fetch(`/api/keldes/${idkec}`);
+            const data = await keldes.text();
+            const datakeldes = JSON.parse(data);
+            const cdes = document.getElementById('des');
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+            datakeldes.forEach(kk => {
+                const nama = kk.nama;
+                const id = kk.id;
+                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                cdes.innerHTML += create;
+            });
+        } else {
+            const cdes = document.getElementById('des');
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+
+</script>
+<%- include('../template/footer') %>
+<%- include('../template/close_foot') %>

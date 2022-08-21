@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-
+const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 const apiRoute = require('./routers/api');
@@ -22,6 +22,7 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({extend: true}));
 app.use(bodyParser.json());
 app.use(cookieParser('secret'));
+app.use(methodOverride('_method'));
 app.use(
     session({
         cookie: { maxAge:600 },

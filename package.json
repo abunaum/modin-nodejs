@@ -11,6 +11,8 @@
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
+    "fs": "^0.0.1-security",
+    "method-override": "^3.0.0",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.2",
     "passport": "^0.6.0",
@@ -18,6 +20,7 @@
     "passport-google-oauth2": "^0.2.0"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "pwa": "create-pwa --icon=\"./views/assets/img/aconline.png\" --launch=\"./views/assets/img/aconline.png\""
   }
 }

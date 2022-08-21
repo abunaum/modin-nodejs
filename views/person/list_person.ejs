@@ -4,7 +4,6 @@
 <%- include('../template/nav') %>
 <script>
     const error = <%- JSON.stringify(error) %>;
-    console.log(error);
     if (error.length >= 1) {
         const textnya = [];
         error.map(function(err) {
@@ -22,7 +21,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Mantap.',
-            html: 'Data berhasil ditambah.',
+            html: sukses,
         });
     };
     const gagal = '<%=gagal%>';
@@ -51,6 +50,7 @@
         <th>RT</th>
         <th>RW</th>
         <th>Detail</th>
+        <th>Aksi</th>
     </tr>
     </thead>
     <tbody>
@@ -71,6 +71,16 @@
         <td><%= orang.rt%></td>
         <td><%= orang.rw%></td>
         <td><%= orang.jalan%></td>
+        <td>
+            <form action="/person/edit" method="post">
+                <input type="hidden" name="id" value="<%= orang._id%>"/>
+                <button type="submit" class="btn btn-warning">Edit</button>
+            </form>
+            <form action="/person?_method=DELETE" method="post" id="hps-<%= orang._id%>" name="hps-<%= orang._id%>" onclick="hapusform('<%= orang._id%>', '<%= orang.nama%>')">
+                <input type="hidden" name="id" value="<%= orang._id%>"/>
+                <button type="button" class="btn btn-danger">Hapus</button>
+            </form>
+        </td>
     </tr>
     <%
     })
@@ -194,10 +204,9 @@
         if (provin != ''){
             const prov = provin.split("-");
             const idprov = prov[0];
-            const kabkot = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${idprov}.json`);
+            const kabkot = await fetch(`/api/kabkot/${idprov}`);
             const data = await kabkot.text();
             const datakabkot = JSON.parse(data);
-            const sortkabkot = datakabkot.sort((a, b) => a.nama.localeCompare(b.nama));
             const ckabkot = document.getElementById('kabkot');
             const ckec = document.getElementById('kec');
             const cdes = document.getElementById('des');
@@ -207,7 +216,7 @@
             ckec.innerHTML = "<option value=''>Kecamatan</option>";
             $("#des option").remove();
             cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            sortkabkot.forEach(kk => {
+            datakabkot.forEach(kk => {
                 const nama = kk.nama;
                 const id = kk.id;
                 const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
@@ -230,17 +239,16 @@
         if (dkk != ''){
             const kabkot = dkk.split("-");
             const idkabkot = kabkot[0];
-            const kec = await fetch(`https://ibnux.github.io/data-indonesia/kecamatan/${idkabkot}.json`);
+            const kec = await fetch(`/api/kec/${idkabkot}`);
             const data = await kec.text();
             const datakec = JSON.parse(data);
-            const sortkec = datakec.sort((a, b) => a.nama.localeCompare(b.nama));
             const ckec = document.getElementById('kec');
             const cdes = document.getElementById('des');
             $("#kec option").remove();
             ckec.innerHTML = "<option value=''>Kecamatan</option>";
             $("#des option").remove();
             cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            sortkec.forEach(kk => {
+            datakec.forEach(kk => {
                 const nama = kk.nama;
                 const id = kk.id;
                 const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
@@ -260,14 +268,13 @@
         if (dkec != ''){
             const kec = dkec.split("-");
             const idkec = kec[0];
-            const keldes = await fetch(`https://ibnux.github.io/data-indonesia/kelurahan/${idkec}.json`);
+            const keldes = await fetch(`/api/keldes/${idkec}`);
             const data = await keldes.text();
             const datakeldes = JSON.parse(data);
-            const sortkeldes = datakeldes.sort((a, b) => a.nama.localeCompare(b.nama));
             const cdes = document.getElementById('des');
             $("#des option").remove();
             cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            sortkeldes.forEach(kk => {
+            datakeldes.forEach(kk => {
                 const nama = kk.nama;
                 const id = kk.id;
                 const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
@@ -279,7 +286,23 @@
             cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
         }
     }
-
+    function hapusform(id, nama){
+        const formhps = document.getElementById(`hps-${id}`);
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: `Ingin menghapus ${nama}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Gass hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                formhps.submit();
+            }
+        })
+    }
 </script>
 <%- include('../template/footer') %>
 <%- include('../assets/scripts/extend_js/datatable') %>

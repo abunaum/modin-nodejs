@@ -1,18 +1,41 @@
-const axios = require('axios').default;
+const fs = require('fs');
+
 const loadprovinsi = () => {
-    const prov = axios.get('https://ibnux.github.io/data-indonesia/provinsi.json');
+    const fileBuffer = fs.readFileSync('./utils/lokasi/allprov.json');
+    const prov = JSON.parse(fileBuffer);
     return prov;
 }
 const loadkabupaten = (idprov) => {
-    const kabkot = axios.get(`https://ibnux.github.io/data-indonesia/kabupaten/${idprov}.json`);
-    return kabkot;
+    const dataPath = `./utils/lokasi/provinsi/${idprov}.json`;
+    if (!fs.existsSync(dataPath)){
+        const data = [];
+        return data;
+    } else {
+        const fileBuffer = fs.readFileSync(dataPath);
+        const kabkot = JSON.parse(fileBuffer);
+        return kabkot;
+    }
 }
 const loadkecamatan = (idkabkot) => {
-    const kec = axios.get(`https://ibnux.github.io/data-indonesia/kecamatan/${idkabkot}.json`);
-    return kec;
+    const dataPath = `./utils/lokasi/kabupaten/${idkabkot}.json`;
+    if (!fs.existsSync(dataPath)){
+        const data = [];
+        return data;
+    } else {
+        const fileBuffer = fs.readFileSync(dataPath);
+        const kec = JSON.parse(fileBuffer);
+        return kec;
+    }
 }
 const loadkeldes = (idkec) => {
-    const keldes = axios.get(`https://ibnux.github.io/data-indonesia/kelurahan/${idkec}.json`);
-    return keldes;
+    const dataPath = `./utils/lokasi/kecamatan/${idkec}.json`;
+    if (!fs.existsSync(dataPath)){
+        const data = [];
+        return data;
+    } else {
+        const fileBuffer = fs.readFileSync(dataPath);
+        const keldes = JSON.parse(fileBuffer);
+        return keldes;
+    }
 }
 module.exports = {loadprovinsi, loadkabupaten, loadkecamatan, loadkeldes};
