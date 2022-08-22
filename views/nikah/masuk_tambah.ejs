@@ -4,13 +4,14 @@
 <form action="/nikah/masuk/tambah" method="post">
     <div class="mb-3 input-group input-group-outline">
         <label for="noreg" class="form-label">Nomor Register</label>
-        <input type="text" class="form-control" id="noreg" name="noreg" required>
-        <input type="date" class="form-control" id="tgllahirpr" name="tgllahir">
+        <input type="text" class="form-control" id="noreg" name="noreg">
+        <input type="date" class="form-control" id="tglregister" name="tglregister">
     </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
     <div class="mb-3 input-group input-group-outline">
         <label for="nikpr" class="form-label">NIK</label>
-        <input type="number" class="form-control" id="nikpr" name="nikpr" required>
+        <input type="number" class="form-control" id="nikpr" name="nikpr">
     </div>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="statuspr" name="statuspr" onchange="changepr()">
@@ -34,7 +35,7 @@
     </div>
     <div class="mb-3 input-group input-group-outline" id="noacdiv">
         <label for="noacpr" class="form-label">NO AC</label>
-        <input type="number" class="form-control" id="noacpr" name="noacpr" required>
+        <input type="text" class="form-control" id="noacpr" name="noacpr">
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Ayah Catin Wanita</h1></center>
@@ -61,17 +62,17 @@
     <div id="ayahprdiv">
         <div class="mb-3 input-group input-group-outline">
             <label for="nikaypr" class="form-label">NIK</label>
-            <input type="number" class="form-control" id="nikaypr" name="nikaypr" required>
+            <input type="number" class="form-control" id="nikaypr" name="nikaypr">
         </div>
         <div class="mb-3 input-group input-group-outline">
             <label for="binaypr" class="form-label">Bin</label>
-            <input type="text" class="form-control" id="binaypr" name="binaypr" required>
+            <input type="text" class="form-control" id="binaypr" name="binaypr">
         </div>
     </div>
     <div id="ayahprmatidiv">
         <div class="mb-3 input-group input-group-outline">
             <label for="namaaypr" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaaypr" name="namaaypr" required>
+            <input type="text" class="form-control" id="namaaypr" name="namaaypr">
         </div>
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
@@ -99,18 +100,49 @@
     <div id="ibuprdiv">
         <div class="mb-3 input-group input-group-outline">
             <label for="nikibpr" class="form-label">NIK</label>
-            <input type="number" class="form-control" id="nikibpr" name="nikibpr" required>
+            <input type="number" class="form-control" id="nikibpr" name="nikibpr">
         </div>
         <div class="mb-3 input-group input-group-outline">
             <label for="bintiibpr" class="form-label">Binti</label>
-            <input type="text" class="form-control" id="bintiibpr" name="bintiibpr" required>
+            <input type="text" class="form-control" id="bintiibpr" name="bintiibpr">
         </div>
     </div>
     <div id="ibuprmatidiv">
         <div class="mb-3 input-group input-group-outline">
             <label for="namaibpr" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaibpr" name="namaibpr" required>
+            <input type="text" class="form-control" id="namaibpr" name="namaibpr">
         </div>
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Data Catin Pria</h1></center>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="niklk" class="form-label">NIK</label>
+        <input type="number" class="form-control" id="niklk" name="niklk">
+    </div>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="binlk" class="form-label">BIN</label>
+        <input type="text" class="form-control" id="binlk" name="binlk">
+    </div>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="statuslk" name="statuslk" onchange="changelk()">
+            <option value="jejaka">Jejaka</option>
+            <option value="duda">Duda</option>
+        </select>
+        <script>
+            function changelk() {
+                const sttlk = document.getElementById('statuslk').value;
+                const noaclk = $("#noaclkdiv");
+                if (sttlk =='duda'){
+                    noaclk.show();
+                } else {
+                    noaclk.hide();
+                }
+            }
+        </script>
+    </div>
+    <div class="mb-3 input-group input-group-outline" id="noaclkdiv">
+        <label for="noaclk" class="form-label">NO AC</label>
+        <input type="text" class="form-control" id="noaclk" name="noaclk">
     </div>
     <hr style="border-top: 2px dashed blue;">
     <center><h1>Status Perkawinan</h1></center>
@@ -157,17 +189,17 @@
         <div id="ayahlkdiv">
             <div class="mb-3 input-group input-group-outline">
                 <label for="nikaylk" class="form-label">NIK</label>
-                <input type="number" class="form-control" id="nikaylk" name="nikaylk" required>
+                <input type="number" class="form-control" id="nikaylk" name="nikaylk">
             </div>
             <div class="mb-3 input-group input-group-outline">
                 <label for="binaylk" class="form-label">Bin</label>
-                <input type="text" class="form-control" id="binaylk" name="binaylk" required>
+                <input type="text" class="form-control" id="binaylk" name="binaylk">
             </div>
         </div>
         <div id="ayahlkmatidiv">
             <div class="mb-3 input-group input-group-outline">
                 <label for="namaaylk" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="namaaylk" name="namaaylk" required>
+                <input type="text" class="form-control" id="namaaylk" name="namaaylk">
             </div>
         </div>
         <hr style="border-top: 2px dashed blue;">
@@ -195,19 +227,61 @@
         <div id="ibulkdiv">
             <div class="mb-3 input-group input-group-outline">
                 <label for="nikiblk" class="form-label">NIK</label>
-                <input type="number" class="form-control" id="nikiblk" name="nikiblk" required>
+                <input type="number" class="form-control" id="nikiblk" name="nikiblk">
             </div>
             <div class="mb-3 input-group input-group-outline">
                 <label for="bintiiblk" class="form-label">Bin</label>
-                <input type="text" class="form-control" id="bintiiblk" name="bintiiblk" required>
+                <input type="text" class="form-control" id="bintiiblk" name="bintiiblk">
             </div>
         </div>
         <div id="ibulkmatidiv">
             <div class="mb-3 input-group input-group-outline">
                 <label for="namaiblk" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="namaiblk" name="namaiblk" required>
+                <input type="text" class="form-control" id="namaiblk" name="namaiblk">
             </div>
         </div>
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Data Wali</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="walinikah" name="walinikah" onchange="changewali()">
+            <option value="ayah">Ayah</option>
+            <option value="hakim">Wali Hakim</option>
+            <option value="lainnya">Lainnya</option>
+        </select>
+        <script>
+            function changewali() {
+                const wali = document.getElementById('walinikah').value;
+                const walidiv = $("#walidiv");
+                if (wali =='lainnya'){
+                    walidiv.show();
+                } else {
+                    walidiv.hide();
+                }
+            }
+        </script>
+    </div>
+    <div id="walidiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikwali" class="form-label">NIK</label>
+            <input type="number" class="form-control" id="nikwali" name="nikwali">
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="hubungan_wali" class="form-label">Hubungan</label>
+            <input type="text" class="form-control" id="hubungan_wali" name="hubungan_wali">
+        </div>
+    </div>
+
+    <hr style="border-top: 2px dashed blue;">
+    <center><h1>Data Acara</h1></center>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="tempat_nikah" class="form-label">Tempat Nikah</label>
+        <input type="text" class="form-control" id="tempat_nikah" name="tempat_nikah">
+        <input type="datetime-local" class="form-control" id="tglnikah" name="tglnikah">
+    </div>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="mas_kawin" class="form-label">Mas Kawin</label>
+        <input type="text" class="form-control" id="mas_kawin" name="mas_kawin">
     </div>
     <hr style="border-top: 2px dashed green;">
     <center>
@@ -218,11 +292,13 @@
 <script>
     $( document ).ready(function() {
         $("#noacdiv").hide();
+        $("#noaclkdiv").hide();
         $("#ayahprmatidiv").hide();
         $("#ibuprmatidiv").hide();
         $("#sttkeldesdiv").hide();
         $("#ayahlkmatidiv").hide();
         $("#ibulkmatidiv").hide();
+        $("#walidiv").hide();
     });
 </script>
 <%- include('../template/close_foot') %>

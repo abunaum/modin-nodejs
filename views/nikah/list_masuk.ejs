@@ -42,19 +42,24 @@
         <th>NIK Pria</th>
         <th>NIK Wanita</th>
         <th>Tgl Nikah</th>
+        <th>Jam Nikah</th>
         <th>Mas Kawin</th>
+        <th>Lokasi</th>
         <th>Detail</th>
         <th>Aksi</th>
     </tr>
     </thead>
     <tbody>
         <tr>
-            <td>1643164313416/5364/354</td>
-            <td>1 Juli 2022</td>
-            <td>3473543543753754345</td>
-            <td>3473543543753754345</td>
-            <td>1 Juli 2022</td>
-            <td>Seperangkat Alat Sholat</td>
+            <% datanikah.forEach((dn) =>{%>
+            <td><%= dn.noreg%></td>
+            <td><%= dn.tglregister.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
+            <td><%= dn.niklk%></td>
+            <td><%= dn.nikpr%></td>
+            <td><%= dn.tglnikah.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
+            <td><%= dn.tglnikah.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})%></td>
+            <td><%= dn.mas_kawin%></td>
+            <td><%= dn.tempat_nikah%></td>
             <td>
                 <form action="/nikah/detail" method="post">
                     <input type="hidden" name="id" value=""/>
@@ -71,6 +76,7 @@
                     <button type="button" class="btn btn-danger">Hapus</button>
                 </form>
             </td>
+            <%})%>
         </tr>
     </tbody>
 </table>
