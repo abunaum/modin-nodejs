@@ -22,11 +22,27 @@ function IsLoggedIn(req, res, next) {
     if (!req.user) {
         res.redirect('/login');
     } else {
-        if (req.user.email != 'abunaum@hotmail.com') {
-            req.logout();
-            res.redirect('/login');
+        const session = req.session;
+        if (req.user.provider === 'github') {
+            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.emails[0].value,
+                    'picture': req.user.photos[0].value
+                };
+                next();
+            }
         } else {
-            next();
+            if (req.user.email !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.email,
+                    'picture': req.user.picture
+                };
+                next();
+            }
         }
     }
 }
@@ -122,7 +138,7 @@ person.post('/edit', IsLoggedIn, async (req, res) => {
 
     res.render('person/edit_person', {
         title: 'Edit Person',
-        user: req.user,
+        info : req.session,
         prov: provsorted,
         orang,
         sukses : req.flash('sukses'),
@@ -139,7 +155,7 @@ person.get('/', IsLoggedIn, async (req, res) => {
 
     res.render('person/list_person', {
         title: 'Person',
-        user: req.user,
+        info : req.session,
         prov: provsorted,
         orang,
         sukses : req.flash('sukses'),

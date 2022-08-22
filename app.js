@@ -12,7 +12,8 @@ const authRoute = require('./routers/auth');
 const nikahRoute = require('./routers/nikah');
 const personRoute = require('./routers/person');
 
-require('./auth');
+require('./gauth');
+require('./githubauth');
 require('./utils/db');
 app.set('view engine', 'ejs');
 
@@ -26,7 +27,7 @@ app.use(cookieParser('secret'));
 app.use(methodOverride('_method'));
 app.use(
     session({
-        cookie: { maxAge:600 },
+        cookie: {maxAge: 600},
         secret: 'secret',
         resave: true,
         saveUninitialized: true,
@@ -34,15 +35,31 @@ app.use(
 );
 app.use(flash());
 
-function IsLoggedIn(req, res, next){
-    if (!req.user){
+function IsLoggedIn(req, res, next) {
+    if (!req.user) {
         res.redirect('/login');
-    } else{
-        if (req.user.email !== 'abunaum@hotmail.com'){
-            req.logout();
-            res.redirect('/login');
-        }else{
-            next();
+    } else {
+        const session = req.session;
+        if (req.user.provider === 'github') {
+            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.emails[0].value,
+                    'picture': req.user.photos[0].value
+                };
+                next();
+            }
+        } else {
+            if (req.user.email !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.email,
+                    'picture': req.user.picture
+                };
+                next();
+            }
         }
     }
 }
@@ -55,21 +72,21 @@ app.use('/person', personRoute);
 app.get('/', IsLoggedIn, (req, res) => {
     res.render('beranda', {
         title : 'Beranda',
-        user : req.user
+        info : req.session
     })
 });
 app.get('/login', (req, res) => {
     res.render('login', {
-        title : 'Login'
+        title: 'Login'
     })
 });
 
-app.get('/logout', (req,res) => {
+app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/login');
 });
 
-app.use('/',(req,res) => {
+app.use('/', (req, res) => {
     res.status(404);
     res.render('404');
 });

@@ -3,9 +3,9 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer opacity-5 position-absolute end-0 top-0 d-none d-xl-none text-dark"
            aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
+        <a class="navbar-brand m-0" href="/"
            target="_blank">
-            <img src="<%= user.picture %>" class="navbar-brand-img h-100" alt="main_logo">
+            <img src="<%= info.user.picture %>" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold text-dark">Modin</span>
         </a>
     </div>
@@ -90,7 +90,7 @@
                         <div class="nav-link text-body font-weight-bold px-0 dropdown">
                             <a href="#" class="d-sm-inline d-none dropdown-toggle"
                                data-bs-toggle="dropdown">
-                                 <%= user.email %>
+                                <%= info.user.email %>
                             </a>
                             <div class="dropdown-menu">
                                 <a href="/logout" class="dropdown-item">Logout</a>

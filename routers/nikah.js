@@ -1,15 +1,31 @@
 const express = require('express');
 const nikah = express.Router();
 
-function IsLoggedIn(req, res, next){
-    if (!req.user){
+function IsLoggedIn(req, res, next) {
+    if (!req.user) {
         res.redirect('/login');
-    } else{
-        if (req.user.email !== 'abunaum@hotmail.com'){
-            req.logout();
-            res.redirect('/login');
-        }else{
-            next();
+    } else {
+        const session = req.session;
+        if (req.user.provider === 'github') {
+            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.emails[0].value,
+                    'picture': req.user.photos[0].value
+                };
+                next();
+            }
+        } else {
+            if (req.user.email !== 'abunaum@hotmail.com') {
+                res.redirect('/logout');
+            } else {
+                session.user= {
+                    'email': req.user.email,
+                    'picture': req.user.picture
+                };
+                next();
+            }
         }
     }
 }
@@ -17,7 +33,7 @@ function IsLoggedIn(req, res, next){
 nikah.get('/masuk',IsLoggedIn, (req, res) => {
     res.render('nikah/list_masuk', {
         title: 'Nikah Masuk',
-        user: req.user,
+        info : req.session,
         sukses : req.flash('sukses'),
         error : req.flash('error'),
         gagal : req.flash('gagal'),
@@ -27,7 +43,7 @@ nikah.get('/masuk',IsLoggedIn, (req, res) => {
 nikah.get('/masuk/tambah',IsLoggedIn, (req, res) => {
     res.render('nikah/masuk_tambah', {
         title: 'Nikah Masuk',
-        user: req.user,
+        info : req.session,
         sukses : req.flash('sukses'),
         error : req.flash('error'),
         gagal : req.flash('gagal'),
