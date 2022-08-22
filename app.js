@@ -9,6 +9,7 @@ const app = express();
 const port = 3000;
 const apiRoute = require('./routers/api');
 const authRoute = require('./routers/auth');
+const nikahRoute = require('./routers/nikah');
 const personRoute = require('./routers/person');
 
 require('./auth');
@@ -48,6 +49,7 @@ function IsLoggedIn(req, res, next){
 
 app.use('/api', apiRoute);
 app.use('/auth', authRoute);
+app.use('/nikah', nikahRoute);
 app.use('/person', personRoute);
 
 app.get('/', IsLoggedIn, (req, res) => {

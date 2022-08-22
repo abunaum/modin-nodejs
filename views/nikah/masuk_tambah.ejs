@@ -1,0 +1,228 @@
+<%- include('../template/header') %>
+<%- include('../template/close_head') %>
+<%- include('../template/nav') %>
+<form action="/nikah/masuk/tambah" method="post">
+    <div class="mb-3 input-group input-group-outline">
+        <label for="noreg" class="form-label">Nomor Register</label>
+        <input type="text" class="form-control" id="noreg" name="noreg" required>
+        <input type="date" class="form-control" id="tgllahirpr" name="tgllahir">
+    </div>
+    <center><h1>Data Catin Wanita</h1></center>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="nikpr" class="form-label">NIK</label>
+        <input type="number" class="form-control" id="nikpr" name="nikpr" required>
+    </div>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="statuspr" name="statuspr" onchange="changepr()">
+            <option value="perawan">Perawan</option>
+            <option value="janda">Janda</option>
+            <% for (var i = 2; i <= 4; i++) { %>
+                <option value='istri ke <%= i %>'>Istri ke <%= i %></option>
+            <% } %>
+        </select>
+        <script>
+            function changepr() {
+                const sttpr = document.getElementById('statuspr').value;
+                const noac = $("#noacdiv");
+                if (sttpr =='janda'){
+                    noac.show();
+                } else {
+                    noac.hide();
+                }
+            }
+        </script>
+    </div>
+    <div class="mb-3 input-group input-group-outline" id="noacdiv">
+        <label for="noacpr" class="form-label">NO AC</label>
+        <input type="number" class="form-control" id="noacpr" name="noacpr" required>
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Data Ayah Catin Wanita</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttaypr" name="sttaypr" onchange="changeayahpr()">
+            <option value="ada">Hidup</option>
+            <option value="meninggal">Meninggal</option>
+        </select>
+        <script>
+            function changeayahpr() {
+                const sttaypr = document.getElementById('sttaypr').value;
+                const aypr = $("#ayahprdiv");
+                const ayprmati = $("#ayahprmatidiv");
+                if (sttaypr =='ada'){
+                    aypr.show();
+                    ayprmati.hide();
+                } else {
+                    aypr.hide();
+                    ayprmati.show();
+                }
+            }
+        </script>
+    </div>
+    <div id="ayahprdiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikaypr" class="form-label">NIK</label>
+            <input type="number" class="form-control" id="nikaypr" name="nikaypr" required>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="binaypr" class="form-label">Bin</label>
+            <input type="text" class="form-control" id="binaypr" name="binaypr" required>
+        </div>
+    </div>
+    <div id="ayahprmatidiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="namaaypr" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="namaaypr" name="namaaypr" required>
+        </div>
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Data Ibu Catin Wanita</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttibpr" name="sttibpr" onchange="changeayahpr()">
+            <option value="ada">Hidup</option>
+            <option value="meninggal">Meninggal</option>
+        </select>
+        <script>
+            function changeayahpr() {
+                const sttibpr = document.getElementById('sttibpr').value;
+                const ibpr = $("#ibuprdiv");
+                const ibprmati = $("#ibuprmatidiv");
+                if (sttibpr =='ada'){
+                    ibpr.show();
+                    ibprmati.hide();
+                } else {
+                    ibpr.hide();
+                    ibprmati.show();
+                }
+            }
+        </script>
+    </div>
+    <div id="ibuprdiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikibpr" class="form-label">NIK</label>
+            <input type="number" class="form-control" id="nikibpr" name="nikibpr" required>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="bintiibpr" class="form-label">Binti</label>
+            <input type="text" class="form-control" id="bintiibpr" name="bintiibpr" required>
+        </div>
+    </div>
+    <div id="ibuprmatidiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="namaibpr" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="namaibpr" name="namaibpr" required>
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed blue;">
+    <center><h1>Status Perkawinan</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttkeldes" name="sttkeldes" onchange="sttkeldescek()">
+            <option value="beda">Beda Desa / Kelurahan</option>
+            <option value="satu">Satu Desa / Kelurahan</option>
+        </select>
+        <script>
+            function sttkeldescek() {
+                const sttkeldesval = document.getElementById('sttkeldes').value;
+                const keldesdiv = $("#sttkeldesdiv");
+                if (sttkeldesval =='satu'){
+                    keldesdiv.show();
+                } else {
+                    keldesdiv.hide();
+                }
+            }
+        </script>
+    </div>
+    <div id="sttkeldesdiv">
+        <hr style="border-top: 2px dashed blue;">
+        <center><h1>Data Ayah Catin Pria</h1></center>
+        <div class="mb-3">
+            <select class="form-select input-group-outline" id="sttaylk" name="sttaylk" onchange="changeayahlk()">
+                <option value="ada">Hidup</option>
+                <option value="meninggal">Meninggal</option>
+            </select>
+            <script>
+                function changeayahlk() {
+                    const sttaylk = document.getElementById('sttaylk').value;
+                    const aylk = $("#ayahlkdiv");
+                    const aylkmati = $("#ayahlkmatidiv");
+                    if (sttaylk =='ada'){
+                        aylk.show();
+                        aylkmati.hide();
+                    } else {
+                        aylk.hide();
+                        aylkmati.show();
+                    }
+                }
+            </script>
+        </div>
+        <div id="ayahlkdiv">
+            <div class="mb-3 input-group input-group-outline">
+                <label for="nikaylk" class="form-label">NIK</label>
+                <input type="number" class="form-control" id="nikaylk" name="nikaylk" required>
+            </div>
+            <div class="mb-3 input-group input-group-outline">
+                <label for="binaylk" class="form-label">Bin</label>
+                <input type="text" class="form-control" id="binaylk" name="binaylk" required>
+            </div>
+        </div>
+        <div id="ayahlkmatidiv">
+            <div class="mb-3 input-group input-group-outline">
+                <label for="namaaylk" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="namaaylk" name="namaaylk" required>
+            </div>
+        </div>
+        <hr style="border-top: 2px dashed blue;">
+        <center><h1>Data Ibu Catin Pria</h1></center>
+        <div class="mb-3">
+            <select class="form-select input-group-outline" id="sttiblk" name="sttiblk" onchange="changeibulk()">
+                <option value="ada">Hidup</option>
+                <option value="meninggal">Meninggal</option>
+            </select>
+            <script>
+                function changeibulk() {
+                    const sttiblk = document.getElementById('sttiblk').value;
+                    const iblk = $("#ibulkdiv");
+                    const iblkmati = $("#ibulkmatidiv");
+                    if (sttiblk =='ada'){
+                        iblk.show();
+                        iblkmati.hide();
+                    } else {
+                        iblk.hide();
+                        iblkmati.show();
+                    }
+                }
+            </script>
+        </div>
+        <div id="ibulkdiv">
+            <div class="mb-3 input-group input-group-outline">
+                <label for="nikiblk" class="form-label">NIK</label>
+                <input type="number" class="form-control" id="nikiblk" name="nikiblk" required>
+            </div>
+            <div class="mb-3 input-group input-group-outline">
+                <label for="bintiiblk" class="form-label">Bin</label>
+                <input type="text" class="form-control" id="bintiiblk" name="bintiiblk" required>
+            </div>
+        </div>
+        <div id="ibulkmatidiv">
+            <div class="mb-3 input-group input-group-outline">
+                <label for="namaiblk" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="namaiblk" name="namaiblk" required>
+            </div>
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed green;">
+    <center>
+        <button type="submit" class="mb-3 btn btn-success">Simpan</button>
+    </center>
+</form>
+<%- include('../template/footer') %>
+<script>
+    $( document ).ready(function() {
+        $("#noacdiv").hide();
+        $("#ayahprmatidiv").hide();
+        $("#ibuprmatidiv").hide();
+        $("#sttkeldesdiv").hide();
+        $("#ayahlkmatidiv").hide();
+        $("#ibulkmatidiv").hide();
+    });
+</script>
+<%- include('../template/close_foot') %>
