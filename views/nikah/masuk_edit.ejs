@@ -1,25 +1,27 @@
 <%- include('../template/header') %>
 <%- include('../template/close_head') %>
 <%- include('../template/nav') %>
-<form action="/nikah/masuk/tambah" method="post">
-    <div class="mb-3 input-group input-group-outline">
+<form action="/nikah/masuk/editdata" method="post">
+    <div class="mb-3 input-group input-group-outline is-filled">
         <label for="noreg" class="form-label">Nomor Register</label>
-        <input type="text" class="form-control" id="noreg" name="noreg">
-        <input type="date" class="form-control" id="tglregister" name="tglregister">
+        <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>">
+        <input type="date" class="form-control" id="tglregister" name="tglregister"
+               value="<%= JSON.stringify(datanikah.tglregister).slice(1, 11) %>">
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
-    <div class="mb-3 input-group input-group-outline">
+    <div class="mb-3 input-group input-group-outline is-filled">
         <label for="nikpr" class="form-label">NIK</label>
-        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control">
+        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control" value="<%= datanikah.nikpr %>">
         <datalist id="listpr">
-            <% pr.forEach((listpr) =>{%>
-            <option value="<%= listpr.nik%>"><%= listpr.nama%></option>
-            <%})%>
+            <% pr.forEach((listpr) =>{ %>
+                <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
+            <% }) %>
         </datalist>
     </div>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="statuspr" name="statuspr" onchange="changepr()">
+            <option value="<%= datanikah.statuspr %>"><%= datanikah.statuspr.charAt(0).toUpperCase() + datanikah.statuspr.slice(1) %></option>
             <option value="perawan">Perawan</option>
             <option value="janda">Janda</option>
             <% for (var i = 2; i <= 4; i++) { %>
@@ -30,7 +32,7 @@
             function changepr() {
                 const sttpr = document.getElementById('statuspr').value;
                 const noac = $("#noacdiv");
-                if (sttpr =='janda'){
+                if (sttpr == 'janda') {
                     noac.show();
                 } else {
                     document.getElementById('noacpr').value = '';
@@ -39,23 +41,32 @@
             }
         </script>
     </div>
-    <div class="mb-3 input-group input-group-outline" id="noacdiv">
+    <div class="mb-3 input-group input-group-outline<% if(datanikah.noacpr){ %> is-filled<% } %>"
+         id="noacdiv">
         <label for="noacpr" class="form-label">NO AC</label>
-        <input type="text" class="form-control" id="noacpr" name="noacpr">
+        <input type="text" class="form-control" id="noacpr" name="noacpr"
+               <% if(datanikah.noacpr){ %>value="<%= datanikah.noacpr %>"
+                <% } %>
+        >
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Ayah Catin Wanita</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="sttaypr" name="sttaypr" onchange="changeayahpr()">
-            <option value="ada">Hidup</option>
-            <option value="meninggal">Meninggal</option>
+            <% if(datanikah.sttaypr === 'ada'){ %>
+                <option value="ada">Hidup</option>
+                <option value="meninggal">Meninggal</option>
+            <% } else { %>
+                <option value="meninggal">Meninggal</option>
+                <option value="ada">Hidup</option>
+            <% } %>
         </select>
         <script>
             function changeayahpr() {
                 const sttaypr = document.getElementById('sttaypr').value;
                 const aypr = $("#ayahprdiv");
                 const ayprmati = $("#ayahprmatidiv");
-                if (sttaypr =='ada'){
+                if (sttaypr == 'ada') {
                     aypr.show();
                     ayprmati.hide();
                 } else {
@@ -66,39 +77,58 @@
         </script>
     </div>
     <div id="ayahprdiv">
-        <div class="mb-3 input-group input-group-outline">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.nikaypr){ %> is-filled<% } %>">
             <label for="nikaypr" class="form-label">NIK</label>
-            <input type="text" name="nikaypr" id="nikaypr" list="listaypr" class="form-control">
+            <input type="text" name="nikaypr" id="nikaypr" list="listaypr" class="form-control"
+                    <% if(datanikah.nikaypr){ %>
+                   value="<%= datanikah.nikaypr %>"
+                    <% } %>
+            >
             <datalist id="listaypr">
-                <% lk.forEach((listlk) =>{%>
-                    <option value="<%= listlk.nik%>"><%= listlk.nama%></option>
-                <%})%>
+                <% lk.forEach((listlk) =>{ %>
+                    <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+                <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline">
-            <label for="binaypr" class="form-label">Bin</label>
-            <input type="text" class="form-control" id="binaypr" name="binaypr">
-        </div>
+        <div class="mb-3 input-group input-group-outline<% if(datanikah.binaypr){ %> is-filled"
+        <% } %>
+        ">
+        <label for="binaypr" class="form-label">Bin</label>
+        <input type="text" class="form-control" id="binaypr" name="binaypr"
+                <% if(datanikah.binaypr){ %>
+               value="<%= datanikah.binaypr %>"
+                <% } %>
+        >
+    </div>
     </div>
     <div id="ayahprmatidiv">
-        <div class="mb-3 input-group input-group-outline">
+        <div class="mb-3 input-group input-group-outline<% if(datanikah.namaaypr){ %> is-filled<% } %>">
             <label for="namaaypr" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namaaypr" name="namaaypr">
+            <input type="text" class="form-control" id="namaaypr" name="namaaypr"
+                    <% if(datanikah.namaaypr){ %>
+                   value="<%= datanikah.namaaypr %>"
+                    <% } %>
+            >
         </div>
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Ibu Catin Wanita</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="sttibpr" name="sttibpr" onchange="changeibpr()">
-            <option value="ada">Hidup</option>
-            <option value="meninggal">Meninggal</option>
+            <% if(datanikah.sttibpr === 'ada'){ %>
+                <option value="ada">Hidup</option>
+                <option value="meninggal">Meninggal</option>
+            <% } else { %>
+                <option value="meninggal">Meninggal</option>
+                <option value="ada">Hidup</option>
+            <% } %>
         </select>
         <script>
             function changeibpr() {
                 const sttibpr = document.getElementById('sttibpr').value;
                 const ibpr = $("#ibuprdiv");
                 const ibprmati = $("#ibuprmatidiv");
-                if (sttibpr =='ada'){
+                if (sttibpr == 'ada') {
                     ibpr.show();
                     ibprmati.hide();
                 } else {
@@ -109,13 +139,13 @@
         </script>
     </div>
     <div id="ibuprdiv">
-        <div class="mb-3 input-group input-group-outline">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.nikibpr){ %> is-filled<% } %>">
             <label for="nikibpr" class="form-label">NIK</label>
-            <input type="text" name="nikibpr" id="nikibpr" list="listibpr" class="form-control">
+            <input type="text" name="nikibpr" id="nikibpr" list="listibpr" class="form-control" <% if(datanikah.nikibpr){ %>value="<%= datanikah.nikibpr%>" <% } %>>
             <datalist id="listibpr">
-                <% pr.forEach((listpr) =>{%>
-                    <option value="<%= listpr.nik%>"><%= listpr.nama%></option>
-                <%})%>
+                <% pr.forEach((listpr) =>{ %>
+                    <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
+                <% }) %>
             </datalist>
         </div>
         <div class="mb-3 input-group input-group-outline">
@@ -135,9 +165,9 @@
         <label for="niklk" class="form-label">NIK</label>
         <input type="text" name="niklk" id="niklk" list="listlk" class="form-control">
         <datalist id="listlk">
-            <% lk.forEach((listlk) =>{%>
-                <option value="<%= listlk.nik%>"><%= listlk.nama%></option>
-            <%})%>
+            <% lk.forEach((listlk) =>{ %>
+                <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+            <% }) %>
         </datalist>
     </div>
     <div class="mb-3 input-group input-group-outline">
@@ -153,7 +183,7 @@
             function changelk() {
                 const sttlk = document.getElementById('statuslk').value;
                 const noaclk = $("#noaclkdiv");
-                if (sttlk =='duda'){
+                if (sttlk == 'duda') {
                     noaclk.show();
                 } else {
                     noaclk.hide();
@@ -176,7 +206,7 @@
             function sttkeldescek() {
                 const sttkeldesval = document.getElementById('sttkeldes').value;
                 const keldesdiv = $("#sttkeldesdiv");
-                if (sttkeldesval =='satu'){
+                if (sttkeldesval == 'satu') {
                     keldesdiv.show();
                 } else {
                     keldesdiv.hide();
@@ -197,7 +227,7 @@
                     const sttaylk = document.getElementById('sttaylk').value;
                     const aylk = $("#ayahlkdiv");
                     const aylkmati = $("#ayahlkmatidiv");
-                    if (sttaylk =='ada'){
+                    if (sttaylk == 'ada') {
                         aylk.show();
                         aylkmati.hide();
                     } else {
@@ -212,9 +242,9 @@
                 <label for="nikaylk" class="form-label">NIK</label>
                 <input type="text" name="nikaylk" id="nikaylk" list="listaylk" class="form-control">
                 <datalist id="listaylk">
-                    <% lk.forEach((listlk) =>{%>
-                        <option value="<%= listlk.nik%>"><%= listlk.nama%></option>
-                    <%})%>
+                    <% lk.forEach((listlk) =>{ %>
+                        <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+                    <% }) %>
                 </datalist>
             </div>
             <div class="mb-3 input-group input-group-outline">
@@ -240,7 +270,7 @@
                     const sttiblk = document.getElementById('sttiblk').value;
                     const iblk = $("#ibulkdiv");
                     const iblkmati = $("#ibulkmatidiv");
-                    if (sttiblk =='ada'){
+                    if (sttiblk == 'ada') {
                         iblk.show();
                         iblkmati.hide();
                     } else {
@@ -255,9 +285,9 @@
                 <label for="nikiblk" class="form-label">NIK</label>
                 <input type="text" name="nikiblk" id="nikiblk" list="listiblk" class="form-control">
                 <datalist id="listiblk">
-                    <% pr.forEach((listpr) =>{%>
-                        <option value="<%= listpr.nik%>"><%= listpr.nama%></option>
-                    <%})%>
+                    <% pr.forEach((listpr) =>{ %>
+                        <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
+                    <% }) %>
                 </datalist>
             </div>
             <div class="mb-3 input-group input-group-outline">
@@ -284,7 +314,7 @@
             function changewali() {
                 const wali = document.getElementById('walinikah').value;
                 const walidiv = $("#walidiv");
-                if (wali =='lainnya'){
+                if (wali == 'lainnya') {
                     walidiv.show();
                 } else {
                     walidiv.hide();
@@ -297,9 +327,9 @@
             <label for="nikwali" class="form-label">NIK</label>
             <input type="text" name="nikwali" id="nikwali" list="listwali" class="form-control">
             <datalist id="listwali">
-                <% lk.forEach((listlk) =>{%>
-                    <option value="<%= listlk.nik%>"><%= listlk.nama%></option>
-                <%})%>
+                <% lk.forEach((listlk) =>{ %>
+                    <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+                <% }) %>
             </datalist>
         </div>
         <div class="mb-3 input-group input-group-outline">
@@ -326,8 +356,7 @@
 </form>
 <%- include('../template/footer') %>
 <script>
-    $( document ).ready(function() {
-        $("#noacdiv").hide();
+    $(document).ready(function () {
         $("#noaclkdiv").hide();
         $("#ayahprmatidiv").hide();
         $("#ibuprmatidiv").hide();
@@ -335,6 +364,13 @@
         $("#ayahlkmatidiv").hide();
         $("#ibulkmatidiv").hide();
         $("#walidiv").hide();
+        changepr();
+        changeayahpr();
+        changeibpr();
+        changelk();
+        changeibulk();
+        changeayahlk();
+        changewali();
     });
 </script>
 <%- include('../template/close_foot') %>

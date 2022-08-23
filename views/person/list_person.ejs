@@ -1,9 +1,12 @@
 <%- include('../template/header') %>
-<%- include('../assets/scripts/extend_css/datatable') %>
+<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <%- include('../template/close_head') %>
 <%- include('../template/nav') %>
 <script>
-    const error = <%- JSON.stringify(error) %>;
+    const err = <%- JSON.stringify(error) %>;
+    const error =err[0].errors;
     if (error.length >= 1) {
         const textnya = [];
         error.map(function(err) {
@@ -305,5 +308,18 @@
     }
 </script>
 <%- include('../template/footer') %>
-<%- include('../assets/scripts/extend_js/datatable') %>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var table = $('#tabel').DataTable( {
+            responsive: true
+        } );
+
+        new $.fn.dataTable.FixedHeader( table );
+    } );
+</script>
 <%- include('../template/close_foot') %>
