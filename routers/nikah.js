@@ -10,6 +10,9 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const {check, body, validationResult} = require("express-validator");
 
+const moment = require('moment');
+moment().format('id');
+
 nikah.use(cookieParser('secret'));
 nikah.use(
     session({
@@ -75,11 +78,20 @@ nikah.get('/masuk/tambah', IsLoggedIn, async (req, res) => {
         gagal: req.flash('gagal'),
     });
 });
-nikah.post('/masuk/edit/', IsLoggedIn, async (req, res) => {
+nikah.post('/masuk/edit/',IsLoggedIn, async (req, res) => {
     const id = req.body.id;
     const datanikah = await Nikah.findById(id);
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
+
+    const date = datanikah.tglnikah;
+    let string = JSON.stringify(date);
+
+    Date.prototype.toJSON = function(){
+        return moment(this).format("YYYY-MM-DDTHH:mm");
+    };
+    tglnikah = JSON.stringify(date);
+    datanikah.tglnikah = tglnikah;
     res.render('nikah/masuk_edit', {
         title: 'Nikah Masuk',
         info: req.session,
@@ -211,7 +223,7 @@ nikah.post('/masuk/tambah', IsLoggedIn,
                     const ibpr = {
                         sttibpr: datareq.sttibpr,
                         nikibpr: datareq.nikibpr,
-                        binibpr: datareq.binibpr,
+                        bintiibpr: datareq.bintiibpr,
                     };
                     return ibpr;
                 } else {
@@ -274,7 +286,7 @@ nikah.post('/masuk/tambah', IsLoggedIn,
                             const iblk = {
                                 sttiblk: datareq.sttiblk,
                                 nikiblk: datareq.nikiblk,
-                                biniblk: datareq.biniblk,
+                                bintiiblk: datareq.bintiiblk,
                             };
                             return iblk;
                         } else {
