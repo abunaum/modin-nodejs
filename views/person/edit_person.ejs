@@ -3,6 +3,7 @@
 <%- include('../template/nav') %>
 <form action="/person?_method=PUT" method="post">
     <input type="hidden" class="form-control" id="id" name="id" value="<%= orang._id %>" required>
+    <input type="hidden" class="form-control" id="nik_ori" name="nik_ori" value="<%= orang.nik %>" required>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="nama" class="form-label">Nama</label>
         <input type="text" class="form-control" id="nama" name="nama" value="<%= orang.nama %>" required>

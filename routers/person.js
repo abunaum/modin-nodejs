@@ -61,7 +61,7 @@ person.put('/', IsLoggedIn,
         check('nik', 'NIK tidak valid').isNumeric(),
         body('nik').custom(async (value, { req }) => {
             const duplikat = await Orang.findOne({nik: value});
-            if (value !== req.body.nik && duplikat) {
+            if (value !== req.body.nik_ori && duplikat) {
                 throw new Error('NIK sudah terdaftar');
             }
             return true;

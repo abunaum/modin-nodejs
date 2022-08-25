@@ -6,9 +6,8 @@
 <%- include('../template/nav') %>
 <script>
     const err = <%- JSON.stringify(error) %>;
-    const error =err[0].errors;
-    console.log(error);
-    if (error.length >= 1) {
+    if (err.length >= 1) {
+        const error =err[0].errors;
         const textnya = [];
         error.map(function(err) {
             textnya.push('<iconify-icon icon="akar-icons:circle-x" style="color: red;" width="14" height="14"></iconify-icon> ' + err['msg']);
@@ -49,7 +48,6 @@
         <th>Jam Nikah</th>
         <th>Mas Kawin</th>
         <th>Lokasi</th>
-        <th>Detail</th>
         <th>Aksi</th>
     </tr>
     </thead>
@@ -65,18 +63,14 @@
             <td><%= dn.mas_kawin%></td>
             <td><%= dn.tempat_nikah%></td>
             <td>
-                <form action="/nikah/detail" method="post">
-                    <input type="hidden" name="id" value=""/>
-                    <button type="submit" class="btn btn-info">Detail</button>
-                </form>
-            </td>
-            <td>
-                <form action="/nikah/masuk/edit" method="post">
-                    <input type="hidden" name="id" value="<%= dn._id%>" />
-                    <button type="submit" class="btn btn-warning">Edit</button>
-                </form>
-                <form action="/person?_method=DELETE" method="post" id="hps" name="hps" onclick="hapusform()">
-                    <input type="hidden" name="id" value=""/>
+                <a href="/nikah/masuk/detail/<%= dn._id%>">
+                    <button type="button" class="btn btn-info">Detail</button>
+                </a>
+                <a href="/nikah/masuk/edit/<%= dn._id%>">
+                    <button type="button" class="btn btn-warning">Edit</button>
+                </a>
+                <form class="d-inline" action="/nikah/masuk?_method=DELETE" method="post" id="hps-<%= dn._id%>" name="hps-<%= dn._id%>" onclick="hapusform('<%= dn._id%>', '<%= dn.noreg%>')">
+                    <input type="hidden" name="id" value="<%= dn._id%>"/>
                     <button type="button" class="btn btn-danger">Hapus</button>
                 </form>
             </td>
@@ -105,5 +99,22 @@
 
         new $.fn.dataTable.FixedHeader( table );
     } );
+    function hapusform(id, nama){
+        const formhps = document.getElementById(`hps-${id}`);
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: `Ingin menghapus ${nama}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Gass hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                formhps.submit();
+            }
+        })
+    }
 </script>
 <%- include('../template/close_foot') %>

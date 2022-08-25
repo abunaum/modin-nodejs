@@ -1,7 +1,9 @@
 <%- include('../template/header') %>
 <%- include('../template/close_head') %>
 <%- include('../template/nav') %>
-<form action="/nikah/masuk/editdata" method="post">
+<form action="/nikah/masuk/edit?_method=PUT" method="post">
+    <input type="hidden" class="form-control" id="id" name="id" value="<%= datanikah._id %>" required>
+    <input type="hidden" class="form-control" id="noreg_ori" name="noreg_ori" value="<%= datanikah.noreg %>" required>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="noreg" class="form-label">Nomor Register</label>
         <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>">
