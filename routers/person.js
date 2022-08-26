@@ -6,6 +6,7 @@ const person = express.Router();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const ceklogin = require('../controller/login');
 person.use(cookieParser('secret'));
 person.use(
     session({
@@ -17,43 +18,14 @@ person.use(
 );
 person.use(flash());
 
-function IsLoggedIn(req, res, next) {
-    if (!req.user) {
-        res.redirect('/login');
-    } else {
-        const session = req.session;
-        if (req.user.provider === 'github') {
-            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user= {
-                    'email': req.user.emails[0].value,
-                    'picture': req.user.photos[0].value
-                };
-                next();
-            }
-        } else {
-            if (req.user.email !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user= {
-                    'email': req.user.email,
-                    'picture': req.user.picture
-                };
-                next();
-            }
-        }
-    }
-}
-
-person.delete('/', IsLoggedIn, (req, res) => {
+person.delete('/', ceklogin, (req, res) => {
     Orang.deleteOne({_id: req.body.id}).then((result)=>{
         req.flash('sukses','Data berhasil dihapus');
         res.redirect('/person');
     });
 });
 
-person.put('/', IsLoggedIn,
+person.put('/', ceklogin,
     [
         check('nama', 'Nama harus diisi').notEmpty(),
         check('nik', 'NIK harus diisi').notEmpty(),
@@ -122,7 +94,7 @@ person.put('/', IsLoggedIn,
         }
 });
 
-person.post('/edit', IsLoggedIn, async (req, res) => {
+person.post('/edit', ceklogin, async (req, res) => {
     if (!req.body.id){
         req.flash('error', ['Data tidak ditemukan']);
         res.redirect('/person');
@@ -147,7 +119,7 @@ person.post('/edit', IsLoggedIn, async (req, res) => {
     });
 });
 
-person.get('/', IsLoggedIn, async (req, res) => {
+person.get('/', ceklogin, async (req, res) => {
 
     const getprov = await loadprovinsi();
     const orang = await Orang.find();
@@ -164,7 +136,7 @@ person.get('/', IsLoggedIn, async (req, res) => {
     });
 });
 person.post('/tambah',
-    IsLoggedIn,
+    ceklogin,
     [
     check('nama', 'Nama harus diisi').notEmpty(),
     check('nik', 'NIK harus diisi').notEmpty(),

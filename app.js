@@ -11,14 +11,14 @@ const apiRoute = require('./routers/api');
 const authRoute = require('./routers/auth');
 const nikahRoute = require('./routers/nikah');
 const personRoute = require('./routers/person');
-
+const ceklogin = require('./controller/login')
 require('./gauth');
 require('./githubauth');
 require('./utils/db');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/views'));
-app.use(session({secret: 'user', resave: true, saveUninitialized: true,}));
+app.use(session({secret: 'user', resave: false, saveUninitialized: false,}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,50 +35,25 @@ app.use(
 );
 app.use(flash());
 
-function IsLoggedIn(req, res, next) {
-    if (!req.user) {
-        res.redirect('/login');
-    } else {
-        const session = req.session;
-        if (req.user.provider === 'github') {
-            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user= {
-                    'email': req.user.emails[0].value,
-                    'picture': req.user.photos[0].value
-                };
-                next();
-            }
-        } else {
-            if (req.user.email !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user= {
-                    'email': req.user.email,
-                    'picture': req.user.picture
-                };
-                next();
-            }
-        }
-    }
-}
-
 app.use('/api', apiRoute);
 app.use('/auth', authRoute);
 app.use('/nikah', nikahRoute);
 app.use('/person', personRoute);
 
-app.get('/', IsLoggedIn, (req, res) => {
+app.get('/', ceklogin, (req, res) => {
     res.render('beranda', {
         title : 'Beranda',
         info : req.session
     })
 });
 app.get('/login', (req, res) => {
-    res.render('login', {
-        title: 'Login'
-    })
+    if (req.user) {
+        res.redirect('/');
+    } else {
+        res.render('login', {
+            title: 'Login'
+        })
+    }
 });
 
 app.get('/logout', (req, res) => {

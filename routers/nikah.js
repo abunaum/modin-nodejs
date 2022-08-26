@@ -3,6 +3,8 @@ const Nikah = require("../model/nikah");
 const bodyParser = require("body-parser");
 const Orang = require("../model/orang");
 const {toDate} = require("validator");
+
+const ceklogin = require('../controller/login');
 const nikah = express.Router();
 
 const session = require('express-session');
@@ -14,7 +16,7 @@ const methodOverride = require('method-override');
 const moment = require('moment');
 moment().format('id');
 
-// nikah.use(bodyParser.urlencoded({extend: true}));
+nikah.use(bodyParser.urlencoded({extended: true}));
 nikah.use(bodyParser.json());
 nikah.use(cookieParser('secret'));
 nikah.use(
@@ -28,43 +30,14 @@ nikah.use(
 nikah.use(flash());
 nikah.use(methodOverride('_method'));
 
-function IsLoggedIn(req, res, next) {
-    if (!req.user) {
-        res.redirect('/login');
-    } else {
-        const session = req.session;
-        if (req.user.provider === 'github') {
-            if (req.user.emails[0].value !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user = {
-                    'email': req.user.emails[0].value,
-                    'picture': req.user.photos[0].value
-                };
-                next();
-            }
-        } else {
-            if (req.user.email !== 'abunaum@hotmail.com') {
-                res.redirect('/logout');
-            } else {
-                session.user = {
-                    'email': req.user.email,
-                    'picture': req.user.picture
-                };
-                next();
-            }
-        }
-    }
-}
-
-nikah.delete('/masuk', IsLoggedIn, (req, res) => {
+nikah.delete('/masuk', ceklogin, (req, res) => {
     Nikah.deleteOne({_id: req.body.id}).then((result)=>{
         req.flash('sukses','Data berhasil dihapus');
         res.redirect('/nikah/masuk');
     });
 });
 
-nikah.get('/masuk', IsLoggedIn, async (req, res) => {
+nikah.get('/masuk', ceklogin, async (req, res) => {
     const datanikah = await Nikah.find({status: 'masuk'});
     res.render('nikah/list_masuk', {
         title: 'Nikah Masuk',
@@ -76,7 +49,7 @@ nikah.get('/masuk', IsLoggedIn, async (req, res) => {
     });
 });
 
-nikah.get('/masuk/tambah', IsLoggedIn, async (req, res) => {
+nikah.get('/masuk/tambah', ceklogin, async (req, res) => {
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
     res.render('nikah/masuk_tambah', {
@@ -89,7 +62,7 @@ nikah.get('/masuk/tambah', IsLoggedIn, async (req, res) => {
         gagal: req.flash('gagal'),
     });
 });
-nikah.put('/masuk/edit', IsLoggedIn,
+nikah.put('/masuk/edit', ceklogin,
     [
         check('noreg', 'Nomor Register harus diisi').notEmpty(),
         body('noreg').custom(async (value, {req}) => {
@@ -331,7 +304,7 @@ nikah.put('/masuk/edit', IsLoggedIn,
         }
     });
 
-nikah.get('/masuk/edit/:id', IsLoggedIn, async (req, res) => {
+nikah.get('/masuk/edit/:id', ceklogin, async (req, res) => {
     const id = req.params.id;
     const datanikah = await Nikah.findById(id);
     const lk = await Orang.find({jk: 'lk'});
@@ -356,7 +329,7 @@ nikah.get('/masuk/edit/:id', IsLoggedIn, async (req, res) => {
         gagal: req.flash('gagal'),
     });
 });
-nikah.post('/masuk/tambah', IsLoggedIn,
+nikah.post('/masuk/tambah', ceklogin,
     [
         check('noreg', 'Nomor Register harus diisi').notEmpty(),
         body('noreg').custom(async (value) => {
