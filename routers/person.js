@@ -1,13 +1,11 @@
 const express = require('express');
-const {loadprovinsi, loadkabupaten, loadkecamatan, loadkeldes} = require('../utils/lokasi');
+const {loadprovinsi} = require('../utils/lokasi');
 const Orang = require("../model/orang");
 const {body, validationResult, check} = require('express-validator');
 const person = express.Router();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const {json} = require("express");
-
 person.use(cookieParser('secret'));
 person.use(
     session({

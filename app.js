@@ -1,18 +1,16 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const apiRoute = require('./routers/api');
-const authRoute = require('./routers/auth');
-const nikahRoute = require('./routers/nikah');
-const personRoute = require('./routers/person');
-
 const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const methodOverride = require('method-override');
-
 const app = express();
 const port = 3000;
+const apiRoute = require('./routers/api');
+const authRoute = require('./routers/auth');
+const nikahRoute = require('./routers/nikah');
+const personRoute = require('./routers/person');
 
 require('./gauth');
 require('./githubauth');
@@ -20,19 +18,21 @@ require('./utils/db');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/views'));
-app.use(session({
-    cookie: {maxAge: 600},
-    secret: 'abunaum!@#',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}))
+app.use(session({secret: 'user', resave: true, saveUninitialized: true,}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
-app.use(cookieParser('abunaum!@#'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser('secret'));
 app.use(methodOverride('_method'));
+app.use(
+    session({
+        cookie: {maxAge: 600},
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true,
+    })
+);
 app.use(flash());
 
 function IsLoggedIn(req, res, next) {
