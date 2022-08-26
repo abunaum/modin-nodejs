@@ -75,11 +75,11 @@
         <td><%= orang.rw%></td>
         <td><%= orang.jalan%></td>
         <td>
-            <form action="/person/edit" method="post">
+            <form class="d-inline" action="/person/edit" method="post">
                 <input type="hidden" name="id" value="<%= orang._id%>"/>
                 <button type="submit" class="btn btn-warning">Edit</button>
             </form>
-            <form action="/person?_method=DELETE" method="post" id="hps-<%= orang._id%>" name="hps-<%= orang._id%>" onclick="hapusform('<%= orang._id%>', '<%= orang.nama%>')">
+            <form class="d-inline" action="/person?_method=DELETE" method="post" id="hps-<%= orang._id%>" name="hps-<%= orang._id%>" onclick="hapusform('<%= orang._id%>', '<%= orang.nama%>')">
                 <input type="hidden" name="id" value="<%= orang._id%>"/>
                 <button type="button" class="btn btn-danger">Hapus</button>
             </form>
