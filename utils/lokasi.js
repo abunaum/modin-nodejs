@@ -1,41 +1,15 @@
-const fs = require('fs');
+const axios = require("axios");
 
 const loadprovinsi = () => {
-    const fileBuffer = fs.readFileSync('./utils/lokasi/allprov.json');
-    const prov = JSON.parse(fileBuffer);
-    return prov;
+    return axios.get('https://cdn.jsdelivr.net/gh/abunaum/lokasi@main/allprov.json');
 }
 const loadkabupaten = (idprov) => {
-    const dataPath = `./utils/lokasi/provinsi/${idprov}.json`;
-    if (!fs.existsSync(dataPath)){
-        const data = [];
-        return data;
-    } else {
-        const fileBuffer = fs.readFileSync(dataPath);
-        const kabkot = JSON.parse(fileBuffer);
-        return kabkot;
-    }
+    return axios.get(`https://cdn.jsdelivr.net/gh/abunaum/lokasi@main/provinsi/${idprov}.json`);
 }
 const loadkecamatan = (idkabkot) => {
-    const dataPath = `./utils/lokasi/kabupaten/${idkabkot}.json`;
-    if (!fs.existsSync(dataPath)){
-        const data = [];
-        return data;
-    } else {
-        const fileBuffer = fs.readFileSync(dataPath);
-        const kec = JSON.parse(fileBuffer);
-        return kec;
-    }
+    return axios.get(`https://cdn.jsdelivr.net/gh/abunaum/lokasi@main/kabupaten/${idkabkot}.json`);
 }
 const loadkeldes = (idkec) => {
-    const dataPath = `./utils/lokasi/kecamatan/${idkec}.json`;
-    if (!fs.existsSync(dataPath)){
-        const data = [];
-        return data;
-    } else {
-        const fileBuffer = fs.readFileSync(dataPath);
-        const keldes = JSON.parse(fileBuffer);
-        return keldes;
-    }
+    return axios.get(`https://cdn.jsdelivr.net/gh/abunaum/lokasi@main/kecamatan/${idkec}.json`);
 }
 module.exports = {loadprovinsi, loadkabupaten, loadkecamatan, loadkeldes};

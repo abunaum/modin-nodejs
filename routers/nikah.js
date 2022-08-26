@@ -14,7 +14,7 @@ const methodOverride = require('method-override');
 const moment = require('moment');
 moment().format('id');
 
-nikah.use(bodyParser.urlencoded({extend: true}));
+// nikah.use(bodyParser.urlencoded({extend: true}));
 nikah.use(bodyParser.json());
 nikah.use(cookieParser('secret'));
 nikah.use(

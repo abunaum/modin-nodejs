@@ -1,31 +1,36 @@
 const express = require('express');
 const api = express.Router();
 const {loadprovinsi, loadkabupaten, loadkecamatan, loadkeldes} = require('../utils/lokasi');
+const Orang = require("../model/orang");
 
-api.get('/provinsi', (req, res) => {
-    const prov = loadprovinsi();
-    const provsorted = prov.sort((a, b) => a.nama.localeCompare(b.nama));
+api.get('/provinsi', async  (req, res) => {
+    const getprov = await loadprovinsi();
+    const prov = await getprov.data;
+    const provsorted = await prov.sort((a, b) => a.nama.localeCompare(b.nama));
     res.send(provsorted);
 });
 
-api.get('/kabkot/:id', (req, res) => {
+api.get('/kabkot/:id', async (req, res) => {
     const id = req.params.id;
-    const kab = loadkabupaten(id);
-    const kabsorted = kab.sort((a, b) => a.nama.localeCompare(b.nama));
+    const getkab = await loadkabupaten(id);
+    const kab = await getkab.data;
+    const kabsorted = await kab.sort((a, b) => a.nama.localeCompare(b.nama));
     res.send(kabsorted);
 });
 
-api.get('/kec/:id', (req, res) => {
+api.get('/kec/:id', async (req, res) => {
     const id = req.params.id;
-    const kec = loadkecamatan(id);
-    const kecsorted = kec.sort((a, b) => a.nama.localeCompare(b.nama));
+    const getkec = await loadkecamatan(id);
+    const kec = await getkec.data;
+    const kecsorted = await kec.sort((a, b) => a.nama.localeCompare(b.nama));
     res.send(kecsorted);
 });
 
-api.get('/keldes/:id', (req, res) => {
+api.get('/keldes/:id', async (req, res) => {
     const id = req.params.id;
-    const keldes = loadkeldes(id);
-    const keldessorted = keldes.sort((a, b) => a.nama.localeCompare(b.nama));
+    const getkeldes = await loadkeldes(id);
+    const keldes = await getkeldes.data;
+    const keldessorted = await keldes.sort((a, b) => a.nama.localeCompare(b.nama));
     res.send(keldessorted);
 });
 

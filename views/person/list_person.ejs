@@ -6,8 +6,8 @@
 <%- include('../template/nav') %>
 <script>
     const err = <%- JSON.stringify(error) %>;
-    const error =err[0].errors;
-    if (error.length >= 1) {
+    if (err.length >= 1) {
+        const error =err[0].errors;
         const textnya = [];
         error.map(function(err) {
             textnya.push('<iconify-icon icon="akar-icons:circle-x" style="color: red;" width="14" height="14"></iconify-icon> ' + err['msg']);

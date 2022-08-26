@@ -6,6 +6,7 @@ const person = express.Router();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const {json} = require("express");
 
 person.use(cookieParser('secret'));
 person.use(
@@ -133,8 +134,9 @@ person.post('/edit', IsLoggedIn, async (req, res) => {
         req.flash('error', ['Data tidak ditemukan']);
         res.redirect('/person');
     }
-    const prov = loadprovinsi();
-    const provsorted = prov.sort((a, b) => a.nama.localeCompare(b.nama));
+    const getprov = await loadprovinsi();
+    const prov = await getprov.data;
+    const provsorted = await prov.sort((a, b) => a.nama.localeCompare(b.nama));
 
     res.render('person/edit_person', {
         title: 'Edit Person',
@@ -149,10 +151,10 @@ person.post('/edit', IsLoggedIn, async (req, res) => {
 
 person.get('/', IsLoggedIn, async (req, res) => {
 
-    const prov = loadprovinsi();
+    const getprov = await loadprovinsi();
     const orang = await Orang.find();
-    const provsorted = prov.sort((a, b) => a.nama.localeCompare(b.nama));
-
+    const prov = await getprov.data;
+    const provsorted = await prov.sort((a, b) => a.nama.localeCompare(b.nama));
     res.render('person/list_person', {
         title: 'Person',
         info : req.session,
