@@ -3,6 +3,8 @@ const Orang = require("../model/orang");
 const {check, body, validationResult} = require("express-validator");
 const moment = require("moment/moment");
 const {toDate} = require("validator");
+const {filter_masuk} = require("../utils/filter_nikah")
+
 const delete_masuk = (req, res) => {
     Nikah.deleteOne({_id: req.body.id}).then((result) => {
         req.flash('sukses', 'Data berhasil dihapus');
@@ -283,19 +285,11 @@ const view_edit_masuk = async (req, res) => {
     const datanikah = await Nikah.findById(id);
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
-
-    const date = datanikah.tglnikah;
-    let string = JSON.stringify(date);
-
-    Date.prototype.toJSON = function () {
-        return moment(this).format("YYYY-MM-DDTHH:mm");
-    };
-    tglnikah = JSON.stringify(date);
-    datanikah.tglnikah = tglnikah;
+    const dn = await filter_masuk(datanikah);
     res.render('nikah/masuk_edit', {
         title: 'Nikah Masuk',
         info: req.session,
-        datanikah,
+        datanikah: dn,
         lk,
         pr,
         sukses: req.flash('sukses'),
@@ -542,4 +536,17 @@ const tambah_masuk = [
     }
 ]
 
-module.exports = {delete_masuk, view_masuk, view_tambah_masuk, edit_masuk, view_edit_masuk, tambah_masuk}
+const detail_masuk = async (req, res) => {
+    const detailreg = await Nikah.findById(req.params.id);
+    const dr = await filter_masuk(detailreg);
+    res.render('nikah/detail_masuk', {
+        title: 'Nikah Masuk',
+        info: req.session,
+        dr,
+        sukses: req.flash('sukses'),
+        error: req.flash('error'),
+        gagal: req.flash('gagal'),
+    });
+}
+
+module.exports = {delete_masuk, view_masuk, view_tambah_masuk, edit_masuk, view_edit_masuk, tambah_masuk, detail_masuk}

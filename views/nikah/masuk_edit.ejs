@@ -8,13 +8,13 @@
         <label for="noreg" class="form-label">Nomor Register</label>
         <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>">
         <input type="date" class="form-control" id="tglregister" name="tglregister"
-               value="<%= JSON.stringify(datanikah.tglregister).slice(1, 11) %>">
+               value="<%= datanikah.tglreg %>">
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="nikpr" class="form-label">NIK</label>
-        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control" value="<%= datanikah.nikpr %>">
+        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control" value="<%= datanikah.data_pr.nik %>">
         <datalist id="listpr">
             <% pr.forEach((listpr) =>{ %>
                 <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
@@ -23,7 +23,7 @@
     </div>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="statuspr" name="statuspr" onchange="changepr()">
-            <option value="<%= datanikah.statuspr %>"><%= datanikah.statuspr.charAt(0).toUpperCase() + datanikah.statuspr.slice(1) %></option>
+            <option value="<%= datanikah.data_pr.status %>"><%= datanikah.data_pr.status.charAt(0).toUpperCase() + datanikah.data_pr.status.slice(1) %></option>
             <option value="perawan">Perawan</option>
             <option value="janda">Janda</option>
             <% for (var i = 2; i <= 4; i++) { %>
@@ -43,11 +43,11 @@
             }
         </script>
     </div>
-    <div class="mb-3 input-group input-group-outline<% if(datanikah.noacpr){ %> is-filled<% } %>"
+    <div class="mb-3 input-group input-group-outline<% if(datanikah.data_pr.noac){ %> is-filled<% } %>"
          id="noacdiv">
         <label for="noacpr" class="form-label">NO AC</label>
         <input type="text" class="form-control" id="noacpr" name="noacpr"
-               <% if(datanikah.noacpr){ %>value="<%= datanikah.noacpr %>"
+               <% if(datanikah.data_pr.noac){ %>value="<%= datanikah.data_pr.noac %>"
                 <% } %>
         >
     </div>
@@ -55,7 +55,7 @@
     <center><h1>Data Ayah Catin Wanita</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="sttaypr" name="sttaypr" onchange="changeayahpr()">
-            <% if(datanikah.sttaypr === 'ada'){ %>
+            <% if(datanikah.data_aypr.status === 'ada'){ %>
                 <option value="ada">Hidup</option>
                 <option value="meninggal">Meninggal</option>
             <% } else { %>
@@ -79,11 +79,11 @@
         </script>
     </div>
     <div id="ayahprdiv">
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.nikaypr){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.data_aypr.nik){ %> is-filled<% } %>">
             <label for="nikaypr" class="form-label">NIK</label>
             <input type="text" name="nikaypr" id="nikaypr" list="listaypr" class="form-control"
-            <% if(datanikah.nikaypr){ %>
-                   value="<%= datanikah.nikaypr %>"
+            <% if(datanikah.data_aypr.nik){ %>
+                   value="<%= datanikah.data_aypr.nik %>"
                     <% } %>
             >
             <datalist id="listaypr">
@@ -92,23 +92,23 @@
                 <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline<% if(datanikah.binaypr){ %> is-filled"
+        <div class="mb-3 input-group input-group-outline<% if(datanikah.data_aypr.bin){ %> is-filled"
         <% } %>
         ">
         <label for="binaypr" class="form-label">Bin</label>
         <input type="text" class="form-control" id="binaypr" name="binaypr"
-        <% if(datanikah.binaypr){ %>
-               value="<%= datanikah.binaypr %>"
+        <% if(datanikah.data_aypr.bin){ %>
+               value="<%= datanikah.data_aypr.bin %>"
                 <% } %>
         >
     </div>
     </div>
     <div id="ayahprmatidiv">
-        <div class="mb-3 input-group input-group-outline<% if(datanikah.namaaypr){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline<% if(datanikah.data_aypr.nama){ %> is-filled<% } %>">
             <label for="namaaypr" class="form-label">Nama</label>
             <input type="text" class="form-control" id="namaaypr" name="namaaypr"
-            <% if(datanikah.namaaypr){ %>
-                   value="<%= datanikah.namaaypr %>"
+            <% if(datanikah.data_aypr.nama){ %>
+                   value="<%= datanikah.data_aypr.nama %>"
                     <% } %>
             >
         </div>
@@ -117,7 +117,7 @@
     <center><h1>Data Ibu Catin Wanita</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="sttibpr" name="sttibpr" onchange="changeibpr()">
-            <% if(datanikah.sttibpr === 'ada'){ %>
+            <% if(datanikah.data_ibpr.status === 'ada'){ %>
                 <option value="ada">Hidup</option>
                 <option value="meninggal">Meninggal</option>
             <% } else { %>
@@ -141,10 +141,10 @@
         </script>
     </div>
     <div id="ibuprdiv">
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.nikibpr){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.data_ibpr.nik){ %> is-filled<% } %>">
             <label for="nikibpr" class="form-label">NIK</label>
             <input type="text" name="nikibpr" id="nikibpr" list="listibpr" class="form-control"
-                   <% if(datanikah.nikibpr){ %>value="<%= datanikah.nikibpr %>"
+                   <% if(datanikah.data_ibpr.nik){ %>value="<%= datanikah.data_ibpr.nik %>"
                     <% } %>
             >
             <datalist id="listibpr">
@@ -153,19 +153,19 @@
                 <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.bintiibpr){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.data_ibpr.binti){ %> is-filled<% } %>">
             <label for="bintiibpr" class="form-label">Binti</label>
             <input type="text" class="form-control" id="bintiibpr" name="bintiibpr"
-            <% if(datanikah.bintiibpr){ %> value="<%= datanikah.bintiibpr %>"
+            <% if(datanikah.data_ibpr.binti){ %> value="<%= datanikah.data_ibpr.binti %>"
                     <% } %>
             >
         </div>
     </div>
     <div id="ibuprmatidiv">
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.namaibpr){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if(datanikah.data_ibpr.nama){ %> is-filled<% } %>">
             <label for="namaibpr" class="form-label">Nama</label>
             <input type="text" class="form-control" id="namaibpr" name="namaibpr"
-            <% if(datanikah.nikibpr){ %> value="<%= datanikah.namaibpr %>"
+            <% if(datanikah.data_ibpr.nama){ %> value="<%= datanikah.data_ibpr.nama %>"
                     <% } %>
             >
         </div>
@@ -174,23 +174,23 @@
     <center><h1>Data Catin Pria</h1></center>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="niklk" class="form-label">NIK</label>
-        <input type="text" name="niklk" id="niklk" list="listlk" class="form-control" value="<%= datanikah.niklk %>">
+        <input type="text" name="niklk" id="niklk" list="listlk" class="form-control" value="<%= datanikah.data_lk.nik %>">
         <datalist id="listlk">
             <% lk.forEach((listlk) =>{ %>
                 <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
             <% }) %>
         </datalist>
     </div>
-    <div class="mb-3 input-group input-group-outline <% if(datanikah.binlk){ %> is-filled<% } %>">
+    <div class="mb-3 input-group input-group-outline <% if(datanikah.data_lk.bin){ %> is-filled<% } %>">
         <label for="binlk" class="form-label">BIN</label>
         <input type="text" class="form-control" id="binlk" name="binlk"
-        <% if(datanikah.nikibpr){ %> value="<%= datanikah.binlk %>"
+        <% if(datanikah.data_lk.bin){ %> value="<%= datanikah.data_lk.bin %>"
                 <% } %>
         >
     </div>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="statuslk" name="statuslk" onchange="changelk()">
-            <% if(datanikah.statuslk === 'jejaka'){ %>
+            <% if(datanikah.data_lk.status === 'jejaka'){ %>
                 <option value="jejaka">Jejaka</option>
                 <option value="duda">Duda</option>
             <% } else { %>
@@ -210,10 +210,10 @@
             }
         </script>
     </div>
-    <div class="mb-3 input-group input-group-outline <% if(datanikah.noaclk){ %> is-filled<% } %>" id="noaclkdiv">
+    <div class="mb-3 input-group input-group-outline <% if(datanikah.data_lk.noac){ %> is-filled<% } %>" id="noaclkdiv">
         <label for="noaclk" class="form-label">NO AC</label>
         <input type="text" class="form-control" id="noaclk" name="noaclk"
-        <% if(datanikah.binlk){ %> value="<%= datanikah.noaclk %>"
+        <% if(datanikah.data_lk.noac){ %> value="<%= datanikah.data_lk.noac %>"
                 <% } %>
         >
     </div>
@@ -221,7 +221,7 @@
     <center><h1>Status Perkawinan</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="sttkeldes" name="sttkeldes" onchange="sttkeldescek()">
-            <% if(datanikah.sttkeldes === 'beda'){ %>
+            <% if(datanikah.status_keldes === 'beda'){ %>
                 <option value="beda">Beda Desa / Kelurahan</option>
                 <option value="satu">Satu Desa / Kelurahan</option>
             <% } else { %>
@@ -246,13 +246,18 @@
         <center><h1>Data Ayah Catin Pria</h1></center>
         <div class="mb-3">
             <select class="form-select input-group-outline" id="sttaylk" name="sttaylk" onchange="changeayahlk()">
-                <% if(datanikah.sttaylk === 'ada'){ %>
-                    <option value="ada">Hidup</option>
-                    <option value="meninggal">Meninggal</option>
-                <% } else { %>
+                <% if (datanikah.status_keldes === 'satu'){%>
+                    <% if(datanikah.data_aylk.status === 'ada'){ %>
+                        <option value="ada">Hidup</option>
+                        <option value="meninggal">Meninggal</option>
+                    <% } else { %>
                         <option value="meninggal">Meninggal</option>
                         <option value="ada">Hidup</option>
-                <% } %>
+                    <% } %>
+                <%} else{%>
+                        <option value="ada">Hidup</option>
+                        <option value="meninggal">Meninggal</option>
+                <%}%>
             </select>
             <script>
                 function changeayahlk() {
@@ -270,37 +275,42 @@
             </script>
         </div>
         <div id="ayahlkdiv">
-            <div class="mb-3 input-group input-group-outline  <% if(datanikah.nikaylk){ %> is-filled<% } %>">
-                <label for="nikaylk" class="form-label">NIK</label>
-                <input type="text" name="nikaylk" id="nikaylk" list="listaylk" class="form-control" <% if(datanikah.nikaylk){ %> value="<%= datanikah.nikaylk%>" <% } %>>
-                <datalist id="listaylk">
-                    <% lk.forEach((listlk) =>{ %>
-                        <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
-                    <% }) %>
-                </datalist>
-            </div>
-            <div class="mb-3 input-group input-group-outline <% if(datanikah.binaylk){ %> is-filled<% } %>">
-                <label for="binaylk" class="form-label">Bin</label>
-                <input type="text" class="form-control" id="binaylk" name="binaylk" <% if(datanikah.binaylk){ %> value="<%= datanikah.binaylk%>" <% } %>>
-            </div>
+                <div class="mb-3 input-group input-group-outline  <% if (datanikah.data_aylk){if(datanikah.data_aylk.nik){ %> is-filled<%}} %>">
+                    <label for="nikaylk" class="form-label">NIK</label>
+                    <input type="text" name="nikaylk" id="nikaylk" list="listaylk" class="form-control" <% if (datanikah.data_aylk){if(datanikah.data_aylk.nik){ %> value="<%= datanikah.data_aylk.nik%>" <% }} %>>
+                    <datalist id="listaylk">
+                        <% lk.forEach((listlk) =>{ %>
+                            <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+                        <% }) %>
+                    </datalist>
+                </div>
+                <div class="mb-3 input-group input-group-outline <% if (datanikah.data_aylk){if(datanikah.data_aylk.bin){ %> is-filled<% }} %>">
+                    <label for="binaylk" class="form-label">Bin</label>
+                    <input type="text" class="form-control" id="binaylk" name="binaylk" <% if (datanikah.data_aylk){if(datanikah.data_aylk.bin){ %> value="<%= datanikah.data_aylk.bin%>" <% }} %>>
+                </div>
         </div>
         <div id="ayahlkmatidiv">
-            <div class="mb-3 input-group input-group-outline <% if(datanikah.namaaylk){ %> is-filled<% } %>">
+            <div class="mb-3 input-group input-group-outline <% if (datanikah.data_aylk){if(datanikah.data_aylk.nama){ %> is-filled<% }} %>">
                 <label for="namaaylk" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="namaaylk" name="namaaylk" <% if(datanikah.namaaylk){ %> value="<%= datanikah.namaaylk%>" <% } %>>
+                <input type="text" class="form-control" id="namaaylk" name="namaaylk" <% if (datanikah.data_aylk){if(datanikah.data_aylk.nama){ %> value="<%= datanikah.data_aylk.nama%>" <% }} %>>
             </div>
         </div>
         <hr style="border-top: 2px dashed blue;">
         <center><h1>Data Ibu Catin Pria</h1></center>
         <div class="mb-3">
             <select class="form-select input-group-outline" id="sttiblk" name="sttiblk" onchange="changeibulk()">
-                <% if(datanikah.sttiblk === 'ada'){ %>
+                <% if (datanikah.status_keldes === 'satu'){%>
+                    <% if(datanikah.data_iblk.status === 'ada'){ %>
+                        <option value="ada">Hidup</option>
+                        <option value="meninggal">Meninggal</option>
+                    <% } else { %>
+                        <option value="meninggal">Meninggal</option>
+                        <option value="ada">Hidup</option>
+                    <% } %>
+                <%} else{%>
                     <option value="ada">Hidup</option>
                     <option value="meninggal">Meninggal</option>
-                <% } else { %>
-                    <option value="meninggal">Meninggal</option>
-                    <option value="ada">Hidup</option>
-                <% } %>
+                <%}%>
             </select>
             <script>
                 function changeibulk() {
@@ -318,24 +328,27 @@
             </script>
         </div>
         <div id="ibulkdiv">
-            <div class="mb-3 input-group input-group-outline <% if(datanikah.nikiblk){ %> is-filled<% } %>">
+            <div class="mb-3 input-group input-group-outline <%
+            if (datanikah.data_iblk){
+                if(datanikah.data_iblk.nik){ %> is-filled<% }
+            } %>">
                 <label for="nikiblk" class="form-label">NIK</label>
-                <input type="text" name="nikiblk" id="nikiblk" list="listiblk" class="form-control" <% if(datanikah.nikiblk){ %> <%= datanikah.nikiblk%><% } %>>
+                <input type="text" name="nikiblk" id="nikiblk" list="listiblk" class="form-control" <% if (datanikah.data_iblk){if(datanikah.data_iblk.nik){ %> <%= datanikah.data_iblk.nik%><% }} %>>
                 <datalist id="listiblk">
                     <% pr.forEach((listpr) =>{ %>
                         <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
                     <% }) %>
                 </datalist>
             </div>
-            <div class="mb-3 input-group input-group-outline <% if(datanikah.bintiiblk){ %> is-filled<% } %>">
+            <div class="mb-3 input-group input-group-outline <% if (datanikah.data_iblk){if(datanikah.data_iblk.binti){ %> is-filled<% }} %>">
                 <label for="bintiiblk" class="form-label">Bin</label>
-                <input type="text" class="form-control" id="bintiiblk" name="bintiiblk" <% if(datanikah.bintiiblk){ %> <%= datanikah.bintiiblk%><% } %>>
+                <input type="text" class="form-control" id="bintiiblk" name="bintiiblk" <% if (datanikah.data_iblk){if(datanikah.data_iblk.binti){ %> <%= datanikah.data_iblk.binti%><% }} %>>
             </div>
         </div>
         <div id="ibulkmatidiv">
-            <div class="mb-3 input-group input-group-outline <% if(datanikah.namaiblk){ %> is-filled<% } %>">
+            <div class="mb-3 input-group input-group-outline <% if (datanikah.data_iblk){if(datanikah.data_iblk.nama){ %> is-filled<% }} %>">
                 <label for="namaiblk" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="namaiblk" name="namaiblk" <% if(datanikah.namaiblk){ %> value="<%= datanikah.namaiblk%>" <% } %>>
+                <input type="text" class="form-control" id="namaiblk" name="namaiblk" <% if (datanikah.data_iblk){if(datanikah.data_iblk.nama){ %> value="<%= datanikah.data_iblk.nama%>" <% }} %>>
             </div>
         </div>
     </div>
@@ -343,7 +356,7 @@
     <center><h1>Data Wali</h1></center>
     <div class="mb-3">
         <select class="form-select input-group-outline" id="walinikah" name="walinikah" onchange="changewali()">
-            <% if(datanikah.walinikah === 'ayah'){ %>
+            <% if(datanikah.wali === 'ayah'){ %>
                 <option value="ayah">Ayah</option>
                 <option value="hakim">Wali Hakim</option>
                 <option value="lainnya">Lainnya</option>
@@ -370,18 +383,18 @@
         </script>
     </div>
     <div id="walidiv">
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.nikwali){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if (datanikah.data_wali){if(datanikah.datawali.nik){ %> is-filled<% }} %>">
             <label for="nikwali" class="form-label">NIK</label>
-            <input type="text" name="nikwali" id="nikwali" list="listwali" class="form-control" <% if(datanikah.nikwali){ %> value="<%= datanikah.nikwali%>" <% } %>>
+            <input type="text" name="nikwali" id="nikwali" list="listwali" class="form-control" <% if (datanikah.data_wali){if(datanikah.datawali.nik){ %> value="<%= datanikah.datawali.nik%>" <% }} %>>
             <datalist id="listwali">
                 <% lk.forEach((listlk) =>{ %>
                     <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
                 <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline <% if(datanikah.hubungan_wali){ %> is-filled<% } %>">
+        <div class="mb-3 input-group input-group-outline <% if (datanikah.data_wali){if(datanikah.data_wali.hubungan){ %> is-filled<% }} %>">
             <label for="hubungan_wali" class="form-label">Hubungan</label>
-            <input type="text" class="form-control" id="hubungan_wali" name="hubungan_wali"<% if(datanikah.hubungan_wali){ %> <%= datanikah.hubungan_wali%><% } %>>
+            <input type="text" class="form-control" id="hubungan_wali" name="hubungan_wali"<% if (datanikah.data_wali){if(datanikah.data_wali.hubungan){ %> <%= datanikah.data_wali.hubungan%><% }} %>>
         </div>
     </div>
 
@@ -390,7 +403,7 @@
     <div class="mb-3 input-group input-group-outline <% if(datanikah.tempat_nikah){ %> is-filled<% } %>">
         <label for="tempat_nikah" class="form-label">Tempat Nikah</label>
         <input type="text" class="form-control" id="tempat_nikah" name="tempat_nikah" <% if(datanikah.tempat_nikah){ %> value="<%= datanikah.tempat_nikah%>" <% } %>>
-        <input type="datetime-local" class="form-control" id="tglnikah" name="tglnikah" <% if(datanikah.tglnikah){ %> value="<%= JSON.stringify(datanikah.tglnikah).slice(1,17)%>"<% } %>>
+        <input type="datetime-local" class="form-control" id="tglnikah" name="tglnikah" <% if(datanikah.tglnikah){ %> value="<%= datanikah.tglnikah%>"<% } %>>
     </div>
     <div class="mb-3 input-group input-group-outline <% if(datanikah.mas_kawin){ %> is-filled<% } %>">
         <label for="mas_kawin" class="form-label">Mas Kawin</label>
