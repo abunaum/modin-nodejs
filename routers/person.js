@@ -1,7 +1,4 @@
 const express = require('express');
-const {loadprovinsi} = require('../utils/lokasi');
-const Orang = require("../model/orang");
-const {body, validationResult, check} = require('express-validator');
 const person = express.Router();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');

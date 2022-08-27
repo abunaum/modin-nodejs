@@ -11,7 +11,8 @@ const apiRoute = require('./routers/api');
 const authRoute = require('./routers/auth');
 const nikahRoute = require('./routers/nikah');
 const personRoute = require('./routers/person');
-const ceklogin = require('./controller/login')
+const cetakRoute = require('./routers/cetak');
+const ceklogin = require('./controller/login');
 require('./gauth');
 require('./githubauth');
 require('./utils/db');
@@ -39,6 +40,7 @@ app.use('/api', apiRoute);
 app.use('/auth', authRoute);
 app.use('/nikah', nikahRoute);
 app.use('/person', personRoute);
+app.use('/cetak', cetakRoute);
 
 app.get('/', ceklogin, (req, res) => {
     res.render('beranda', {
