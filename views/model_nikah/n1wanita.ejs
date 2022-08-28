@@ -1,29 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
+    <title>N1</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <br/>
     <style type="text/css">
-        .left {
-            text-align: left;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font: 12pt "Tahoma";
         }
-        .right {
-            text-align: right;
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
         }
-        .center {
-            text-align: center;
+
+        .page {
+            width: 21cm;
+            min-height: 33cm;
+            padding: 1cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
-        .justify {
-            text-align: justify;
+
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ft10 {
+            font-size: 10px;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft11 {
+            font-size: 16px;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft12 {
+            font-size: 16px;
+            font-family: Times;
+            color: #000000;
         }
     </style>
 </head>
-<body>
-<p class="left">
-    LAMPIRAN IV <br>KEPUTUSAN DIREKTUR JENDERAL BIMBINGAN MASYARAKAT ISLAM<br>NOMOR 473 TAHUN 2020<br>TENTANG<br>PETUNJUK TEKNIS PELAKSANAAN PENCATATAN PERNIKAHAN
-</p>
+<div class="page">
+    <p style="text-align: end" class="ft10">LAMPIRAN IV</p>
+    <p style="text-align: end" class="ft10">KEPUTUSAN DIREKTUR JENDERAL BIMBINGAN MASYARAKAT ISLAM</p>
+    <p style="text-align: end" class="ft10">NOMOR 473 TAHUN 2020</p>
+    <p style="text-align: end" class="ft10">TENTANG</p>
+    <p style="text-align: end" class="ft10">PETUNJUK TEKNIS PELAKSANAAN PENCATATAN PERNIKAHAN</p>
+    <br>
+    <p style="text-align: center;" class="ft11"><b>FORMULIR SURAT PENGANTAR NIKAH</b></p>
+    <p style="text-align: end" class="ft12">Model N1</p>
+    <table>
+        <tr>
+            <td><p class="ft12">KANTOR DESA/KELURAHAN </p></td>
+            <td><p class="ft12">: SATREYAN</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">KECAMATAN</p></td>
+            <td><p class="ft12">: MARON</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">KABUPATEN/KOTA </p></td>
+            <td><p class="ft12">: PROBOLINGGO</p></td>
+        </tr>
+    </table>
+    <br>
+    <p style="text-align: center; text-decoration: underline" class="ft11">
+        <b>FORMULIR PENGANTAR NIKAH</b>
+    </p>
+    <p style="text-align: center;" class="ft11"><b>Nomor : <%= dr.noreg%></b></p>
+    <br>
+    <p class="ft12">Yang bertanda tangan di bawah ini menjelaskan dengan sesungguhnya bahwa:</p>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Jenis Kelamin</p></td>
+            <td><p class="ft12"> : Perempuan</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.tempat_lahir.toUpperCase() %>
+                    , <%= new Date(dr.data_pr.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">8. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : RT <%= dr.data_pr.rt %> RW <%= dr.data_pr.rw %> , <%= dr.data_pr.keldes %>
+                    Kec. <%= dr.data_pr.kec %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">9. </p></td>
+            <td><p class="ft12">Status Pernikahan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.status.toUpperCase() %></p></td>
+        </tr>
+        <% if(dr.data_pr.noac){ %>
+            <tr>
+                <td><p class="ft12">10. </p></td>
+                <td><p class="ft12">No AC</p></td>
+                <td><p class="ft12"> : <%= dr.data_pr.noac.toUpperCase() %></p></td>
+            </tr>
+        <% } %>
+    </table>
+    <p class="ft12">Adalah benar anak dari pernikahan seorang pria :</p>
+    <table style="margin-left: 30px">
+        <% if(dr.data_aypr.status === 'ada'){ %>
+            <tr>
+                <td><p class="ft12">1. </p></td>
+                <td><p class="ft12">Nama</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.nama %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">2. </p></td>
+                <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.nik %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">3. </p></td>
+                <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.tempat_lahir.toUpperCase() %>
+                        , <%= new Date(dr.data_aypr.tanggal_lahir).toLocaleDateString("id", {
+                            year: 'numeric',
+                            month: 'long',
+                            day: '2-digit'
+                        }) %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">4. </p></td>
+                <td><p class="ft12">Kewarganegaraan</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.wn %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">5. </p></td>
+                <td><p class="ft12">Agama</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.agama %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">6. </p></td>
+                <td><p class="ft12">Pekerjaan</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.pekerjaan %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">7. </p></td>
+                <td><p class="ft12">Alamat</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.jalan %> RT <%= dr.data_aypr.rt %> RW <%= dr.data_aypr.rw %>
+                        , <%= dr.data_aypr.keldes %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12"></p></td>
+                <td><p class="ft12"></p></td>
+                <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_aypr.kec %> - <%= dr.data_aypr.kabkot.toLowerCase() %>
+                        - <%= dr.data_aypr.prov.toUpperCase() %></p></td>
+            </tr>
+        <% }else{ %>
+            <tr>
+                <td><p class="ft12">1. </p></td>
+                <td><p class="ft12">Nama</p></td>
+                <td><p class="ft12"> : <%= dr.data_aypr.nama.toUpperCase() %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">2. </p></td>
+                <td><p class="ft12">Status</p></td>
+                <td><p class="ft12"> : Meninggal / Almarhum</p></td>
+            </tr>
+        <% } %>
+    </table>
+    <p class="ft12">Dengan seorang wanita :</p>
+    <table style="margin-left: 30px">
+        <% if(dr.data_ibpr.status === 'ada'){ %>
+            <tr>
+                <td><p class="ft12">1. </p></td>
+                <td><p class="ft12">Nama</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.nama %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">2. </p></td>
+                <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.nik %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">3. </p></td>
+                <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.tempat_lahir.toUpperCase() %>
+                        , <%= new Date(dr.data_ibpr.tanggal_lahir).toLocaleDateString("id", {
+                            year: 'numeric',
+                            month: 'long',
+                            day: '2-digit'
+                        }) %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">4. </p></td>
+                <td><p class="ft12">Kewarganegaraan</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.wn %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">5. </p></td>
+                <td><p class="ft12">Agama</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.agama %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">6. </p></td>
+                <td><p class="ft12">Pekerjaan</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.pekerjaan %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">7. </p></td>
+                <td><p class="ft12">Alamat</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.jalan %> RT <%= dr.data_ibpr.rt %> RW <%= dr.data_ibpr.rw %>
+                        , <%= dr.data_ibpr.keldes %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12"></p></td>
+                <td><p class="ft12"></p></td>
+                <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_ibpr.kec %> - <%= dr.data_ibpr.kabkot.toLowerCase() %>
+                        - <%= dr.data_ibpr.prov.toUpperCase() %></p></td>
+            </tr>
+        <% }else{ %>
+            <tr>
+                <td><p class="ft12">1. </p></td>
+                <td><p class="ft12">Nama</p></td>
+                <td><p class="ft12"> : <%= dr.data_ibpr.nama.toUpperCase() %></p></td>
+            </tr>
+            <tr>
+                <td><p class="ft12">2. </p></td>
+                <td><p class="ft12">Status</p></td>
+                <td><p class="ft12"> : Meninggal / Almarhum</p></td>
+            </tr>
+        <% } %>
+    </table>
+    <p class="ft12">Demikian, Surat pengantar ini dibuat dengan mengingat sumpah jabatan dan untuk dipergunakan
+        sebagaimana mestinya.</p>
+    <br>
+    <p style="text-align: center;" class="ft12">Probolinggo, <%= new Date(dr.tglreg).toLocaleDateString("id", {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit'
+        }) %></p>
+    <p style="text-align: center;" class="ft12">Kepala Desa</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p style="text-align: center; text-decoration: underline; font-weight: bold" class="ft12">(IMAM MUZAMIL)</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

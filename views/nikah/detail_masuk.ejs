@@ -382,30 +382,30 @@
 <center><h3>Cetak Model</h3></center>
 <center>
     <% if(dr.status_keldes !== 'beda'){ %>
-        <a href="/cetak/n1pria/<%= dr.id%>" target="_blank">
+        <a href="/cetak/n1pria/<%= dr.id %>" target="_blank">
             <button type="button" class="btn btn-success">N1 Pria</button>
         </a>
     <% } %>
-    <a href="/cetak/n1wanita/<%= dr.id%>" target="_blank">
+    <a href="/cetak/n1wanita/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">N1 Wanita</button>
     </a>
-    <a href="/cetak/n2/<%= dr.id%>" target="_blank">
+    <a href="/cetak/n2/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">N2</button>
     </a>
-    <a href="/cetak/n4/<%= dr.id%>" target="_blank">
+    <a href="/cetak/n4/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">N4</button>
     </a>
-    <a href="/cetak/n5/<%= dr.id%>" target="_blank">
+    <a href="/cetak/n5/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">N5</button>
     </a>
-    <a href="/cetak/wali/<%= dr.id%>" target="_blank">
+    <a href="/cetak/wali/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">Wali Nikah</button>
     </a>
-    <a href="/cetak/kuasa/<%= dr.id%>" target="_blank">
+    <a href="/cetak/kuasa/<%= dr.id %>" target="_blank">
         <button type="button" class="btn btn-success">Surat Kuasa</button>
     </a>
     <% if(dr.data_pr.status === 'perawan'){ %>
-        <a href="/cetak/tt/<%= dr.id%>" target="_blank">
+        <a href="/cetak/tt/<%= dr.id %>" target="_blank">
             <button type="button" class="btn btn-success">TT Nikah</button>
         </a>
     <% } %>
@@ -447,6 +447,5 @@
         $('#ttlpr').html(': ' + '<%= dr.data_pr.tempat_lahir %>'.toUpperCase() + ', ' + tglpr);
         $('#ttllk').html(': ' + '<%= dr.data_lk.tempat_lahir %>'.toUpperCase() + ', ' + tgllk);
     });
-
 </script>
 <%- include('../template/close_foot') %>
