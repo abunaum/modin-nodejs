@@ -25,5 +25,13 @@ module.exports = {
             title: 'N2',
             dr,
         });
+    },
+    n4: async function (req,res){
+        const detailreg = await Nikah.findById(req.params.id);
+        const dr = await filter_masuk(detailreg);
+        res.render('model_nikah/n4', {
+            title: 'N4',
+            dr,
+        });
     }
 }
