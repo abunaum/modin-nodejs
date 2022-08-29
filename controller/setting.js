@@ -1,6 +1,6 @@
 const {loadprovinsi} = require("../utils/lokasi");
-const {loadSetting, editKeldes, editKUA, editModin} = require('../utils/setting');
-const {check, validationResult} = require("express-validator");
+const {loadSetting, editKeldes, editKUA, editModin, editTambahan} = require('../utils/setting');
+const {check, validationResult, checkSchema} = require("express-validator");
 module.exports = {
     index: async (req, res) => {
         const getprov = await loadprovinsi();
@@ -118,5 +118,29 @@ module.exports = {
                 req.flash('sukses', 'Berhasil mengedit data Modin');
                 res.redirect('/setting');
             }
-        }]
+        }],
+    edit_tambahan: [
+        check('alamatkua', 'Alamat KUA harus diisi').notEmpty(),
+        check("emailkua", "Email KUA tidak valid").bail().isEmail(),
+        check('alamatpuskesmas', 'Alamat Puskesmas harus diisi').notEmpty(),
+        check('emailpuskesmas', 'Email Puskesmas harus diisi').notEmpty(),
+        check('emailpuskesmas', 'Email Puskesmas tidak valid').bail().isEmail(),
+        async (req, res) => {
+            const error = validationResult(req);
+            if (!error.isEmpty()) {
+                req.flash('error', error);
+                res.redirect('/setting');
+            } else {
+                const newdata = {
+                    email_kua: req.body.emailkua,
+                    email_puskesmas: req.body.emailpuskesmas,
+                    alamat_kua: req.body.alamatkua,
+                    alamat_puskesmas: req.body.alamatpuskesmas,
+                };
+                await editTambahan(newdata);
+                req.flash('sukses', 'Berhasil mengedit data tambahan');
+                res.redirect('/setting');
+            }
+        }
+    ],
 }

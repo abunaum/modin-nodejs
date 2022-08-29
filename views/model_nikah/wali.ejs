@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <br/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ccc;
+            font: 12pt "Tahoma";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 33cm;
+            padding-top: 0.5cm;
+            padding-left: 1cm;
+            padding-right: 1cm;
+            padding-bottom: 1cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ft10 {
+            font-size: 10pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft12 {
+            font-size: 12pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft14 {
+            font-size: 14pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        img.kop {
+            height: 3cm;
+            width: 2.8cm;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <table style="border-bottom: 2px solid;padding-top: 0cm;padding-left: 1cm;padding-right: 1cm;padding-bottom: 1cm;">
+        <tr>
+            <td><img src="/assets/img/kua.png" class="kop"></td>
+            <td style="width: 100%">
+                <center>
+                    <p class="ft14 fw-bold">KEMENTERIAN AGAMA REPUBLIK INDONESIA</p>
+                    <p class="ft14 fw-bold">KANTOR KEMENTERIAN AGAMA <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "KABUPATEN")%></p>
+                        <p class="ft14 fw-bold">KANTOR URUSAN AGAMA KECAMATAN <%= setting.modin.kec.toUpperCase() %></p>
+                    <p class="ft10">Email : <%= setting.data_tambahan.email_kua%></p>
+                    <p class="ft10"><%= setting.data_tambahan.alamat_kua%></p>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <div class="mt-5">
+        <p class="ft12">Pada hari ini <%= new Date(dr.tglreg).toLocaleDateString("id", {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit'
+            }) %> telah dilakukan pemeriksaan wali nikah terhadap calon pengantin wanita:</p>
+    </div>
+    <br>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Binti</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.tempat_lahir.toUpperCase() %>
+                    , <%= new Date(dr.data_pr.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">8. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.jalan %> RT <%= dr.data_pr.rt %> RW <%= dr.data_pr.rw %>
+                    , <%= dr.data_pr.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_pr.kec %> - <%= dr.data_pr.kabkot.toLowerCase() %>
+                    - <%= dr.data_pr.prov.toUpperCase() %></p></td>
+        </tr>
+    </table>
+    <br>
+    <p class="ft12">Menetapkan bahwa wali nikah atas nama tersebut diatas adalah
+        <% if(dr.wali === 'ayah'){ %>
+        nasab ayah kandung
+        <% } else if(dr.wali === 'lainnya'){ %>
+        nasab <%= dr.data_wali.hubungan %>
+        <% } else{ %>
+        wali hakim
+        <% } %>
+    </p>
+    <br>
+    <table style="margin-left: 30px">
+        <% if(dr.wali === 'ayah'){ %>
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.tempat_lahir %>
+                    , <%= new Date(dr.data_aypr.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_aypr.jalan %> RT <%= dr.data_aypr.rt %> RW <%= dr.data_aypr.rw %>
+                    , <%= dr.data_aypr.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_aypr.kec %> - <%= dr.data_aypr.kabkot.toLowerCase() %>
+                    - <%= dr.data_aypr.prov.toUpperCase() %></p></td>
+        </tr>
+        <% } else if (dr.wali === 'lainnya'){ %>
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.tempat_lahir %>
+                    , <%= new Date(dr.data_wali.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_wali.jalan %> RT <%= dr.data_wali.rt %> RW <%= dr.data_wali.rw %>
+                    , <%= dr.data_wali.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_wali.kec %> - <%= dr.data_wali.kabkot.toLowerCase() %>
+                    - <%= dr.data_wali.prov.toUpperCase() %></p></td>
+        </tr>
+        <% } else { %>
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= setting.pejabat_kua.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Jabatan</p></td>
+            <td><p class="ft12"> : <%= setting.pejabat_kua.jabatan %></p></td>
+        </tr>
+        <% if(setting.pejabat_kua.nip){ %>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Nip</p></td>
+            <td><p class="ft12"> : <%= setting.pejabat_kua.nip %></p></td>
+        </tr>
+        <% } %>
+        <% } %>
+    </table>
+    <% if(dr.wali !== 'ayah'){ %>
+    <br>
+    <p class="ft12">Adapun sebab wali sebagai berikut:</p>
+    <br>
+    <% if(dr.wali === 'lainnya'){ %>
+    <p class="ft12">1. <%= dr.data_wali.nama %> adalah <%= dr.data_wali.hubungan %> catin wanita.</p>
+    <% if(dr.data_aypr.status !== 'ada'){ %>
+    <p class="ft12">2. Ayah catin wanita sudah meninggal.</p>
+    <% } %>
+    <% } else { %>
+    <p class="ft12">1. Catin wanita sudah tidak mempunyai wali nikah.</p>
+    <% } %>
+    <% } %>
+    <br>
+    <table class="table table-borderless">
+        <tr>
+            <td width="300px"><p class="ft12" style="text-align: center">Calon Pengantin Wanita</p></td>
+            <td width="300px"><p class="ft12" style="text-align: center">Yang Memeriksa</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"
+                   style="text-align: center; text-decoration: underline; font-weight: bold"><%= dr.data_pr.nama %></p>
+            </td>
+            <td><p class="ft12"
+                   style="text-align: center; text-decoration: underline; font-weight: bold">
+                    ................................................</p>
+            </td>
+        </tr>
+    </table>
+    <td><p class="ft12" style="text-align: center">Saksi</p></td>
+    <table class="table table-borderless">
+        <tr>
+            <td width="300px"><p class="ft12" style="text-align: center">Keluarga Catin Wanita</p></td>
+            <td width="300px"><p class="ft12" style="text-align: center">Keluarga Catin Wanita</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+            <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"
+                   style="text-align: center; text-decoration: underline; font-weight: bold">
+                    ................................................</p>
+            </td>
+            <td><p class="ft12"
+                   style="text-align: center; text-decoration: underline; font-weight: bold">
+                    ................................................</p>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

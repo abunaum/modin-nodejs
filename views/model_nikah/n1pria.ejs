@@ -82,15 +82,15 @@
     <table>
         <tr>
             <td><p class="ft12">KANTOR DESA/KELURAHAN </p></td>
-            <td><p class="ft12">: SATREYAN</p></td>
+            <td><p class="ft12">: <%= setting.modin.keldes.toUpperCase()%></p></td>
         </tr>
         <tr>
             <td><p class="ft12">KECAMATAN</p></td>
-            <td><p class="ft12">: MARON</p></td>
+            <td><p class="ft12">: <%= setting.modin.kec.toUpperCase()%></p></td>
         </tr>
         <tr>
             <td><p class="ft12">KABUPATEN/KOTA </p></td>
-            <td><p class="ft12">: PROBOLINGGO</p></td>
+            <td><p class="ft12">: <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "").replace(/KOTA/g, "")%></p></td>
         </tr>
     </table>
     <br>

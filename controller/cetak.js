@@ -58,5 +58,15 @@ module.exports = {
             dr,
             setting,
         });
+    },
+    wali: async function (req,res){
+        const detailreg = await Nikah.findById(req.params.id);
+        const dr = await filter_masuk(detailreg);
+        const setting = await loadSetting();
+        res.render('model_nikah/wali', {
+            title: 'Wali',
+            dr,
+            setting,
+        });
     }
 }

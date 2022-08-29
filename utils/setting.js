@@ -31,6 +31,12 @@ if (!fs.existsSync(dataPath)) {
         pejabat_desa: {
             nama: 'IMAM MUZAMIL',
             jabatan: 'Kepala Desa',
+        },
+        data_tambahan: {
+            email_kua: 'maronwetan@gmail.com',
+            email_puskesmas: 'puskesmasmaron@probolinggo.go.id',
+            alamat_kua: 'Jalan raya paleran Maron 67276',
+            alamat_puskesmas: 'JL.ASMALI No.64 TELP.(0335)611552',
         }
     };
     fs.writeFileSync(dataPath, JSON.stringify(defaultData), 'utf-8');
@@ -66,4 +72,12 @@ const editModin = async (data) => {
     await fs.writeFileSync(dataPath, JSON.stringify(setting), 'utf-8');
 }
 
-module.exports = {loadSetting, editKeldes, editKUA, editModin};
+const editTambahan = async (data) => {
+    const fileBuffer = fs.readFileSync('setting/data.json', 'utf-8');
+    const setting = JSON.parse(fileBuffer);
+    const getdata = data;
+    setting.data_tambahan = getdata;
+    await fs.writeFileSync(dataPath, JSON.stringify(setting), 'utf-8');
+}
+
+module.exports = {loadSetting, editKeldes, editKUA, editModin, editTambahan};
