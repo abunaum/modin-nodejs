@@ -12,16 +12,16 @@ if (!fs.existsSync(dataPath)) {
             nama: 'MUHAMMAD TOHA',
             nik: 3513171601720002,
             ttl: 'Probolinggo , 17 Januari 1972',
+            pekerjaan: 'Modin',
             wn: 'WNI',
             agama: 'ISLAM',
-            pekerjaan: 'Modin',
-            alamat: 'Dusun Gentengan',
+            prov: 'Jawa Timur',
+            kabkot: 'Kab. Probolinggo',
+            kec: 'Maron',
+            keldes: 'Satreyan',
             rt: 9,
             rw: 2,
-            keldes: 'Satreyan',
-            kec: 'Maron',
-            kabkot: 'Kab. Probolinggo',
-            prov: 'Jawa Timur',
+            alamat: 'Dusun Gentengan',
         },
         pejabat_kua: {
             nama: 'H. EKO HERIONO, MHI. M.Pd.I',
@@ -50,4 +50,20 @@ const editKeldes = async (data) => {
     await fs.writeFileSync(dataPath, JSON.stringify(setting), 'utf-8');
 }
 
-module.exports = {loadSetting, editKeldes};
+const editKUA = async (data) => {
+    const fileBuffer = fs.readFileSync('setting/data.json', 'utf-8');
+    const setting = JSON.parse(fileBuffer);
+    const getdata = data;
+    setting.pejabat_kua = getdata;
+    await fs.writeFileSync(dataPath, JSON.stringify(setting), 'utf-8');
+}
+
+const editModin = async (data) => {
+    const fileBuffer = fs.readFileSync('setting/data.json', 'utf-8');
+    const setting = JSON.parse(fileBuffer);
+    const getdata = data;
+    setting.modin = getdata;
+    await fs.writeFileSync(dataPath, JSON.stringify(setting), 'utf-8');
+}
+
+module.exports = {loadSetting, editKeldes, editKUA, editModin};
