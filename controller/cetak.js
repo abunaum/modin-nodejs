@@ -68,5 +68,15 @@ module.exports = {
             dr,
             setting,
         });
+    },
+    tt: async function (req,res){
+        const detailreg = await Nikah.findById(req.params.id);
+        const dr = await filter_masuk(detailreg);
+        const setting = await loadSetting();
+        res.render('model_nikah/tt', {
+            title: 'TT Nikah',
+            dr,
+            setting,
+        });
     }
 }

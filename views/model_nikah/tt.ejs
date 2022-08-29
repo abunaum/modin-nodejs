@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <br/>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ccc;
+            font: 12pt "Tahoma";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 33cm;
+            padding-top: 0.5cm;
+            padding-left: 1cm;
+            padding-right: 1cm;
+            padding-bottom: 1cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ft10 {
+            font-size: 10pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft12 {
+            font-size: 12pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft14 {
+            font-size: 14pt;
+            font-family: Times;
+            color: #000000;
+        }
+
+        img.kop {
+            height: 3cm;
+            width: 2.8cm;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <table style="border-bottom: 2px solid;padding-top: 0cm;padding-left: 1cm;padding-right: 1cm;padding-bottom: 1cm;">
+        <tr>
+            <td><img src="/assets/img/logo_probolinggo.jpg" class="kop"></td>
+            <td style="width: 100%">
+                <center>
+                    <p class="ft14 fw-bold">PEMERINTAH <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "KABUPATEN")%></p>
+                    <p class="ft14 fw-bold">DINAS KESEHATAN DAERAH</p>
+                    <p class="ft14 fw-bold">PUSKESMAS <%= setting.modin.kec.toUpperCase() %></p>
+                    <p class="ft10"><%= setting.data_tambahan.alamat_puskesmas%></p>
+                    <p class="ft10"><%= setting.modin.kec.toUpperCase() %> <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "KABUPATEN")%></p>
+                    <p class="ft10">Email : <%= setting.data_tambahan.email_puskesmas%></p>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <div class="mt-4">
+        <p class="ft12 fw-bold" style="text-align: center">PESONA SANG HATI MULIA</p>
+        <br>
+        <p class="ft12 fw-bold text-decoration-underline">RUJUKAN CALON PENGANTIN</p>
+        <br>
+        <table class="table table-borderless">
+            <tr>
+                <td width="300px"><p class="ft12 fw-bold text-decoration-underline">FORMULIR PENGIRIMAN</p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Yth</p></td>
+            </tr>
+            <tr>
+                <td width="300px"><p class="ft12">Dari : <%= setting.modin.keldes%></p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Bidan POLI KIA</p></td>
+            </tr>
+            <tr>
+                <td width="300px"><p class="ft12">Tanggal : <%= new Date(dr.tglreg).toLocaleDateString("id", {
+                            year: 'numeric',
+                            month: 'long',
+                            day: '2-digit'
+                        }) %></p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Di <%= setting.modin.kec%></p></td>
+            </tr>
+        </table>
+
+        <p class="ft12">Bersamaan ini kami mohon pemeriksaan calon pengantin</p>
+        <p class="ft12">Calon pengantin wanita :</p>
+    </div>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.tempat_lahir.toUpperCase() %>
+                    , <%= new Date(dr.data_pr.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.jalan %> RT <%= dr.data_pr.rt %> RW <%= dr.data_pr.rw %>
+                    , <%= dr.data_pr.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_pr.kec %> - <%= dr.data_pr.kabkot.toLowerCase() %>
+                    - <%= dr.data_pr.prov.toUpperCase() %></p></td>
+        </tr>
+    </table>
+    <br>
+    <p class="ft12">Calon pengantin pria :</p>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.tempat_lahir.toUpperCase() %>
+                    , <%= new Date(dr.data_lk.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_lk.jalan %> RT <%= dr.data_lk.rt %> RW <%= dr.data_lk.rw %>
+                    , <%= dr.data_lk.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_lk.kec %> - <%= dr.data_lk.kabkot.toLowerCase() %>
+                    - <%= dr.data_lk.prov.toUpperCase() %></p></td>
+        </tr>
+    </table>
+    <p class="ft12">Status calon pengantin wanita : UMUM / JAMKESMAS / KAMKESDA / JKN MANDIRI / ASKES</p>
+    <br>
+    <p class="ft12">Sekian Terimakasih.</p>
+    <p class="ft12" style="text-align: center">Pengirim</p>
+    <p class="ft12" style="text-align: center">Pembantu Pegawai Pencatat Nikah</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">( <%= setting.modin.nama%> )</p>
+</div>
+
+<div class="page">
+    <table style="border-bottom: 2px solid;padding-top: 0cm;padding-left: 1cm;padding-right: 1cm;padding-bottom: 1cm;">
+        <tr>
+            <td><img src="/assets/img/logo_probolinggo.jpg" class="kop"></td>
+            <td style="width: 100%">
+                <center>
+                    <p class="ft14 fw-bold">PEMERINTAH <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "KABUPATEN")%></p>
+                    <p class="ft14 fw-bold">DINAS KESEHATAN DAERAH</p>
+                    <p class="ft14 fw-bold">PUSKESMAS <%= setting.modin.kec.toUpperCase() %></p>
+                    <p class="ft10"><%= setting.data_tambahan.alamat_puskesmas%></p>
+                    <p class="ft10"><%= setting.modin.kec.toUpperCase() %> <%= setting.modin.kabkot.toUpperCase().replace(/KAB./g, "KABUPATEN")%></p>
+                    <p class="ft10">Email : <%= setting.data_tambahan.email_puskesmas%></p>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <div class="mt-4">
+        <p class="ft12 fw-bold" style="text-align: center">PESONA SANG HATI MULIA</p>
+        <br>
+        <p class="ft12 fw-bold text-decoration-underline">RUJUKAN CALON PENGANTIN</p>
+        <br>
+        <table class="table table-borderless">
+            <tr>
+                <td width="300px"><p class="ft12 fw-bold text-decoration-underline">FORMULIR PENGIRIMAN KEMBALI</p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Yth</p></td>
+            </tr>
+            <tr>
+                <td width="300px"><p class="ft12">Dari : <%= setting.modin.keldes%></p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Bidan POLI KIA</p></td>
+            </tr>
+            <tr>
+                <td width="300px"><p class="ft12">Tanggal : <%= new Date(dr.tglreg).toLocaleDateString("id", {
+                            year: 'numeric',
+                            month: 'long',
+                            day: '2-digit'
+                        }) %></p></td>
+                <td width="300px"><p class="ft12" style="text-align: center">Di <%= setting.modin.kec%></p></td>
+            </tr>
+        </table>
+
+        <p class="ft12">Bersamaan ini kami mohon pemeriksaan calon pengantin</p>
+        <p class="ft12">Calon pengantin wanita :</p>
+    </div>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">1. </p></td>
+            <td><p class="ft12">Nama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">2. </p></td>
+            <td><p class="ft12">Nomor Induk Kependudukan (NIK)</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.nik %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">3. </p></td>
+            <td><p class="ft12">Tempat dan tanggal lahir</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.tempat_lahir.toUpperCase() %>
+                    , <%= new Date(dr.data_pr.tanggal_lahir).toLocaleDateString("id", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }) %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">4. </p></td>
+            <td><p class="ft12">Kewarganegaraan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.wn %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">5. </p></td>
+            <td><p class="ft12">Agama</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.agama %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">6. </p></td>
+            <td><p class="ft12">Pekerjaan</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.pekerjaan %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">7. </p></td>
+            <td><p class="ft12">Alamat</p></td>
+            <td><p class="ft12"> : <%= dr.data_pr.jalan %> RT <%= dr.data_pr.rt %> RW <%= dr.data_pr.rw %>
+                    , <%= dr.data_pr.keldes %></p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12"></p></td>
+            <td><p class="ft12">&nbsp;&nbsp;Kec. <%= dr.data_pr.kec %> - <%= dr.data_pr.kabkot.toLowerCase() %>
+                    - <%= dr.data_pr.prov.toUpperCase() %></p></td>
+        </tr>
+    </table>
+    <br>
+    <table style="margin-left: 30px">
+        <tr>
+            <td><p class="ft12">Hasil Pemeriksaan</p></td>
+            <td><p class="ft12"> : ....................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">Terapi</p></td>
+            <td><p class="ft12"> : ....................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">Dengan saran lain</p></td>
+            <td><p class="ft12"> : ....................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+        <tr>
+            <td><p class="ft12">&nbsp;</p></td>
+            <td><p class="ft12"> ......................................................................................................................</p></td>
+        </tr>
+    </table>
+    <br>
+    <p class="ft12">Sekian Terimakasih.</p>
+    <p class="ft12" style="text-align: center">Petugas yang menerima</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">&nbsp;</p>
+    <p class="ft12" style="text-align: center">.....................................................</p>
+    <br>
+    <br>
+    <p class="ft12 fw-bold text-decoration-underline">DIISI OLEH PETUGAS YANG MENGIRIM KEMBALI</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
