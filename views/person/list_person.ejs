@@ -97,7 +97,7 @@
     </button>
 </div>
 <!-- Modal -->
-<div class="modal fade" style="z-index: 100001 !important;" id="tambahModal" tabindex="-1"
+<div class="modal fade" id="tambahModal" tabindex="-1"
      aria-labelledby="tambahModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -204,27 +204,42 @@
 <script>
     async function cekkab(){
         const provin = document.getElementById('provinsi').value;
+        const prov = provin.split("-");
+        const idprov = prov[0];
         if (provin != ''){
-            const prov = provin.split("-");
-            const idprov = prov[0];
-            const kabkot = await fetch(`/api/kabkot/${idprov}`);
-            const data = await kabkot.text();
-            const datakabkot = JSON.parse(data);
-            const ckabkot = document.getElementById('kabkot');
-            const ckec = document.getElementById('kec');
-            const cdes = document.getElementById('des');
-            $("#kabkot option").remove();
-            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
-            $("#kec option").remove();
-            ckec.innerHTML = "<option value=''>Kecamatan</option>";
-            $("#des option").remove();
-            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            datakabkot.forEach(kk => {
-                const nama = kk.nama;
-                const id = kk.id;
-                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
-                ckabkot.innerHTML += create;
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kabupaten / Kota<br>di Provinsi<br>' + prov[1],
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
             });
+            async function cekkabkot() {
+                const kabkot = await fetch(`/api/kabkot/${idprov}`);
+                const data = await kabkot.text();
+                const datakabkot = JSON.parse(data);
+                const ckabkot = document.getElementById('kabkot');
+                const ckec = document.getElementById('kec');
+                const cdes = document.getElementById('des');
+                $("#kabkot option").remove();
+                ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+                $("#kec option").remove();
+                ckec.innerHTML = "<option value=''>Kecamatan</option>";
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakabkot.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                    ckabkot.innerHTML += create;
+                });
+            }
+            await cekkabkot();
+            Swal.close();
         } else {
             const ckabkot = document.getElementById('kabkot');
             const ckec = document.getElementById('kec');
@@ -239,24 +254,39 @@
     }
     async function cekkec(){
         const dkk = document.getElementById('kabkot').value;
+        const kabkot = dkk.split("-");
+        const idkabkot = kabkot[0];
         if (dkk != ''){
-            const kabkot = dkk.split("-");
-            const idkabkot = kabkot[0];
-            const kec = await fetch(`/api/kec/${idkabkot}`);
-            const data = await kec.text();
-            const datakec = JSON.parse(data);
-            const ckec = document.getElementById('kec');
-            const cdes = document.getElementById('des');
-            $("#kec option").remove();
-            ckec.innerHTML = "<option value=''>Kecamatan</option>";
-            $("#des option").remove();
-            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            datakec.forEach(kk => {
-                const nama = kk.nama;
-                const id = kk.id;
-                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
-                ckec.innerHTML += create;
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kecamatan<br>di ' + kabkot[1].toUpperCase(),
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
             });
+            async function cekkecamatan() {
+                const kec = await fetch(`/api/kec/${idkabkot}`);
+                const data = await kec.text();
+                const datakec = JSON.parse(data);
+                const ckec = document.getElementById('kec');
+                const cdes = document.getElementById('des');
+                $("#kec option").remove();
+                ckec.innerHTML = "<option value=''>Kecamatan</option>";
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakec.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                    ckec.innerHTML += create;
+                });
+            }
+            await cekkecamatan();
+            Swal.close();
         } else {
             const ckec = document.getElementById('kec');
             const cdes = document.getElementById('des');
@@ -268,21 +298,36 @@
     }
     async function cekdes(){
         const dkec = document.getElementById('kec').value;
+        const kec = dkec.split("-");
+        const idkec = kec[0];
         if (dkec != ''){
-            const kec = dkec.split("-");
-            const idkec = kec[0];
-            const keldes = await fetch(`/api/keldes/${idkec}`);
-            const data = await keldes.text();
-            const datakeldes = JSON.parse(data);
-            const cdes = document.getElementById('des');
-            $("#des option").remove();
-            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
-            datakeldes.forEach(kk => {
-                const nama = kk.nama;
-                const id = kk.id;
-                const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
-                cdes.innerHTML += create;
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kelurahan / Desa<br>di kecamatan<br>' + kec[1].toUpperCase(),
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
             });
+            async function cekdesa() {
+                const keldes = await fetch(`/api/keldes/${idkec}`);
+                const data = await keldes.text();
+                const datakeldes = JSON.parse(data);
+                const cdes = document.getElementById('des');
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakeldes.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + id + '-'+ nama + "'>" + nama + "</option>"
+                    cdes.innerHTML += create;
+                });
+            }
+            await cekdesa();
+            Swal.close();
         } else {
             const cdes = document.getElementById('des');
             $("#des option").remove();

@@ -111,7 +111,7 @@ module.exports = {
                     kec: kec,
                     keldes: des,
                     rt: req.body.rt,
-                    rw: req.body.rt,
+                    rw: req.body.rw,
                     alamat: req.body.alamat,
                 };
                 await editModin(newdata);

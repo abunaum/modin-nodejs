@@ -163,7 +163,7 @@
             <td><p class="ft12" style="text-align: center">Pemohon</p></td>
         </tr>
         <tr>
-            <td><p class="ft12" style="text-align: center">Kepala KUA</p></td>
+            <td><p class="ft12" style="text-align: center"><%= setting.pejabat_kua.jabatan%></p></td>
             <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
         </tr>
         <tr>
@@ -180,16 +180,18 @@
         </tr>
         <tr>
             <td><p class="ft12"
-                   style="text-align: center; text-decoration: underline; font-weight: bold">H. EKO HERIONO, MHI. M.Pd.I</p>
+                   style="text-align: center; text-decoration: underline; font-weight: bold"><%= setting.pejabat_kua.nama%></p>
             </td>
             <td><p class="ft12"
                    style="text-align: center; text-decoration: underline; font-weight: bold"><%= dr.data_lk.nama.toUpperCase() %></p>
             </td>
         </tr>
+        <%if(setting.pejabat_kua.nip){%>
         <tr>
-            <td><p class="ft12" style="text-align: center; font-weight: bold">NIP. 196512312001121004</p></td>
+            <td><p class="ft12" style="text-align: center; font-weight: bold">NIP. <%= setting.pejabat_kua.nip%></p></td>
             <td><p class="ft12" style="text-align: center">&nbsp;</p></td>
         </tr>
+        <%}%>
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
