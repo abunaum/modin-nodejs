@@ -22,7 +22,6 @@
     "passport-google-oauth2": "^0.2.0"
   },
   "scripts": {
-    "start": "nodemon app.js",
-    "pwa": "create-pwa --icon=\"./views/assets/img/aconline.png\" --launch=\"./views/assets/img/aconline.png\""
+    "start": "nodemon app.js"
   }
 }
