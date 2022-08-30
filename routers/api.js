@@ -33,5 +33,14 @@ api.get('/keldes/:id', async (req, res) => {
     const keldessorted = await keldes.sort((a, b) => a.nama.localeCompare(b.nama));
     res.send(keldessorted);
 });
+api.get('/person/:nik', async (req, res) => {
+    const nik = req.params.nik;
+    const orang = await Orang.findOne({nik: nik});
+    if (!orang){
+        res.status(404).send("Not found");
+    }else {
+        res.send(orang);
+    }
+});
 
 module.exports = api;

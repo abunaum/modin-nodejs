@@ -14,7 +14,7 @@ const delete_masuk = (req, res) => {
 
 const view_masuk = async (req, res) => {
     const datanikah = await Nikah.find({status: 'masuk'});
-    res.render('nikah/list_masuk', {
+    res.render('nikah/masuk/list', {
         title: 'Nikah Masuk',
         info: req.session,
         datanikah,
@@ -27,7 +27,7 @@ const view_masuk = async (req, res) => {
 const view_tambah_masuk = async (req, res) => {
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
-    res.render('nikah/masuk_tambah', {
+    res.render('nikah/masuk/tambah', {
         title: 'Nikah Masuk',
         info: req.session,
         lk,
@@ -286,7 +286,7 @@ const view_edit_masuk = async (req, res) => {
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
     const dn = await filter_masuk(datanikah);
-    res.render('nikah/masuk_edit', {
+    res.render('nikah/masuk/edit', {
         title: 'Nikah Masuk',
         info: req.session,
         datanikah: dn,
@@ -539,7 +539,7 @@ const tambah_masuk = [
 const detail_masuk = async (req, res) => {
     const detailreg = await Nikah.findById(req.params.id);
     const dr = await filter_masuk(detailreg);
-    res.render('nikah/detail_masuk', {
+    res.render('nikah/masuk/detail', {
         title: 'Nikah Masuk',
         info: req.session,
         dr,

@@ -1,0 +1,581 @@
+<%- include('../../template/header') %>
+<%- include('../../template/close_head') %>
+<%- include('../../template/nav') %>
+<form action="/nikah/keluar/tambah" method="post">
+    <div class="mb-3 input-group input-group-outline">
+        <label for="noreg" class="form-label">Nomor Register</label>
+        <input type="text" class="form-control" id="noreg" name="noreg">
+        <input type="date" class="form-control" id="tglregister" name="tglregister">
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Data Catin Pria</h1></center>
+    <div class="mb-3 input-group input-group-outline">
+        <label for="niklk" class="form-label">NIK</label>
+        <input type="text" name="niklk" id="niklk" list="listlk" class="form-control">
+        <datalist id="listlk">
+            <% lk.forEach((listlk) =>{ %>
+                <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+            <% }) %>
+        </datalist>
+    </div>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="statuslk" name="statuslk" onchange="changelk()">
+            <option value="jejaka">Jejaka</option>
+            <option value="duda">Duda</option>
+        </select>
+        <script>
+            function changelk() {
+                const sttlk = document.getElementById('statuslk').value;
+                const noaclk = $("#noaclkdiv");
+                if (sttlk == 'duda') {
+                    noaclk.show();
+                } else {
+                    noaclk.hide();
+                }
+            }
+        </script>
+    </div>
+    <div class="mb-3 input-group input-group-outline" id="noacdiv">
+        <label for="noaclk" class="form-label">NO AC</label>
+        <input type="text" class="form-control" id="noaclk" name="noaclk">
+    </div>
+    <hr style="border-top: 2px dashed blue;">
+    <center><h1>Data Ayah Catin Pria</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttaylk" name="sttaylk" onchange="changeayahlk()">
+            <option value="ada">Hidup</option>
+            <option value="meninggal">Meninggal</option>
+        </select>
+    </div>
+    <div id="ayahlkdiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikaylk" class="form-label">NIK</label>
+            <input type="text" name="nikaylk" id="nikaylk" list="listaylk" class="form-control">
+            <datalist id="listaylk">
+                <% lk.forEach((listlk) =>{ %>
+                    <option value="<%= listlk.nik %>"><%= listlk.nama %></option>
+                <% }) %>
+            </datalist>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="binaylk" class="form-label">Bin</label>
+            <input type="text" class="form-control" id="binaylk" name="binaylk">
+        </div>
+    </div>
+    <div id="ayahlkmatidiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="namaaylk" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="namaaylk" name="namaaylk">
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed blue;">
+    <center><h1>Data Ibu Catin Pria</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttiblk" name="sttiblk" onchange="changeibulk()">
+            <option value="ada">Hidup</option>
+            <option value="meninggal">Meninggal</option>
+        </select>
+    </div>
+    <div id="ibulkdiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikiblk" class="form-label">NIK</label>
+            <input type="text" name="nikiblk" id="nikiblk" list="listiblk" class="form-control">
+            <datalist id="listiblk">
+                <% pr.forEach((listpr) =>{ %>
+                    <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
+                <% }) %>
+            </datalist>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="bintiiblk" class="form-label">Bin</label>
+            <input type="text" class="form-control" id="bintiiblk" name="bintiiblk">
+        </div>
+    </div>
+    <div id="ibulkmatidiv">
+        <div class="mb-3 input-group input-group-outline">
+            <label for="namaiblk" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="namaiblk" name="namaiblk">
+        </div>
+    </div>
+    <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+    <center><h1>Status Perkawinan</h1></center>
+    <div class="mb-3">
+        <select class="form-select input-group-outline" id="sttkeluar" name="sttkeluar" onchange="sttkeluarcek()">
+            <option value="satu">Satu Kecamatan</option>
+            <option value="beda">Beda Kecamatan</option>
+        </select>
+    </div>
+    <div id="prdiv">
+        <hr style="border-top: 2px dashed blue;">
+        <center><h1>Data Catin Wanita</h1></center>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="nikpr" class="form-label">NIK</label>
+            <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control">
+            <datalist id="listpr">
+                <% pr.forEach((listpr) =>{ %>
+                    <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
+                <% }) %>
+            </datalist>
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed blue;">
+    <center><h1>Alamat Tujuan</h1></center>
+    <div id="tujuanselectdiv">
+        <div class="mb-3">
+            <select class="form-select input-group-outline" id="cektujuan" name="cektujuan" onchange="tujuancek()">
+                <option value="sama">Sama Dengan Catin Wanita</option>
+                <option value="beda">Beda Dengan Catin Wanita</option>
+            </select>
+        </div>
+    </div>
+    <div id="tujuandiv">
+        <div class="mb-3 input-group">
+            <div class="col-sm-4">
+                <select class="form-select" aria-label="Provinsi" name="provinsi" id="provinsi"
+                        onchange="cekkab()">
+                    <option value="">Provinsi</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <select class="form-select" aria-label="kabkot" name="kabkot" id="kabkot"
+                        onchange="cekkec()">
+                    <option value="">Kabupaten / Kota</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <select class="form-select" aria-label="kec" name="kec" id="kec" onchange="cekdes()">
+                    <option value="">Kecamatan</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="des" class="form-label"></label>
+            <div class="col-sm-4">
+                <select class="form-select" aria-label="des" name="des" id="des">
+                    <option value="">Kelurahan / Desa</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="rt" name="rt" id="rt">
+                    <option value=''>RT</option>
+                    <% for (var i = 1; i < 100; i++) { %>
+                        <option value='<%= i %>'>RT <%= i %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="rw" name="rw" id="rw">
+                    <option value=''>RW</option>
+                    <% for (var i = 1; i < 100; i++) { %>
+                        <option value='<%= i %>'>RW <%= i %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Dusun / Jalan" required>
+            </div>
+        </div>
+    </div>
+    <hr style="border-top: 2px dashed green;">
+    <center>
+        <button type="submit" class="mb-3 btn btn-success">Simpan</button>
+    </center>
+</form>
+<%- include('../../template/footer') %>
+<script>
+    $(document).ready(function () {
+        $("#noacdiv").hide();
+        $("#noaclkdiv").hide();
+        $("#ayahlkmatidiv").hide();
+        $("#ibulkmatidiv").hide();
+        $("#prdiv").hide();
+        $("#tujuanselectdiv").hide();
+    });
+
+    document.getElementById("niklk").addEventListener('change', cekniklk);
+
+    async function validasinik(niklk) {
+        try {
+            const ceklk = await fetch(`/api/person/${niklk}`);
+            return {
+                status: ceklk.status,
+                data: await ceklk.text()
+            };
+
+        } catch (err) {
+            return {
+                status: 404
+            };
+        }
+    }
+
+    async function cekdata(niklk) {
+        const valnik = await validasinik(niklk);
+        if (valnik.status !== 200) {
+            return {
+                status: "gagal"
+            }
+        } else {
+            const datalk = JSON.parse(valnik.data);
+            var allprov = await fetch('/api/provinsi');
+            allprov = await allprov.text();
+            const dataprov = JSON.parse(allprov);
+            for (const dp of dataprov) {
+                if (dp.nama === datalk.prov) {
+                    const idprov = dp.id;
+                    var kabkot = await fetch(`/api/kabkot/${idprov}`);
+                    kabkot = await kabkot.text();
+                    const datakabkot = JSON.parse(kabkot);
+                    for (const kk of datakabkot) {
+                        if (kk.nama === datalk.kabkot) {
+                            const idkabkot = kk.id;
+                            var kec = await fetch(`/api/kec/${idkabkot}`);
+                            kec = await kec.text();
+                            const datakec = JSON.parse(kec);
+                            for (const kc of datakec) {
+                                if (kc.nama === datalk.kec) {
+                                    return {
+                                        status: 'sukses',
+                                        data: kc,
+                                        datalk: datalk
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    async function cekniklk() {
+        const niklk = this.value;
+        if (niklk !== '') {
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data ' + niklk,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            const cari = await cekdata(niklk);
+            Swal.close();
+            if (cari.status === 'sukses') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Mantap',
+                    html: 'Data ditemukan <br> Nik : ' + cari.datalk.nik + '<br> Nama : ' + cari.datalk.nama,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                proseslokasi(cari);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gawat!',
+                    html: 'Data tidak ditemukan <br>',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        }
+    }
+
+    async function cekniklklagi(niklk) {
+        if (niklk !== '') {
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data ' + niklk,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            const cari = await cekdata(niklk);
+            Swal.close();
+            if (cari.status === 'sukses') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Mantap',
+                    html: 'Data ditemukan <br> Nik : ' + cari.datalk.nik + '<br> Nama : ' + cari.datalk.nama,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                proseslokasi(cari);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gawat!',
+                    html: 'Data tidak ditemukan <br>',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        }
+    }
+
+    function proseslokasi(data) {
+        const cprov = document.getElementById('provinsi');
+        const ckabkot = document.getElementById('kabkot');
+        const ckec = document.getElementById('kec');
+        $("#provinsi option").remove();
+        cprov.innerHTML = `<option value='${data.datalk.prov}'>${data.datalk.prov}</option>`;
+        $("#kabkot option").remove();
+        ckabkot.innerHTML = `<option value='${data.datalk.kabkot}'>${data.datalk.kabkot}</option>`;
+        $("#kec option").remove();
+        ckec.innerHTML = `<option value='${data.datalk.kec}'>${data.datalk.kec}</option>`;
+        proseskeldesnya(data.data.id);
+    }
+
+    async function proseskeldesnya(idkec) {
+        const keldes = await fetch(`/api/keldes/${idkec}`);
+        const data = await keldes.text();
+        const datakeldes = JSON.parse(data);
+        const cdes = document.getElementById('des');
+        $("#des option").remove();
+        cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        datakeldes.forEach(kk => {
+            const nama = kk.nama;
+            const id = kk.id;
+            const create = "<option value='" + nama + "'>" + nama + "</option>"
+            cdes.innerHTML += create;
+        });
+    }
+
+    function changeayahlk() {
+        const sttaylk = document.getElementById('sttaylk').value;
+        const aylk = $("#ayahlkdiv");
+        const aylkmati = $("#ayahlkmatidiv");
+        if (sttaylk == 'ada') {
+            aylk.show();
+            aylkmati.hide();
+        } else {
+            aylk.hide();
+            aylkmati.show();
+        }
+    }
+
+    function changeibulk() {
+        const sttiblk = document.getElementById('sttiblk').value;
+        const iblk = $("#ibulkdiv");
+        const iblkmati = $("#ibulkmatidiv");
+        if (sttiblk == 'ada') {
+            iblk.show();
+            iblkmati.hide();
+        } else {
+            iblk.hide();
+            iblkmati.show();
+        }
+    }
+
+    async function sttkeluarcek() {
+        const niklk = document.getElementById('niklk').value;
+        const sttkeluarval = document.getElementById('sttkeluar').value;
+        if (sttkeluarval == 'satu') {
+            $("#prdiv").hide();
+            $("#tujuanselectdiv").hide();
+            $("#tujuandiv").show();
+            cekniklklagi(niklk);
+        } else {
+            $("#prdiv").show();
+            $("#tujuanselectdiv").show();
+            tujuancek();
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Reset data tujuan',
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            await resettujuan();
+            Swal.close();
+        }
+    }
+
+    function tujuancek() {
+        const cektujuan = document.getElementById('cektujuan').value;
+        if (cektujuan == 'sama') {
+            $("#tujuandiv").hide();
+        } else {
+            $("#tujuandiv").show();
+        }
+    }
+
+    function resettujuan() {
+        const ckabkot = document.getElementById('kabkot');
+        const ckec = document.getElementById('kec');
+        const cdes = document.getElementById('des');
+        $("#kabkot option").remove();
+        ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+        $("#kec option").remove();
+        ckec.innerHTML = "<option value=''>Kecamatan</option>";
+        $("#des option").remove();
+        cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        setprov();
+    }
+
+    async function setprov() {
+        var allprov = await fetch('/api/provinsi');
+        allprov = await allprov.text();
+        const dataprov = JSON.parse(allprov);
+        const cprov = document.getElementById('provinsi');
+        $("#provinsi option").remove();
+        cprov.innerHTML = "<option value=''>Provinsi</option>";
+        for (const dp of dataprov) {
+            cprov.innerHTML += `<option value='${dp.id}-${dp.nama}'>${dp.nama}</option>`;
+        }
+    }
+
+    async function cekkab() {
+        const provin = document.getElementById('provinsi').value;
+        const prov = provin.split("-");
+        const idprov = prov[0];
+        if (provin != '') {
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kabupaten / Kota<br>di Provinsi<br>' + prov[1],
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+
+            async function cekkabkot() {
+                const kabkot = await fetch(`/api/kabkot/${idprov}`);
+                const data = await kabkot.text();
+                const datakabkot = JSON.parse(data);
+                const ckabkot = document.getElementById('kabkot');
+                const ckec = document.getElementById('kec');
+                const cdes = document.getElementById('des');
+                $("#kabkot option").remove();
+                ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+                $("#kec option").remove();
+                ckec.innerHTML = "<option value=''>Kecamatan</option>";
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakabkot.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + id + '-' + nama + "'>" + nama + "</option>"
+                    ckabkot.innerHTML += create;
+                });
+            }
+
+            await cekkabkot();
+            Swal.close();
+        } else {
+            const ckabkot = document.getElementById('kabkot');
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kabkot option").remove();
+            ckabkot.innerHTML = "<option value=''>Kabupaten / Kota</option>";
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+
+    async function cekkec() {
+        const dkk = document.getElementById('kabkot').value;
+        const kabkot = dkk.split("-");
+        const idkabkot = kabkot[0];
+        if (dkk != '') {
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kecamatan<br>di ' + kabkot[1].toUpperCase(),
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+
+            async function cekkecamatan() {
+                const kec = await fetch(`/api/kec/${idkabkot}`);
+                const data = await kec.text();
+                const datakec = JSON.parse(data);
+                const ckec = document.getElementById('kec');
+                const cdes = document.getElementById('des');
+                $("#kec option").remove();
+                ckec.innerHTML = "<option value=''>Kecamatan</option>";
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakec.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + id + '-' + nama + "'>" + nama + "</option>"
+                    ckec.innerHTML += create;
+                });
+            }
+
+            await cekkecamatan();
+            Swal.close();
+        } else {
+            const ckec = document.getElementById('kec');
+            const cdes = document.getElementById('des');
+            $("#kec option").remove();
+            ckec.innerHTML = "<option value=''>Kecamatan</option>";
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+
+    async function cekdes() {
+        const dkec = document.getElementById('kec').value;
+        const kec = dkec.split("-");
+        const idkec = kec[0];
+        if (dkec != '') {
+            Swal.fire({
+                title: 'Loading Data',
+                html: 'Mencari data Kelurahan / Desa<br>di kecamatan<br>' + kec[1].toUpperCase(),
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+
+            async function cekdesa() {
+                const keldes = await fetch(`/api/keldes/${idkec}`);
+                const data = await keldes.text();
+                const datakeldes = JSON.parse(data);
+                const cdes = document.getElementById('des');
+                $("#des option").remove();
+                cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+                datakeldes.forEach(kk => {
+                    const nama = kk.nama;
+                    const id = kk.id;
+                    const create = "<option value='" + nama + "'>" + nama + "</option>"
+                    cdes.innerHTML += create;
+                });
+            }
+
+            await cekdesa();
+            Swal.close();
+        } else {
+            const cdes = document.getElementById('des');
+            $("#des option").remove();
+            cdes.innerHTML = "<option value=''>Kelurahan / Desa</option>";
+        }
+    }
+</script>
+<%- include('../../template/close_foot') %>

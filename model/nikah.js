@@ -132,6 +132,14 @@ const Nikah = mongoose.model('Nikah',{
     status: {
         type: String,
         required: true,
+    },
+    sttkeluar: {
+        type: String,
+        required: false,
+    },
+    tujuan: {
+        type: String,
+        required: false,
     }
 });
 module.exports = Nikah;

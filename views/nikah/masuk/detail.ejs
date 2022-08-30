@@ -1,6 +1,6 @@
-<%- include('../template/header') %>
-<%- include('../template/close_head') %>
-<%- include('../template/nav') %>
+<%- include('../../template/header') %>
+<%- include('../../template/close_head') %>
+<%- include('../../template/nav') %>
 <center><h3>Data Register</h3></center>
 <table>
     <tr>
@@ -411,7 +411,7 @@
     <% } %>
 </center>
 <hr class="mt-3 mb-3" style="border-top: 2px dashed black;">
-<%- include('../template/footer') %>
+<%- include('../../template/footer') %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/id.min.js"></script>
 <script>
@@ -448,4 +448,4 @@
         $('#ttllk').html(': ' + '<%= dr.data_lk.tempat_lahir %>'.toUpperCase() + ', ' + tgllk);
     });
 </script>
-<%- include('../template/close_foot') %>
+<%- include('../../template/close_foot') %>
