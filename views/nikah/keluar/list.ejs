@@ -52,8 +52,8 @@
         <tr>
             <td><%= dn.noreg%></td>
             <td><%= dn.tglregister.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
-            <td><%= dn.niklk%></td>
-            <td><%= dn.tujuan%></td>
+            <td><%= dn.datalk.nik%></td>
+            <td><%= dn.tujuan.des%> - Kec. <%= dn.tujuan.kec%> <%= dn.tujuan.kabkot%> - <%= dn.tujuan.provinsi%> </td>
             <td>
                 <a href="/nikah/masuk/detail/<%= dn._id%>">
                     <button type="button" class="btn btn-info">Detail</button>

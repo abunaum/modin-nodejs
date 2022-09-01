@@ -1,6 +1,161 @@
 const mongoose = require("mongoose");
 
-const Nikah = mongoose.model('Nikah',{
+const tujuanSchema = {
+    provinsi: {
+        type: String,
+        required: false,
+    },
+    kabkot: {
+        type: String,
+        required: false,
+    },
+    kec: {
+        type: String,
+        required: false,
+    },
+    des: {
+        type: String,
+        required: false,
+    },
+    rt: {
+        type: String,
+        required: false,
+    },
+    rw: {
+        type: String,
+        required: false,
+    },
+    alamat: {
+        type: String,
+        required: false,
+    }
+}
+
+const statuskeluarSchema = {
+    kec: {
+        type: String,
+        required: true,
+    },
+    tujuan: {
+        type: String,
+        required: true,
+    },
+}
+
+const lkSchema ={
+    nik: {
+        type: Number,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+    },
+    noac: {
+        type: String,
+        required: false,
+    },
+    sttay: {
+        type: String,
+        required: false,
+    },
+    nikay: {
+        type: Number,
+        required: false,
+    },
+    namaay: {
+        type: String,
+        required: false,
+    },
+    sttib: {
+        type: String,
+        required: false,
+    },
+    nikib: {
+        type: Number,
+        required: false,
+    },
+    namaib: {
+        type: String,
+        required: false,
+    },
+}
+
+const prSchema ={
+    nik: {
+        type: Number,
+        required: false,
+    },
+    status: {
+        type: String,
+        required: false,
+    },
+    noac: {
+        type: String,
+        required: false,
+    },
+    sttay: {
+        type: String,
+        required: false,
+    },
+    nikay: {
+        type: Number,
+        required: false,
+    },
+    binay: {
+        type: String,
+        required: false,
+    },
+    namaay: {
+        type: String,
+        required: false,
+    },
+    sttib: {
+        type: String,
+        required: true,
+    },
+    nikib: {
+        type: Number,
+        required: false,
+    },
+    bintiib: {
+        type: String,
+        required: false,
+    },
+    namaib: {
+        type: String,
+        required: false,
+    },
+}
+
+const acaraSchema = {
+    walinikah: {
+        type: String,
+        required: true,
+    },
+    nikwali: {
+        type: String,
+        required: false,
+    },
+    hubungan_wali: {
+        type: String,
+        required: false,
+    },
+    tempat_nikah: {
+        type: String,
+        required: true,
+    },
+    tglnikah: {
+        type: Date,
+        required: true,
+    },
+    mas_kawin: {
+        type: String,
+        required: true,
+    },
+}
+
+const SchemaNikahMasuk = {
     noreg: {
         type: String,
         required: true,
@@ -9,65 +164,13 @@ const Nikah = mongoose.model('Nikah',{
         type: Date,
         required: true,
     },
-    nikpr: {
-        type: Number,
+    datapr: {
+        type: prSchema,
         required: true,
     },
-    statuspr: {
-        type: String,
+    datalk: {
+        type: lkSchema,
         required: true,
-    },
-    noacpr: {
-        type: String,
-        required: false,
-    },
-    sttaypr: {
-        type: String,
-        required: true,
-    },
-    nikaypr: {
-        type: Number,
-        required: false,
-    },
-    binaypr: {
-        type: String,
-        required: false,
-    },
-    namaaypr: {
-        type: String,
-        required: false,
-    },
-    sttibpr: {
-        type: String,
-        required: true,
-    },
-    nikibpr: {
-        type: Number,
-        required: false,
-    },
-    bintiibpr: {
-        type: String,
-        required: false,
-    },
-    namaibpr: {
-        type: String,
-        required: false,
-    },
-    niklk: {
-        type: Number,
-        required: true,
-    },
-    binlk: {
-        type: String,
-        required: true,
-    },
-    statuslk: {
-        type: String,
-        required: true,
-    },
-    noaclk: {
-        type: String,
-        required: false,
     },
     sttkeldes: {
         type: String,
@@ -105,41 +208,47 @@ const Nikah = mongoose.model('Nikah',{
         type: String,
         required: false,
     },
-    walinikah: {
+    acara: {
+        type: acaraSchema,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+    }
+}
+
+const SchemaNikahKeluar = {
+    noreg: {
         type: String,
         required: true,
     },
-    nikwali: {
-        type: String,
-        required: false,
-    },
-    hubungan_wali: {
-        type: String,
-        required: false,
-    },
-    tempat_nikah: {
-        type: String,
-        required: true,
-    },
-    tglnikah: {
+    tglregister: {
         type: Date,
         required: true,
     },
-    mas_kawin: {
-        type: String,
+    datapr: {
+        type: prSchema,
+        required: false,
+    },
+    datalk: {
+        type: lkSchema,
         required: true,
     },
     status: {
         type: String,
         required: true,
     },
-    sttkeluar: {
-        type: String,
-        required: false,
+    statuskeluar: {
+        type: statuskeluarSchema,
+        required: true,
     },
     tujuan: {
-        type: String,
+        type: tujuanSchema,
         required: false,
-    }
-});
-module.exports = Nikah;
+    },
+};
+
+const NikahMasuk = mongoose.model('NikahMasuk', SchemaNikahMasuk, 'nikahs');
+const NikahKeluar = mongoose.model('NikahKeluar', SchemaNikahKeluar, 'nikahs');
+module.exports = {NikahMasuk, NikahKeluar};

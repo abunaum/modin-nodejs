@@ -56,12 +56,12 @@
         <tr>
             <td><%= dn.noreg%></td>
             <td><%= dn.tglregister.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
-            <td><%= dn.niklk%></td>
-            <td><%= dn.nikpr%></td>
-            <td><%= dn.tglnikah.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
-            <td><%= dn.tglnikah.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})%></td>
-            <td><%= dn.mas_kawin%></td>
-            <td><%= dn.tempat_nikah%></td>
+            <td><%= dn.datalk.nik%></td>
+            <td><%= dn.datapr.nik%></td>
+            <td><%= dn.acara.tglnikah.toLocaleDateString("id", { year: 'numeric', month: 'long', day: '2-digit' })%></td>
+            <td><%= dn.acara.tglnikah.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})%></td>
+            <td><%= dn.acara.mas_kawin%></td>
+            <td><%= dn.acara.tempat_nikah%></td>
             <td>
                 <a href="/nikah/masuk/detail/<%= dn._id%>">
                     <button type="button" class="btn btn-info">Detail</button>

@@ -26,11 +26,11 @@
         <script>
             function changelk() {
                 const sttlk = document.getElementById('statuslk').value;
-                const noaclk = $("#noaclkdiv");
+                const noac = $("#noacdiv");
                 if (sttlk == 'duda') {
-                    noaclk.show();
+                    noac.show();
                 } else {
-                    noaclk.hide();
+                    noac.hide();
                 }
             }
         </script>
@@ -57,10 +57,6 @@
                 <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline">
-            <label for="binaylk" class="form-label">Bin</label>
-            <input type="text" class="form-control" id="binaylk" name="binaylk">
-        </div>
     </div>
     <div id="ayahlkmatidiv">
         <div class="mb-3 input-group input-group-outline">
@@ -85,10 +81,6 @@
                     <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
                 <% }) %>
             </datalist>
-        </div>
-        <div class="mb-3 input-group input-group-outline">
-            <label for="bintiiblk" class="form-label">Bin</label>
-            <input type="text" class="form-control" id="bintiiblk" name="bintiiblk">
         </div>
     </div>
     <div id="ibulkmatidiv">
@@ -116,6 +108,10 @@
                     <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
                 <% }) %>
             </datalist>
+        </div>
+        <div class="mb-3 input-group input-group-outline">
+            <label for="bintipr" class="form-label">Binti</label>
+            <input type="text" class="form-control" id="bintipr" name="bintipr">
         </div>
     </div>
     <hr style="border-top: 2px dashed blue;">
@@ -172,7 +168,7 @@
                 </select>
             </div>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Dusun / Jalan" required>
+                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Dusun / Jalan">
             </div>
         </div>
     </div>

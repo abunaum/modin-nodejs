@@ -1,19 +1,19 @@
-const Nikah = require("../model/nikah");
+const {NikahMasuk} = require("../model/nikah");
 const Orang = require("../model/orang");
 const {check, body, validationResult} = require("express-validator");
 const moment = require("moment/moment");
 const {toDate} = require("validator");
-const {filter_masuk} = require("../utils/filter_nikah")
+const {filter_masuk} = require("../utils/filter_nikah");
 
 const delete_masuk = (req, res) => {
-    Nikah.deleteOne({_id: req.body.id}).then((result) => {
+    NikahMasuk.deleteOne({_id: req.body.id}).then((result) => {
         req.flash('sukses', 'Data berhasil dihapus');
         res.redirect('/nikah/masuk');
     });
 }
 
 const view_masuk = async (req, res) => {
-    const datanikah = await Nikah.find({status: 'masuk'});
+    const datanikah = await NikahMasuk.find({status: 'masuk'});
     res.render('nikah/masuk/list', {
         title: 'Nikah Masuk',
         info: req.session,
@@ -41,7 +41,7 @@ const view_tambah_masuk = async (req, res) => {
 const edit_masuk = [
     check('noreg', 'Nomor Register harus diisi').notEmpty(),
     body('noreg').custom(async (value, {req}) => {
-        const duplikat = await Nikah.findOne({noreg: value});
+        const duplikat = await NikahMasuk.findOne({noreg: value});
         if (value !== req.body.noreg_ori && duplikat) {
             throw new Error('Nomor register sudah terdaftar');
         }
@@ -268,9 +268,9 @@ const edit_masuk = [
 
             const status = {status: 'masuk'};
             const data = Object.assign(reg, datapr, datalk(), wali(), acara(), status);
-            await Nikah.replaceOne(
+            await NikahMasuk.findOneAndReplace(
                 {
-                    _id: id
+                    uuid: id
                 },
                 data
             );
@@ -282,14 +282,17 @@ const edit_masuk = [
 
 const view_edit_masuk = async (req, res) => {
     const id = req.params.id;
-    const datanikah = await Nikah.findById(id);
+    const datanikah = await NikahMasuk.findById(id);
     const lk = await Orang.find({jk: 'lk'});
     const pr = await Orang.find({jk: 'pr'});
-    const dn = await filter_masuk(datanikah);
+    const tglreg = moment(datanikah.tglregister).format('YYYY-MM-DD');
+    const tglnikah = moment(datanikah.acara.tglnikah).format('YYYY-MM-DDTHH:mm');
     res.render('nikah/masuk/edit', {
         title: 'Nikah Masuk',
         info: req.session,
-        datanikah: dn,
+        datanikah,
+        tglreg,
+        tglnikah,
         lk,
         pr,
         sukses: req.flash('sukses'),
@@ -301,7 +304,7 @@ const view_edit_masuk = async (req, res) => {
 const tambah_masuk = [
     check('noreg', 'Nomor Register harus diisi').notEmpty(),
     body('noreg').custom(async (value) => {
-        const duplikat = await Nikah.findOne({noreg: value});
+        const duplikat = await NikahMasuk.findOne({noreg: value});
         if (duplikat) {
             throw new Error('Nomor register sudah terdaftar');
         }
@@ -366,7 +369,7 @@ const tambah_masuk = [
         }
         return true;
     }),
-    (req, res) => {
+    async (req, res) => {
         const error = validationResult(req);
         if (!error.isEmpty()) {
             req.flash('error', error);
@@ -375,22 +378,23 @@ const tambah_masuk = [
             const datareq = req.body;
             const reg = {
                 noreg: datareq.noreg,
-                tglregister: datareq.tglregister
+                tglregister: datareq.tglregister,
+                sttkeldes: datareq.sttkeldes
 
             };
 
             function pr() {
                 if (datareq.statuspr === 'janda') {
                     const pr = {
-                        nikpr: datareq.nikpr,
-                        statuspr: datareq.statuspr,
-                        noacpr: datareq.noacpr,
+                        nik: datareq.nikpr,
+                        status: datareq.statuspr,
+                        noac: datareq.noacpr,
                     };
                     return pr;
                 } else {
                     const pr = {
-                        nikpr: datareq.nikpr,
-                        statuspr: datareq.statuspr,
+                        nik: datareq.nikpr,
+                        status: datareq.statuspr,
                     };
                     return pr;
                 }
@@ -399,15 +403,15 @@ const tambah_masuk = [
             function aypr() {
                 if (datareq.sttaypr === 'ada') {
                     const aypr = {
-                        sttaypr: datareq.sttaypr,
-                        nikaypr: datareq.nikaypr,
-                        binaypr: datareq.binaypr,
+                        sttay: datareq.sttaypr,
+                        nikay: datareq.nikaypr,
+                        binay: datareq.binaypr,
                     };
                     return aypr;
                 } else {
                     const aypr = {
-                        sttaypr: datareq.sttaypr,
-                        namaaypr: datareq.namaaypr,
+                        sttay: datareq.sttaypr,
+                        namaay: datareq.namaaypr,
                     };
                     return aypr;
                 }
@@ -416,61 +420,67 @@ const tambah_masuk = [
             function ibpr() {
                 if (datareq.sttibpr === 'ada') {
                     const ibpr = {
-                        sttibpr: datareq.sttibpr,
-                        nikibpr: datareq.nikibpr,
-                        bintiibpr: datareq.bintiibpr,
+                        sttib: datareq.sttibpr,
+                        nikib: datareq.nikibpr,
+                        bintiib: datareq.bintiibpr,
                     };
                     return ibpr;
                 } else {
                     const ibpr = {
-                        sttibpr: datareq.sttibpr,
-                        namaibpr: datareq.namaibpr,
+                        sttib: datareq.sttibpr,
+                        namaib: datareq.namaibpr,
                     };
                     return ibpr;
                 }
             }
 
-            const datapr = Object.assign(pr(), aypr(), ibpr());
-            const sttkeldes = {
-                sttkeldes: datareq.sttkeldes,
-            };
+            const datanyapr = await Object.assign(pr(), aypr(), ibpr());
 
             function lk() {
                 if (datareq.statuslk === 'duda') {
-                    const lk = {
-                        niklk: datareq.niklk,
-                        statuslk: datareq.statuslk,
-                        binlk: datareq.binlk,
-                        noaclk: datareq.noaclk,
-                    };
-                    return lk;
+                    if (datareq.sttkeldes === 'beda') {
+                        const lk = {
+                            nik: datareq.niklk,
+                            status: datareq.statuslk,
+                            namaay: datareq.binlk,
+                            noac: datareq.noaclk,
+                        };
+                        return lk;
+                    } else {
+                        const lk = {
+                            nik: datareq.niklk,
+                            status: datareq.statuslk,
+                            noac: datareq.noaclk,
+                        };
+                        return lk;
+                    }
                 } else {
                     const lk = {
-                        niklk: datareq.niklk,
-                        statuslk: datareq.statuslk,
-                        binlk: datareq.binlk,
+                        nik: datareq.niklk,
+                        status: datareq.statuslk,
+                        namaay: datareq.binlk,
                     };
                     return lk;
                 }
             }
 
-            function datalk() {
+            function datanyalk() {
                 if (datareq.sttkeldes === 'beda') {
-                    const datalk = Object.assign(sttkeldes, lk());
+                    const datalk = lk();
                     return datalk;
                 } else {
                     function aylk() {
                         if (datareq.sttaylk === 'ada') {
                             const aylk = {
-                                sttaylk: datareq.sttaylk,
-                                nikaylk: datareq.nikaylk,
-                                binaylk: datareq.binaylk,
+                                sttay: datareq.sttaylk,
+                                nikay: datareq.nikaylk,
+                                binay: datareq.binaylk,
                             };
                             return aylk;
                         } else {
                             const aylk = {
-                                sttaylk: datareq.sttaylk,
-                                namaaylk: datareq.namaaylk,
+                                sttay: datareq.sttaylk,
+                                namaay: datareq.namaaylk,
                             };
                             return aylk;
                         }
@@ -479,21 +489,21 @@ const tambah_masuk = [
                     function iblk() {
                         if (datareq.sttiblk === 'ada') {
                             const iblk = {
-                                sttiblk: datareq.sttiblk,
-                                nikiblk: datareq.nikiblk,
-                                bintiiblk: datareq.bintiiblk,
+                                sttib: datareq.sttiblk,
+                                nikib: datareq.nikiblk,
+                                bintiib: datareq.bintiiblk,
                             };
                             return iblk;
                         } else {
                             const iblk = {
-                                sttiblk: datareq.sttiblk,
-                                namaiblk: datareq.namaiblk,
+                                sttib: datareq.sttiblk,
+                                namaib: datareq.namaiblk,
                             };
                             return iblk;
                         }
                     }
 
-                    const datalk = Object.assign(sttkeldes, lk(), aylk(), iblk());
+                    const datalk = Object.assign(lk(), aylk(), iblk());
                     return datalk;
                 }
             }
@@ -514,7 +524,7 @@ const tambah_masuk = [
                 }
             }
 
-            function acara() {
+            function acaranya() {
                 const acara = {
                     tempat_nikah: datareq.tempat_nikah,
                     tglnikah: toDate(datareq.tglnikah),
@@ -524,10 +534,17 @@ const tambah_masuk = [
             }
 
             const status = {status: 'masuk'};
-            const data = Object.assign(reg, datapr, datalk(), wali(), acara(), status);
-            Nikah.create(data, function (err, orang) {
+            const cekpr = {datapr: datanyapr};
+            const carilk = await datanyalk();
+            const cariwali = await wali();
+            const cariacara = await acaranya();
+            const ceklk = {datalk: carilk}
+            const dataacara = Object.assign(cariwali, cariacara);
+            const data = Object.assign(reg, cekpr, ceklk, {acara: dataacara}, status);
+            NikahMasuk.create(data, function (err, orang) {
                 if (err) {
                     req.flash('gagal', err);
+                    res.redirect('/nikah/masuk');
                 }
             });
             req.flash('sukses', 'Berhasil menambah data person');
@@ -537,7 +554,7 @@ const tambah_masuk = [
 ]
 
 const detail_masuk = async (req, res) => {
-    const detailreg = await Nikah.findById(req.params.id);
+    const detailreg = await NikahMasuk.findById(req.params.id);
     const dr = await filter_masuk(detailreg);
     res.render('nikah/masuk/detail', {
         title: 'Nikah Masuk',
