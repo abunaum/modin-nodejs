@@ -45,11 +45,11 @@ const statuskeluarSchema = {
 const lkSchema ={
     nik: {
         type: Number,
-        required: true,
+        required: false,
     },
     status: {
         type: String,
-        required: true,
+        required: false,
     },
     noac: {
         type: String,
@@ -112,7 +112,7 @@ const prSchema ={
     },
     sttib: {
         type: String,
-        required: true,
+        required: false,
     },
     nikib: {
         type: Number,

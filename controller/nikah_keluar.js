@@ -151,7 +151,8 @@ const tambah_keluar = async (req, res) => {
     await NikahKeluar.create(data, function (err, data) {
         if (err) {
             req.flash('gagal', err);
-            res.redirect('/nikah/keluar');
+            console.log(err);
+            // res.redirect('/nikah/keluar');
         }
     });
     req.flash('sukses', 'Berhasil menambah data person');

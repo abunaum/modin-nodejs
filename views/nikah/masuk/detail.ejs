@@ -14,7 +14,7 @@
     <tr>
         <td>Status Pernikahan</td>
         <td>:
-            <% if(dr.status_keldes === 'beda'){ %>
+            <% if(dr.sttkeldes === 'beda'){ %>
                 Beda
             <% } else { %>
                 Satu
@@ -358,7 +358,7 @@
     <% } else { %>
         <tr>
             <td>Wali Nikah</td>
-            <td>: <%= dr.wali.toUpperCase() %></td>
+            <td>: <%= dr.data_wali.walinikah.toUpperCase() %></td>
         </tr>
     <% } %>
 </table>

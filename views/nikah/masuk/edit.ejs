@@ -8,7 +8,7 @@
         <label for="noreg" class="form-label">Nomor Register</label>
         <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>">
         <input type="date" class="form-control" id="tglregister" name="tglregister"
-               value="<%= tglreg%>">
+               value="<%= datanikah.tglregister%>">
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
@@ -93,9 +93,7 @@
                 <% }) %>
             </datalist>
         </div>
-        <div class="mb-3 input-group input-group-outline<% if(datanikah.datapr.binay){ %> is-filled"
-        <% } %>
-        ">
+        <div class="mb-3 input-group input-group-outline<% if(datanikah.datapr.binay){ %> is-filled<% } %>">
         <label for="binaypr" class="form-label">Bin</label>
         <input type="text" class="form-control" id="binaypr" name="binaypr"
         <% if(datanikah.datapr.binay){ %>
@@ -431,7 +429,7 @@
                 <% } %>
         >
         <input type="datetime-local" class="form-control" id="tglnikah" name="tglnikah"
-        <% if(datanikah.acara.tglnikah){ %> value="<%= tglnikah%>"
+        <% if(datanikah.acara.tglnikah){ %> value="<%= datanikah.acara.tglnikah%>"
                 <% } %>
         >
     </div>
@@ -448,8 +446,6 @@
     </center>
 </form>
 <%- include('../../template/footer') %>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/id.js"></script>
 <script>
     $(document).ready(function () {
         $("#noaclkdiv").hide();

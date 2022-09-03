@@ -9,12 +9,12 @@ const filter_masuk = async function (data) {
     };
 
     async function pr() {
-        if (data.nikpr) {
-            const pr = await Orang.findOne({nik: data.nikpr});
+        if (data.datapr.nik) {
+            const pr = await Orang.findOne({nik: data.datapr.nik});
             const datapr = {
                 id: pr._id,
                 nik: pr.nik,
-                status: data.statuspr,
+                status: data.datapr.status,
                 nama: pr.nama,
                 jk: pr.jk,
                 tempat_lahir: pr.tempat_lahir,
@@ -31,7 +31,7 @@ const filter_masuk = async function (data) {
                 jalan: pr.jalan,
             };
             if (data.noacpr) {
-                const dprnoac = Object.assign({noac: data.noacpr}, datapr);
+                const dprnoac = Object.assign({noac: data.datapr.noac}, datapr);
                 const fixpr = {data_pr: dprnoac};
                 return fixpr;
             } else {
@@ -47,10 +47,10 @@ const filter_masuk = async function (data) {
     const datapr = await pr();
 
     async function aypr() {
-        if (data.sttaypr === 'ada') {
-            const aypr = await Orang.findOne({nik: data.nikaypr});
+        if (data.datapr.sttay === 'ada') {
+            const aypr = await Orang.findOne({nik: data.datapr.nikay});
             const dataaypr = {
-                status: data.sttaypr,
+                status: data.datapr.sttay,
                 id: aypr._id,
                 nik: aypr.nik,
                 nama: aypr.nama,
@@ -68,8 +68,8 @@ const filter_masuk = async function (data) {
                 rw: aypr.rw,
                 jalan: aypr.jalan,
             };
-            if (data.binaypr) {
-                const dayprbin = Object.assign({bin: data.binaypr}, dataaypr);
+            if (data.datapr.binay) {
+                const dayprbin = Object.assign({bin: data.datapr.binay}, dataaypr);
                 const fixaypr = {data_aypr: dayprbin};
                 return fixaypr;
             } else {
@@ -79,8 +79,8 @@ const filter_masuk = async function (data) {
             }
         } else {
             const daypr = {
-                status: data.sttaypr,
-                nama: data.namaaypr
+                status: data.datapr.sttay,
+                nama: data.datapr.namaay
             };
             const fixaypr = {data_aypr: daypr};
             return fixaypr;
@@ -90,10 +90,10 @@ const filter_masuk = async function (data) {
     const dataaypr = await aypr();
 
     async function ibpr() {
-        if (data.sttibpr === 'ada') {
-            const ibpr = await Orang.findOne({nik: data.nikibpr});
+        if (data.datapr.sttib === 'ada') {
+            const ibpr = await Orang.findOne({nik: data.datapr.nikib});
             const dataibpr = {
-                status: data.sttibpr,
+                status: data.datapr.sttib,
                 id: ibpr._id,
                 nik: ibpr.nik,
                 nama: ibpr.nama,
@@ -111,8 +111,8 @@ const filter_masuk = async function (data) {
                 rw: ibpr.rw,
                 jalan: ibpr.jalan,
             };
-            if (data.bintiibpr) {
-                const dibprbin = Object.assign({binti: data.bintiibpr}, dataibpr);
+            if (data.datapr.bintiib) {
+                const dibprbin = Object.assign({binti: data.datapr.bintiib}, dataibpr);
                 const fixibpr = {data_ibpr: dibprbin};
                 return fixibpr;
             } else {
@@ -122,8 +122,8 @@ const filter_masuk = async function (data) {
             }
         } else {
             const dibpr = {
-                status: data.sttibpr,
-                nama: data.namaibpr
+                status: data.datapr.sttib,
+                nama: data.datapr.namaib
             };
             const fixibpr = {data_ibpr: dibpr};
             return fixibpr;
@@ -133,12 +133,12 @@ const filter_masuk = async function (data) {
     const dataibpr = await ibpr();
 
     async function lk() {
-        if (data.niklk) {
-            const lk = await Orang.findOne({nik: data.niklk});
+        if (data.datalk.nik) {
+            const lk = await Orang.findOne({nik: data.datalk.nik});
             const datalk = {
                 id: lk._id,
                 nik: lk.nik,
-                status: data.statuslk,
+                status: data.datalk.status,
                 nama: lk.nama,
                 jk: lk.jk,
                 tempat_lahir: lk.tempat_lahir,
@@ -153,10 +153,10 @@ const filter_masuk = async function (data) {
                 rt: lk.rt,
                 rw: lk.rw,
                 jalan: lk.jalan,
-                bin: data.binlk,
+                bin: data.datalk.namaay,
             };
-            if (data.noaclk) {
-                const dlknoac = Object.assign({noac: data.noaclk}, datalk);
+            if (data.datalk.noac) {
+                const dlknoac = Object.assign({noac: data.datalk.noac}, datalk);
                 const fixlk = {data_lk: dlknoac};
                 return fixlk;
             } else {
@@ -175,10 +175,10 @@ const filter_masuk = async function (data) {
         if (data.sttkeldes === 'beda') {
             return {};
         } else {
-            if (data.sttaylk === 'ada') {
-                const aylk = await Orang.findOne({nik: data.nikaylk});
+            if (data.datalk.sttay === 'ada') {
+                const aylk = await Orang.findOne({nik: data.datalk.nikay});
                 const dataaylk = {
-                    status: data.sttaylk,
+                    status: data.datalk.sttay,
                     id: aylk._id,
                     nik: aylk.nik,
                     nama: aylk.nama,
@@ -196,8 +196,8 @@ const filter_masuk = async function (data) {
                     rw: aylk.rw,
                     jalan: aylk.jalan,
                 };
-                if (data.binaylk) {
-                    const daylkbin = Object.assign({bin: data.binaylk}, dataaylk);
+                if (data.datalk.binay) {
+                    const daylkbin = Object.assign({bin: data.datalk.binay}, dataaylk);
                     const fixaylk = {data_aylk: daylkbin};
                     return fixaylk;
                 } else {
@@ -207,8 +207,8 @@ const filter_masuk = async function (data) {
                 }
             } else {
                 const daylk = {
-                    status: data.sttaylk,
-                    nama: data.namaaylk
+                    status: data.datalk.sttay,
+                    nama: data.datalk.namaay
                 };
                 const fixaylk = {data_aylk: daylk};
                 return fixaylk;
@@ -222,10 +222,10 @@ const filter_masuk = async function (data) {
         if (data.sttkeldes === 'beda') {
             return {};
         } else {
-            if (data.sttiblk === 'ada') {
-                const iblk = await Orang.findOne({nik: data.nikiblk});
+            if (data.datalk.sttib === 'ada') {
+                const iblk = await Orang.findOne({nik: data.datalk.nikib});
                 const dataiblk = {
-                    status: data.sttiblk,
+                    status: data.datalk.sttib,
                     id: iblk._id,
                     nik: iblk.nik,
                     nama: iblk.nama,
@@ -243,8 +243,8 @@ const filter_masuk = async function (data) {
                     rw: iblk.rw,
                     jalan: iblk.jalan,
                 };
-                if (data.bintiiblk) {
-                    const diblkbin = Object.assign({binti: data.bintiiblk}, dataiblk);
+                if (data.datalk.bintiib) {
+                    const diblkbin = Object.assign({binti: data.datalk.bintiib}, dataiblk);
                     const fixiblk = {data_iblk: diblkbin};
                     return fixiblk;
                 } else {
@@ -254,8 +254,8 @@ const filter_masuk = async function (data) {
                 }
             } else {
                 const diblk = {
-                    status: data.sttiblk,
-                    nama: data.namaiblk
+                    status: data.datalk.sttib,
+                    nama: data.datalk.namaib
                 };
                 const fixiblk = {data_iblk: diblk};
                 return fixiblk;
@@ -265,10 +265,11 @@ const filter_masuk = async function (data) {
 
     const dataiblk = await iblk();
     async function wali() {
-        if (data.walinikah === 'lainnya') {
-            const wali = await Orang.findOne({nik: data.nikwali});
+        if (data.acara.walinikah === 'lainnya') {
+            const wali = await Orang.findOne({nik: data.acara.nikwali});
             const datawali = {
-                hubungan: data.hubungan_wali,
+                walinikah: data.acara.walinikah,
+                hubungan: data.acara.hubungan_wali,
                 id: wali._id,
                 nik: wali.nik,
                 nama: wali.nama,
@@ -289,17 +290,21 @@ const filter_masuk = async function (data) {
             const fixwali = {data_wali: datawali};
             return fixwali;
         } else {
-            return {};
+            const datawali = {
+                walinikah: data.acara.walinikah,
+            };
+            const fixwali = {data_wali: datawali};
+            return fixwali;
         }
     }
 
     const datawali = await wali();
 
-    const tglnikah = moment(data.tglnikah).locale('id').format("YYYY-MM-DDTHH:mm");
+    const tglnikah = moment(data.acara.tglnikah).locale('id').format("YYYY-MM-DDTHH:mm");
     const dataacara = {
-        tempat_nikah: data.tempat_nikah,
+        tempat_nikah: data.acara.tempat_nikah,
         tglnikah: tglnikah,
-        mas_kawin: data.mas_kawin,
+        mas_kawin: data.acara.mas_kawin,
     };
     return Object.assign(datareg, datapr, dataaypr, dataibpr, datalk, {status_keldes: data.sttkeldes}, dataaylk, dataiblk, {wali: data.walinikah}, datawali, dataacara);
 }

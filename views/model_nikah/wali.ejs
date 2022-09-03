@@ -162,9 +162,9 @@
     </table>
     <br>
     <p class="ft12">Menetapkan bahwa wali nikah atas nama tersebut diatas adalah
-        <% if(dr.wali === 'ayah'){ %>
+        <% if(dr.data_wali.walinikah === 'ayah'){ %>
         nasab ayah kandung
-        <% } else if(dr.wali === 'lainnya'){ %>
+        <% } else if(dr.data_wali.walinikah === 'lainnya'){ %>
         nasab <%= dr.data_wali.hubungan %>
         <% } else{ %>
         wali hakim
@@ -172,7 +172,7 @@
     </p>
     <br>
     <table style="margin-left: 30px">
-        <% if(dr.wali === 'ayah'){ %>
+        <% if(dr.data_wali.walinikah === 'ayah'){ %>
         <tr>
             <td><p class="ft12">1. </p></td>
             <td><p class="ft12">Nama</p></td>
@@ -288,7 +288,7 @@
         <% } %>
         <% } %>
     </table>
-    <% if(dr.wali !== 'ayah'){ %>
+    <% if(dr.data_wali.walinikah !== 'ayah'){ %>
     <br>
     <p class="ft12">Adapun sebab wali sebagai berikut:</p>
     <br>
