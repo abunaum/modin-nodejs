@@ -4,14 +4,14 @@
 <form action="/nikah/masuk/tambah" method="post">
     <div class="mb-3 input-group input-group-outline">
         <label for="noreg" class="form-label">Nomor Register</label>
-        <input type="text" class="form-control" id="noreg" name="noreg">
-        <input type="date" class="form-control" id="tglregister" name="tglregister">
+        <input type="text" class="form-control" id="noreg" name="noreg" required>
+        <input type="date" class="form-control" id="tglregister" name="tglregister" required>
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
     <div class="mb-3 input-group input-group-outline">
         <label for="nikpr" class="form-label">NIK</label>
-        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control">
+        <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control" required>
         <datalist id="listpr">
             <% pr.forEach((listpr) =>{%>
             <option value="<%= listpr.nik%>"><%= listpr.nama%></option>
@@ -133,7 +133,7 @@
     <center><h1>Data Catin Pria</h1></center>
     <div class="mb-3 input-group input-group-outline">
         <label for="niklk" class="form-label">NIK</label>
-        <input type="text" name="niklk" id="niklk" list="listlk" class="form-control">
+        <input type="text" name="niklk" id="niklk" list="listlk" class="form-control" required>
         <datalist id="listlk">
             <% lk.forEach((listlk) =>{%>
                 <option value="<%= listlk.nik%>"><%= listlk.nama%></option>

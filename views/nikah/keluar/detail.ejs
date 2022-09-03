@@ -1,0 +1,207 @@
+<%- include('../../template/header') %>
+<%- include('../../template/close_head') %>
+<%- include('../../template/nav') %>
+<center><h3>Data Register</h3></center>
+<table>
+    <tr>
+        <td>Nomor Register</td>
+        <td>: <%= dr.noreg %></td>
+    </tr>
+    <tr>
+        <td>Tanggal Register</td>
+        <td>: <%= dr.tglreg %></td>
+    </tr>
+    <tr>
+        <td>Status Pernikahan</td>
+        <td>:
+            <% if(dr.tujuan.kec === 'beda'){ %>
+                Beda Kecamatan
+            <% } else { %>
+                Satu Kecamatan
+            <% } %>
+        </td>
+    </tr>
+</table>
+<hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+<center><h3>Data Pria</h3></center>
+<table>
+    <tr>
+        <td>NIK</td>
+        <td>: <%= dr.data_lk.nik %></td>
+    </tr>
+    <tr>
+        <td>Nama</td>
+        <td>: <%= dr.data_lk.nama %></td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>: <%= dr.data_lk.status.toUpperCase() %></td>
+    </tr>
+    <% if(dr.data_lk.noac) { %>
+        <tr>
+            <td>No AC</td>
+            <td>: <%= dr.data_lk.noac.toUpperCase() %></td>
+        </tr>
+    <% } %>
+    <tr>
+        <td>TTL</td>
+        <td>: <%= dr.data_lk.tempat_lahir %>, <%= dr.data_lk.tanggal_lahir %></td>
+    </tr>
+    <tr>
+        <td>Pekerjaan</td>
+        <td>: <%= dr.data_lk.pekerjaan.toUpperCase() %></td>
+    </tr>
+    <tr>
+        <td>Agama</td>
+        <td>: <%= dr.data_lk.agama.toUpperCase() %></td>
+    </tr>
+    <tr>
+        <td>Kewarganegaraan</td>
+        <td>: <%= dr.data_lk.wn.toUpperCase() %></td>
+    </tr>
+    <tr>
+        <td>Alamat</td>
+        <td>: <%= dr.data_lk.jalan %> RT <%= dr.data_lk.rt %> RW <%= dr.data_lk.rw %>, <%= dr.data_lk.keldes %>
+            - <%= dr.data_lk.kec %> - <%= dr.data_lk.kabkot.toLowerCase() %> - <%= dr.data_lk.prov.toUpperCase() %></td>
+    </tr>
+</table>
+<hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+<center><h3>Data Ayah Catin Pria</h3></center>
+<table>
+    <% if (dr.data_aylk.status === 'ada') { %>
+        <tr>
+            <td>NIK</td>
+            <td>: <%= dr.data_aylk.nik %></td>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td>: <%= dr.data_aylk.nama %></td>
+        </tr>
+        <tr>
+            <td>TTL</td>
+            <td>: <%= dr.data_aylk.tempat_lahir %>, <%= dr.data_aylk.tanggal_lahir %></td>
+        </tr>
+        <tr>
+            <td>Pekerjaan</td>
+            <td>: <%= dr.data_aylk.pekerjaan.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Agama</td>
+            <td>: <%= dr.data_aylk.agama.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Kewarganegaraan</td>
+            <td>: <%= dr.data_aylk.wn.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Alamat</td>
+            <td>: <%= dr.data_aylk.jalan %> RT <%= dr.data_aylk.rt %> RW <%= dr.data_aylk.rw %>
+                , <%= dr.data_aylk.keldes %> - <%= dr.data_aylk.kec %> - <%= dr.data_aylk.kabkot.toLowerCase() %>
+                - <%= dr.data_aylk.prov.toUpperCase() %></td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td>Nama</td>
+            <td>: <%= dr.data_aylk.nama %></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>: Meninggal / Almarhum</td>
+        </tr>
+    <% } %>
+</table>
+<hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+<center><h3>Data Ibu Catin Pria</h3></center>
+<table>
+    <% if (dr.data_iblk.status === 'ada') { %>
+        <tr>
+            <td>NIK</td>
+            <td>: <%= dr.data_iblk.nik %></td>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td>: <%= dr.data_iblk.nama %></td>
+        </tr>
+        <tr>
+            <td>TTL</td>
+            <td>: <%= dr.data_iblk.tempat_lahir %>, <%= dr.data_iblk.tanggal_lahir %></td>
+        </tr>
+        <tr>
+            <td>Pekerjaan</td>
+            <td>: <%= dr.data_iblk.pekerjaan.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Agama</td>
+            <td>: <%= dr.data_iblk.agama.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Kewarganegaraan</td>
+            <td>: <%= dr.data_iblk.wn.toUpperCase() %></td>
+        </tr>
+        <tr>
+            <td>Alamat</td>
+            <td>: <%= dr.data_iblk.jalan %> RT <%= dr.data_iblk.rt %> RW <%= dr.data_iblk.rw %>
+                , <%= dr.data_iblk.keldes %> - <%= dr.data_iblk.kec %> - <%= dr.data_iblk.kabkot.toLowerCase() %>
+                - <%= dr.data_iblk.prov.toUpperCase() %></td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td>Nama</td>
+            <td>: <%= dr.data_iblk.nama %></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>: Meninggal / Almarhumah</td>
+        </tr>
+    <% } %>
+</table>
+<hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
+<center><h3>Data Tujuan</h3></center>
+<table>
+    <tr>
+        <td>Dusun / jalan</td>
+        <td>: <%= dr.tujuan.alamat %></td>
+    </tr>
+    <tr>
+        <td>RT</td>
+        <td>: <%= dr.tujuan.rt %></td>
+    </tr>
+    <tr>
+        <td>RW</td>
+        <td>: <%= dr.tujuan.rw %></td>
+    </tr>
+    <tr>
+        <td>Desa / Kelurahan</td>
+        <td>: <%= dr.tujuan.des %></td>
+    </tr>
+    <tr>
+        <td>Kecamatan</td>
+        <td>: <%= dr.tujuan.kec %></td>
+    </tr>
+    <tr>
+        <td>Kabupaten / Kota</td>
+        <td>: <%= dr.tujuan.kabkot %></td>
+    </tr>
+    <tr>
+        <td>Provinsi</td>
+        <td>: <%= dr.tujuan.provinsi %></td>
+    </tr>
+</table>
+<hr class="mt-3 mb-3" style="border-top: 4px dashed green;">
+<center><h3>Cetak Model</h3></center>
+<center>
+    <a href="/cetak/pengantar/<%= dr.id %>" target="_blank">
+        <button type="button" class="btn btn-success">Pengantar</button>
+    </a>
+    <a href="/cetak/n1pria/<%= dr.id %>" target="_blank">
+        <button type="button" class="btn btn-success">N1</button>
+    </a>
+    <% if(dr.statuskeluar.kec === 'beda'){ %>
+        <a href="/cetak/n10/<%= dr.id %>" target="_blank">
+            <button type="button" class="btn btn-success">N10</button>
+        </a>
+    <% } %>
+</center>
+<hr class="mt-3 mb-3" style="border-top: 2px dashed black;">
+<%- include('../../template/footer') %>
+<%- include('../../template/close_foot') %>

@@ -6,16 +6,16 @@
     <input type="hidden" class="form-control" id="noreg_ori" name="noreg_ori" value="<%= datanikah.noreg %>" required>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="noreg" class="form-label">Nomor Register</label>
-        <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>">
+        <input type="text" class="form-control" id="noreg" name="noreg" value="<%= datanikah.noreg %>" required>
         <input type="date" class="form-control" id="tglregister" name="tglregister"
-               value="<%= datanikah.tglregister%>">
+               value="<%= datanikah.tglregister%>" required>
     </div>
     <hr class="mt-3 mb-3" style="border-top: 2px dashed blue;">
     <center><h1>Data Catin Wanita</h1></center>
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="nikpr" class="form-label">NIK</label>
         <input type="text" name="nikpr" id="nikpr" list="listpr" class="form-control"
-               value="<%= datanikah.datapr.nik %>">
+               value="<%= datanikah.datapr.nik %>" required>
         <datalist id="listpr">
             <% pr.forEach((listpr) =>{ %>
                 <option value="<%= listpr.nik %>"><%= listpr.nama %></option>
@@ -174,7 +174,7 @@
     <div class="mb-3 input-group input-group-outline is-filled">
         <label for="niklk" class="form-label">NIK</label>
         <input type="text" name="niklk" id="niklk" list="listlk" class="form-control"
-               value="<%= datanikah.datalk.nik %>">
+               value="<%= datanikah.datalk.nik %>" required>
         <datalist id="listlk">
             <% lk.forEach((listlk) =>{ %>
                 <option value="<%= listlk.nik %>"><%= listlk.nama %></option>

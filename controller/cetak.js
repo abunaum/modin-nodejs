@@ -1,11 +1,18 @@
 const {NikahMasuk} = require("../model/nikah");
-const {filter_masuk} = require("../utils/filter_nikah");
-const moment = require("moment/moment");
+const {
+    filter_n1wanita,
+    filter_n1pria,
+    filter_n2,
+    filter_n4,
+    filter_n5,
+    filter_tt,
+    filter_walidankuasa
+} = require("../utils/filter_model");
 const {loadSetting} = require('../utils/setting');
 module.exports = {
-    n1pr: async function (req,res){
+    n1pr: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_n1wanita(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/n1wanita', {
             title: 'N1',
@@ -13,9 +20,9 @@ module.exports = {
             setting,
         });
     },
-    n1lk: async function (req,res){
+    n1lk: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_n1pria(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/n1pria', {
             title: 'N1',
@@ -23,9 +30,9 @@ module.exports = {
             setting,
         });
     },
-    n2: async function (req,res){
+    n2: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_n2(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/n2', {
             title: 'N2',
@@ -33,25 +40,25 @@ module.exports = {
             setting,
         });
     },
-    n4: async function (req,res){
+    n4: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_n4(detailreg);
         res.render('model_nikah/n4', {
             title: 'N4',
             dr,
         });
     },
-    n5: async function (req,res){
+    n5: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_n5(detailreg);
         res.render('model_nikah/n5', {
             title: 'N5',
             dr,
         });
     },
-    kuasa: async function (req,res){
+    kuasa: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_walidankuasa(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/kuasa', {
             title: 'Kuasa',
@@ -59,9 +66,9 @@ module.exports = {
             setting,
         });
     },
-    wali: async function (req,res){
+    wali: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_walidankuasa(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/wali', {
             title: 'Wali',
@@ -69,9 +76,9 @@ module.exports = {
             setting,
         });
     },
-    tt: async function (req,res){
+    tt: async function (req, res) {
         const detailreg = await NikahMasuk.findById(req.params.id);
-        const dr = await filter_masuk(detailreg);
+        const dr = await filter_tt(detailreg);
         const setting = await loadSetting();
         res.render('model_nikah/tt', {
             title: 'TT Nikah',

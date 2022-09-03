@@ -55,13 +55,13 @@
             <td><%= dn.datalk.nik%></td>
             <td><%= dn.tujuan.des%> - Kec. <%= dn.tujuan.kec%> <%= dn.tujuan.kabkot%> - <%= dn.tujuan.provinsi%> </td>
             <td>
-                <a href="/nikah/masuk/detail/<%= dn._id%>">
+                <a href="/nikah/keluar/detail/<%= dn._id%>">
                     <button type="button" class="btn btn-info">Detail</button>
                 </a>
-                <a href="/nikah/masuk/edit/<%= dn._id%>">
+                <a href="/nikah/keluar/edit/<%= dn._id%>">
                     <button type="button" class="btn btn-warning">Edit</button>
                 </a>
-                <form class="d-inline" action="/nikah/masuk?_method=DELETE" method="post" id="hps-<%= dn._id%>" name="hps-<%= dn._id%>" onclick="hapusform('<%= dn._id%>', '<%= dn.noreg%>')">
+                <form class="d-inline" action="/nikah/keluar?_method=DELETE" method="post" id="hps-<%= dn._id%>" name="hps-<%= dn._id%>" onclick="hapusform('<%= dn._id%>', '<%= dn.noreg%>')">
                     <input type="hidden" name="id" value="<%= dn._id%>"/>
                     <button type="button" class="btn btn-danger">Hapus</button>
                 </form>

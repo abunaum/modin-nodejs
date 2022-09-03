@@ -3,7 +3,7 @@ const Orang = require("../model/orang");
 const {check, body, validationResult} = require("express-validator");
 const moment = require("moment/moment");
 const {toDate} = require("validator");
-const {filter_masuk} = require("../utils/filter_nikah");
+const {filter_masuk} = require("../utils/filter_model");
 
 const delete_masuk = (req, res) => {
     NikahMasuk.deleteOne({_id: req.body.id}).then((result) => {
@@ -48,7 +48,7 @@ const edit_masuk = [
         return true;
     }),
     body('nikpr').custom(async (value) => {
-        const caripr = await Orang.findOne({nikpr: value});
+        const caripr = await Orang.findOne({nik: value});
         if (!caripr) {
             throw new Error('NIK catin wanita tidak terdaftar');
         }
@@ -56,7 +56,7 @@ const edit_masuk = [
     }),
     body('nikaypr').custom(async (value, {req}) => {
         if (req.body.sttaypr === 'ada') {
-            const cariaypr = await Orang.findOne({nikaypr: value});
+            const cariaypr = await Orang.findOne({nik: value});
             if (!cariaypr) {
                 throw new Error('NIK ayah catin wanita tidak terdaftar');
             }
@@ -65,7 +65,7 @@ const edit_masuk = [
     }),
     body('nikibpr').custom(async (value, {req}) => {
         if (req.body.sttibpr === 'ada') {
-            const cariibpr = await Orang.findOne({nikibpr: value});
+            const cariibpr = await Orang.findOne({nik: value});
             if (!cariibpr) {
                 throw new Error('NIK ibu catin wanita tidak terdaftar');
             }
@@ -73,7 +73,7 @@ const edit_masuk = [
         return true;
     }),
     body('niklk').custom(async (value) => {
-        const carilk = await Orang.findOne({niklk: value});
+        const carilk = await Orang.findOne({nik: value});
         if (!carilk) {
             throw new Error('NIK catin pria tidak terdaftar');
         }
@@ -81,7 +81,7 @@ const edit_masuk = [
     }),
     body('nikaylk').custom(async (value, {req}) => {
         if (req.body.sttkeldes === 'satu' && req.body.sttaylk === 'ada') {
-            const cariaylk = await Orang.findOne({nikaylk: value});
+            const cariaylk = await Orang.findOne({nik: value});
             if (!cariaylk) {
                 throw new Error('NIK ayah catin pria tidak terdaftar');
             }
@@ -90,7 +90,7 @@ const edit_masuk = [
     }),
     body('nikiblk').custom(async (value, {req}) => {
         if (req.body.sttkeldes === 'satu' && req.body.sttiblk === 'ada') {
-            const cariiblk = await Orang.findOne({nikiblk: value});
+            const cariiblk = await Orang.findOne({nik: value});
             if (!cariiblk) {
                 throw new Error('NIK ibu catin pria tidak terdaftar');
             }
@@ -99,7 +99,7 @@ const edit_masuk = [
     }),
     body('nikwali').custom(async (value, {req}) => {
         if (req.body.walinikah === 'lainnya') {
-            const cariwali = await Orang.findOne({nikwali: value});
+            const cariwali = await Orang.findOne({nik: value});
             if (!cariwali) {
                 throw new Error('NIK wali tidak terdaftar');
             }
@@ -113,7 +113,7 @@ const edit_masuk = [
             res.redirect('/nikah/masuk');
         } else {
             const id = req.body.id;
-            const datareq = req.body;
+            var datareq = req.body;
             delete datareq.noreg_ori;
             delete datareq.id;
             const reg = {
@@ -322,7 +322,7 @@ const tambah_masuk = [
         return true;
     }),
     body('nikpr').custom(async (value) => {
-        const caripr = await Orang.findOne({nikpr: value});
+        const caripr = await Orang.findOne({nik: value});
         if (!caripr) {
             throw new Error('NIK catin wanita tidak terdaftar');
         }
@@ -330,7 +330,7 @@ const tambah_masuk = [
     }),
     body('nikaypr').custom(async (value, {req}) => {
         if (req.body.sttaypr === 'ada') {
-            const cariaypr = await Orang.findOne({nikaypr: value});
+            const cariaypr = await Orang.findOne({nik: value});
             if (!cariaypr) {
                 throw new Error('NIK ayah catin wanita tidak terdaftar');
             }
@@ -339,7 +339,7 @@ const tambah_masuk = [
     }),
     body('nikibpr').custom(async (value, {req}) => {
         if (req.body.sttibpr === 'ada') {
-            const cariibpr = await Orang.findOne({nikibpr: value});
+            const cariibpr = await Orang.findOne({nik: value});
             if (!cariibpr) {
                 throw new Error('NIK ibu catin wanita tidak terdaftar');
             }
@@ -347,7 +347,7 @@ const tambah_masuk = [
         return true;
     }),
     body('niklk').custom(async (value) => {
-        const carilk = await Orang.findOne({niklk: value});
+        const carilk = await Orang.findOne({nik: value});
         if (!carilk) {
             throw new Error('NIK catin pria tidak terdaftar');
         }
@@ -355,7 +355,7 @@ const tambah_masuk = [
     }),
     body('nikaylk').custom(async (value, {req}) => {
         if (req.body.sttkeldes === 'satu' && req.body.sttaylk === 'ada') {
-            const cariaylk = await Orang.findOne({nikaylk: value});
+            const cariaylk = await Orang.findOne({nik: value});
             if (!cariaylk) {
                 throw new Error('NIK ayah catin pria tidak terdaftar');
             }
@@ -364,7 +364,7 @@ const tambah_masuk = [
     }),
     body('nikiblk').custom(async (value, {req}) => {
         if (req.body.sttkeldes === 'satu' && req.body.sttiblk === 'ada') {
-            const cariiblk = await Orang.findOne({nikiblk: value});
+            const cariiblk = await Orang.findOne({nik: value});
             if (!cariiblk) {
                 throw new Error('NIK ibu catin pria tidak terdaftar');
             }
@@ -373,7 +373,7 @@ const tambah_masuk = [
     }),
     body('nikwali').custom(async (value, {req}) => {
         if (req.body.walinikah === 'lainnya') {
-            const cariwali = await Orang.findOne({nikwali: value});
+            const cariwali = await Orang.findOne({nik: value});
             if (!cariwali) {
                 throw new Error('NIK wali tidak terdaftar');
             }
