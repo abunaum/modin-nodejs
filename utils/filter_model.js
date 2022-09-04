@@ -280,6 +280,11 @@ async function wali(data) {
     }
 }
 
+async function tujuan(data) {
+    const tuj = {tujuan: data.tujuan};
+    return tuj;
+}
+
 const filter_masuk = async function (data) {
     const tglreg = moment(data.tglregister).locale('id').format("YYYY-MM-DD");
     const datareg = {
@@ -412,6 +417,18 @@ const filter_tt = async function (data) {
     return Object.assign(datareg, datapr, datalk);
 }
 
+const filter_tujuan = async function (data) {
+    const tglreg = moment(data.tglregister).locale('id').format("YYYY-MM-DD");
+    const datareg = {
+        id: data._id,
+        tglreg: tglreg,
+        noreg: data.noreg,
+    };
+    const datalk = await lk(data);
+    const datatujuan = await tujuan(data);
+    return Object.assign(datareg, datalk, datatujuan);
+}
+
 module.exports = {
     filter_n1pria,
     filter_n1wanita,
@@ -421,5 +438,6 @@ module.exports = {
     filter_walidankuasa,
     filter_tt,
     filter_masuk,
-    filter_keluar
+    filter_keluar,
+    filter_tujuan
 }
