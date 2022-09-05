@@ -24,12 +24,24 @@ async function pr(data) {
             jalan: pr.jalan,
         };
         if (data.noacpr) {
-            const dprnoac = Object.assign({noac: data.datapr.noac}, datapr);
-            const fixpr = {data_pr: dprnoac};
-            return fixpr;
+            if(data.datapr.namaay){
+                const dprnoac = Object.assign({noac: data.datapr.noac}, {binti: data.datapr.namaay}, datapr);
+                const fixpr = {data_pr: dprnoac};
+                return fixpr;
+            }else {
+                const dprnoac = Object.assign({noac: data.datapr.noac}, datapr);
+                const fixpr = {data_pr: dprnoac};
+                return fixpr;
+            }
         } else {
-            const fixpr = {data_pr: datapr};
-            return fixpr;
+            if(data.datapr.namaay){
+                const dprnoac = Object.assign({binti: data.datapr.namaay}, datapr);
+                const fixpr = {data_pr: dprnoac};
+                return fixpr;
+            }else {
+                const fixpr = {data_pr: datapr};
+                return fixpr;
+            }
         }
     } else {
         const pr = {};
@@ -429,6 +441,19 @@ const filter_tujuan = async function (data) {
     return Object.assign(datareg, datalk, datatujuan);
 }
 
+
+const filter_n10 = async function (data) {
+    const tglreg = moment(data.tglregister).locale('id').format("YYYY-MM-DD");
+    const datareg = {
+        id: data._id,
+        tglreg: tglreg,
+    };
+    const datapr = await pr(data);
+    const datalk = await lk(data);
+    const datatujuan = await tujuan(data);
+    return Object.assign(datareg, datapr, datalk, datatujuan);
+}
+
 module.exports = {
     filter_n1pria,
     filter_n1wanita,
@@ -439,5 +464,6 @@ module.exports = {
     filter_tt,
     filter_masuk,
     filter_keluar,
-    filter_tujuan
+    filter_tujuan,
+    filter_n10
 }

@@ -12,5 +12,6 @@ cetakmodel.get('/wali/:id', controller.wali);
 cetakmodel.get('/kuasa/:id', controller.kuasa);
 cetakmodel.get('/tt/:id', controller.tt);
 cetakmodel.get('/pengantar/:id', controller.pengantar);
+cetakmodel.get('/n10/:id', controller.n10);
 
 module.exports = cetakmodel;

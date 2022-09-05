@@ -6,7 +6,9 @@ const {
     filter_n4,
     filter_n5,
     filter_tt,
-    filter_walidankuasa, filter_tujuan
+    filter_walidankuasa,
+    filter_tujuan,
+    filter_n10
 } = require("../utils/filter_model");
 const {loadSetting} = require('../utils/setting');
 module.exports = {
@@ -92,6 +94,16 @@ module.exports = {
         const setting = await loadSetting();
         res.render('model_nikah/pengantar', {
             title: 'Pengantar Nikah',
+            dr,
+            setting,
+        });
+    },
+    n10: async function (req, res) {
+        const detailreg = await NikahMasuk.findById(req.params.id).lean();
+        const dr = await filter_n10(detailreg);
+        const setting = await loadSetting();
+        res.render('model_nikah/n10', {
+            title: 'N10',
             dr,
             setting,
         });

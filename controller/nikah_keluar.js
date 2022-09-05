@@ -436,4 +436,19 @@ const detail_keluar = async (req, res) => {
     });
 }
 
-module.exports = {view_keluar, view_tambah_keluar, tambah_keluar, view_edit_keluar, edit_keluar, detail_keluar}
+const delete_keluar = (req, res) => {
+    NikahKeluar.deleteOne({_id: req.body.id}).then((result) => {
+        req.flash('sukses', 'Data berhasil dihapus');
+        res.redirect('/nikah/keluar');
+    });
+}
+
+module.exports = {
+    view_keluar,
+    view_tambah_keluar,
+    tambah_keluar,
+    view_edit_keluar,
+    edit_keluar,
+    detail_keluar,
+    delete_keluar
+}
