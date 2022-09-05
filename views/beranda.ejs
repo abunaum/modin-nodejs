@@ -1,6 +1,221 @@
-<%- include('template/header')%>
-<%- include('template/close_head')%>
-<%- include('template/nav')%>
-<h1>Hello World</h1>
-<%- include('template/footer')%>
-<%- include('template/close_foot')%>
+<%- include('template/header') %>
+<%- include('template/close_head') %>
+<%- include('template/nav') %>
+<center>
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <canvas id="semuadata" width="400" height="400"></canvas>
+                <div class="card-body">
+                    <h5 class="card-title">Semua Data Nikah</h5>
+                    <p class="card-text">Total semua data nikah adalah <%= semuadata.length %>.</p>
+                    <a href="nikah/semua-data" class="btn btn-primary">Cek semua data</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <canvas id="datamasuk" width="400" height="400"></canvas>
+                <div class="card-body">
+                    <h5 class="card-title">Nikah Masuk</h5>
+                    <p class="card-text">Total data nikah masuk adalah <%= datamasuk.length %>.</p>
+                    <a href="nikah/masuk" class="btn btn-primary">Cek nikah masuk</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <canvas id="datakeluar" width="400" height="400"></canvas>
+                <div class="card-body">
+                    <h5 class="card-title">Nikah Keluar</h5>
+                    <p class="card-text">Total semua data nikah adalah <%= datakeluar.length %>.</p>
+                    <a href="nikah/keluar" class="btn btn-primary">Cek nikah keluar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+<%- include('template/footer') %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function getRandomRgb() {
+        var num = Math.round(0xffffff * Math.random());
+        var r = num >> 16;
+        var g = num >> 8 & 255;
+        var b = num & 255;
+        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+
+    function getRandomRgba() {
+        var num = Math.round(0xffffff * Math.random());
+        var r = num >> 16;
+        var g = num >> 8 & 255;
+        var b = num & 255;
+        return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.4)';
+    }
+
+    function hitungtahun(array, tahun) {
+        var count = 0;
+        array.forEach((data) => (data.tahun === tahun && count++));
+        return count;
+    }
+
+    const ambildatamasuk = <%- JSON.stringify(datamasuk) %>;
+    var fixdm = [];
+    var thfixdm = [];
+    ambildatamasuk.forEach((data => {
+        var noreg = data.noreg.replace(/\s/g, '');
+        noreg = noreg.split('/');
+        var newdata = data;
+        const tahun = {tahun: parseInt(noreg[3])};
+        newdata = Object.assign({}, tahun, data);
+        fixdm.push(newdata);
+        if(thfixdm.indexOf(parseInt(noreg[3])) < 0) {
+            thfixdm.push(parseInt(noreg[3]));
+        }
+    }))
+
+    thfixdm = thfixdm.sort();
+
+    function hitungdmtahun() {
+        var tahundm = [];
+        thfixdm.forEach((tahun)=>{
+            var cektahun = hitungtahun(fixdm, tahun);
+            tahundm.push(cektahun)
+        })
+        return tahundm;
+    }
+
+    function borfixdm(){
+        var borderfixdm = [];
+        thfixdm.forEach(()=>{
+            borderfixdm.push(getRandomRgb())
+        })
+        return borderfixdm;
+    }
+
+    function bgfixdm() {
+        var bgrgbafixdm = [];
+        thfixdm.forEach(()=>{
+            bgrgbafixdm.push(getRandomRgba())
+        })
+        return bgrgbafixdm;
+    }
+
+    const ambildatakeluar = <%- JSON.stringify(datakeluar) %>;
+    var fixdk = [];
+    var thfixdk = [];
+    ambildatakeluar.forEach((data => {
+        var noreg = data.noreg.replace(/\s/g, '');
+        noreg = noreg.split('/');
+        var newdata = data;
+        const tahun = {tahun: parseInt(noreg[3])};
+        newdata = Object.assign({}, tahun, data);
+        fixdk.push(newdata);
+        if(thfixdk.indexOf(parseInt(noreg[3])) < 0) {
+            thfixdk.push(parseInt(noreg[3]));
+        }
+    }))
+
+    thfixdk = thfixdk.sort();
+
+    function hitungdktahun() {
+        var tahundk = [];
+        thfixdk.forEach((tahun)=>{
+            var cektahun = hitungtahun(fixdk, tahun);
+            tahundk.push(cektahun)
+        })
+        return tahundk;
+    }
+
+    function borfixdk(){
+        var borderfixdk = [];
+        thfixdk.forEach(()=>{
+            borderfixdk.push(getRandomRgb())
+        })
+        return borderfixdk;
+    }
+
+    function bgfixdk() {
+        var bgrgbafixdk = [];
+        thfixdk.forEach(()=>{
+            bgrgbafixdk.push(getRandomRgba())
+        })
+        return bgrgbafixdk;
+    }
+
+    const sd = document.getElementById('semuadata');
+    const semdat = {
+        labels: [
+            'Data Masuk',
+            'Data Keluar'
+        ],
+        datasets: [{
+            label: 'Semua Data Nikah',
+            data: [<%= datamasuk.length %>, <%= datakeluar.length %>],
+            backgroundColor: [
+                getRandomRgb(),
+                getRandomRgb()
+            ],
+            hoverOffset: 4
+        }]
+    };
+    const semuadata = new Chart(sd, {
+        type: 'doughnut',
+        data: semdat,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const dm = document.getElementById('datamasuk');
+    const datmas = {
+        labels: thfixdm,
+        datasets: [{
+            label: 'Data Masuk',
+            data: hitungdmtahun(),
+            backgroundColor: bgfixdm(),
+            borderColor: borfixdm(),
+            borderWidth: 1
+        }]
+    };
+    const dama = new Chart(dm, {
+        type: 'bar',
+        data: datmas,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    });
+
+    const dk = document.getElementById('datakeluar');
+    const datkel = {
+        labels: thfixdk,
+        datasets: [{
+            label: 'Data Keluar',
+            data: hitungdktahun(),
+            backgroundColor: bgfixdk(),
+            borderColor: borfixdk(),
+            borderWidth: 1
+        }]
+    };
+    const dake = new Chart(dk, {
+        type: 'bar',
+        data: datkel,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    });
+</script>
+<%- include('template/close_foot') %>

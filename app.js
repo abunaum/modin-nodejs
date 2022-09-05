@@ -17,6 +17,7 @@ const ceklogin = require('./controller/login');
 require('./gauth');
 require('./githubauth');
 require('./utils/db');
+const {NikahSemua} = require("./model/nikah");
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/views'));
@@ -44,10 +45,22 @@ app.use('/person', personRoute);
 app.use('/setting', settingRoute);
 app.use('/cetak', cetakRoute);
 
-app.get('/', ceklogin, (req, res) => {
+app.get('/', ceklogin, async (req, res) => {
+    function masuk(data) {
+        return data.status === 'masuk';
+    }
+    function keluar(data) {
+        return data.status === 'keluar';
+    }
+    const semuadata= await NikahSemua.find().lean();
+    const datamasuk = semuadata.filter(masuk);
+    const datakeluar = semuadata.filter(keluar);
     res.render('beranda', {
         title : 'Beranda',
-        info : req.session
+        info : req.session,
+        semuadata,
+        datamasuk,
+        datakeluar
     })
 });
 app.get('/login', (req, res) => {

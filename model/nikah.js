@@ -249,6 +249,22 @@ const SchemaNikahKeluar = {
     },
 };
 
+const SchemaSemuaNikah = {
+    noreg: {
+        type: String,
+        required: true,
+    },
+    tglregister: {
+        type: Date,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+    },
+};
+
 const NikahMasuk = mongoose.model('NikahMasuk', SchemaNikahMasuk, 'nikahs');
 const NikahKeluar = mongoose.model('NikahKeluar', SchemaNikahKeluar, 'nikahs');
-module.exports = {NikahMasuk, NikahKeluar};
+const NikahSemua = mongoose.model('SemuaNikah', SchemaSemuaNikah, 'nikahs');
+module.exports = {NikahMasuk, NikahKeluar, NikahSemua};

@@ -13,7 +13,10 @@ const delete_masuk = (req, res) => {
 }
 
 const view_masuk = async (req, res) => {
-    const datanikah = await NikahMasuk.find({status: 'masuk'});
+    var datanikah = await NikahMasuk.find({status: 'masuk'}).lean();
+    await datanikah.sort(function(a, b) {
+        return a.tglregister > b.tglregister;
+    });
     res.render('nikah/masuk/list', {
         title: 'Nikah Masuk',
         info: req.session,
