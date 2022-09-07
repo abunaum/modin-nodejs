@@ -318,7 +318,7 @@ const edit_keluar = [
             }
 
             function aylk() {
-                if (datareq.statusaylk === 'ada') {
+                if (datareq.sttaylk === 'ada') {
                     const aylk = {
                         nikay: datareq.nikaylk,
                         sttay: datareq.sttaylk,
@@ -334,7 +334,7 @@ const edit_keluar = [
             }
 
             function iblk() {
-                if (datareq.statusiblk === 'ada') {
+                if (datareq.sttiblk === 'ada') {
                     const iblk = {
                         nikib: datareq.nikiblk,
                         sttib: datareq.sttiblk,
