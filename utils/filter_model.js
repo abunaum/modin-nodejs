@@ -450,8 +450,9 @@ const filter_n10 = async function (data) {
     };
     const datapr = await pr(data);
     const datalk = await lk(data);
+    const dataaylk = await aylk(data);
     const datatujuan = await tujuan(data);
-    return Object.assign(datareg, datapr, datalk, datatujuan);
+    return Object.assign(datareg, datapr, datalk, dataaylk, datatujuan);
 }
 
 module.exports = {
