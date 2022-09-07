@@ -112,7 +112,7 @@ const tambah_keluar = [
             }
 
             function aylk() {
-                if (datareq.statusaylk === 'ada') {
+                if (datareq.sttaylk === 'ada') {
                     const aylk = {
                         nikay: datareq.nikaylk,
                         sttay: datareq.sttaylk,
@@ -128,7 +128,7 @@ const tambah_keluar = [
             }
 
             function iblk() {
-                if (datareq.statusiblk === 'ada') {
+                if (datareq.sttiblk === 'ada') {
                     const iblk = {
                         nikib: datareq.nikiblk,
                         sttib: datareq.sttiblk,
@@ -169,7 +169,7 @@ const tambah_keluar = [
                     return tujuan;
                 } else if (datareq.sttkeluar === 'beda' && datareq.cektujuan === 'sama') {
                     const pr = await Orang.findOne({nik: datareq.nikpr});
-                    var tujuan = {
+                    const tujuan = {
                         provinsi: pr.prov,
                         kabkot: pr.kabkot,
                         kec: pr.kec,
@@ -178,7 +178,6 @@ const tambah_keluar = [
                         rw: pr.rw,
                         alamat: pr.jalan,
                     };
-                    tujuan = await tujuan;
                     return tujuan;
                 } else {
                     const prov = datareq.provinsi.split("-");
