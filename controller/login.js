@@ -1,5 +1,7 @@
 const cek = function (req, res, next) {
     if (!req.user) {
+        const redirecturl = req.baseUrl+req.url;
+        res.cookie('redirect', redirecturl);
         res.redirect('/login');
     } else {
         const session = req.session;

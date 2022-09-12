@@ -10,11 +10,11 @@ auth.get('/google/callback',
     }));
 
 auth.get('/github',
-    passport.authenticate('github', { scope: [ 'user:email' ] }));
+    passport.authenticate('github', {scope: ['user:email']}));
 
 auth.get('/github/callback',
-    passport.authenticate('github', { failureRedirect: '/auth/login' }),
-    function(req, res) {
+    passport.authenticate('github', {failureRedirect: '/auth/login'}),
+    function (req, res) {
         // Successful authentication, redirect home.
         res.redirect('/');
     });
