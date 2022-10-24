@@ -1,4 +1,8 @@
 {
+  "name": "modin",
+  "version": "1.0.0",
+  "description": "Aplikasi khusus modin",
+  "main": "app.js",
   "devDependencies": {
     "nodemon": "^2.0.19"
   },
@@ -22,6 +26,6 @@
     "passport-google-oauth2": "^0.2.0"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   }
 }
